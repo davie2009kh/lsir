@@ -52,6 +52,7 @@ from transformers import WhisperProcessor, WhisperForConditionalGeneration, get_
 from transformers.models.whisper.english_normalizer import BasicTextNormalizer
 from peft import LoraConfig, get_peft_model, PeftModel
 import transformers, peft
+transformers.logging.set_verbosity_error()   # hide repetitive library warnings
 
 def seed_all(s):
     random.seed(s); np.random.seed(s); torch.manual_seed(s); torch.cuda.manual_seed_all(s)
