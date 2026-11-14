@@ -254,9 +254,10 @@ plt.tight_layout(); plt.savefig(f"{OUT}/channels_spectrogram.png", dpi=110); plt
 
 # %% [markdown]
 # ## 3. Model, labels and LoRA
-# BuzzASR replaced Whisper's tokenizer with an Armenian-specific one, and the tokenizer's automatic prefix
-# picks the wrong language token, so we build each training label from the model's own special-token ids
-# (start, Armenian, transcribe, no-timestamps, text, end) and check them against the model's own output.
+# BuzzASR replaced Whisper's tokenizer with an Armenian-specific one. With the newer transformers library on Kaggle,
+# the tokenizer's *special* token numbers no longer match the model's (we checked: the model's "start" token id
+# decodes as `<|zh|>`), so we build each training label from the model's own special-token ids
+# (start, Armenian, transcribe, no-timestamps, text, end) and compare with the model's own output.
 
 # %%
 proc = WhisperProcessor.from_pretrained(BASE)
@@ -271,18 +272,27 @@ for k in ["lang_to_id", "task_to_id", "language", "task", "no_timestamps_token_i
 gc.is_multilingual = True
 PREFIX = [GCJ["decoder_start_token_id"], GCJ["lang_to_id"]["<|hy|>"], GCJ["task_to_id"]["transcribe"], GCJ["no_timestamps_token_id"]]
 EOS = GCJ["eos_token_id"]
-assert tok.convert_ids_to_tokens(PREFIX) == ["<|startoftranscript|>", "<|hy|>", "<|transcribe|>", "<|notimestamps|>"], tok.convert_ids_to_tokens(PREFIX)
-print("prefix tokens:", tok.convert_ids_to_tokens(PREFIX), "| eos:", tok.convert_ids_to_tokens([EOS]))
+# The model's special tokens (end, start, languages, ...) start right after its text vocabulary, at id = EOS.
+# Newer transformers number the tokenizer's *special* tokens differently from the model, so we only use the
+# tokenizer for ordinary text, take every special id from the model's own config, and decode text ids only.
+TEXT_VOCAB = EOS
+print("model special ids -> start", PREFIX[0], "| <|hy|>", PREFIX[1], "| transcribe", PREFIX[2], "| no-timestamps", PREFIX[3], "| end", EOS)
 
 def label_ids(text):
-    return PREFIX + tok(" " + text.strip(), add_special_tokens=False).input_ids + [EOS]
+    ids = tok(" " + text.strip(), add_special_tokens=False).input_ids
+    assert max(ids) < TEXT_VOCAB, "text token outside the model's text vocabulary"
+    return PREFIX + ids + [EOS]
+
+def decode(seqs):
+    return [tok.decode([t for t in s.tolist() if t < TEXT_VOCAB]).strip() for s in seqs]
 
 with torch.no_grad():
     f = proc.feature_extractor(train_df["wav"][0], sampling_rate=16000, return_tensors="pt").input_features.to(DEVICE, torch.float16)
     g = model.generate(input_features=f, **GEN)
-print("model's own output starts with:", g[0][:5].tolist(), "| our label starts with:", label_ids("x")[:4])
-print("decoded output:", proc.batch_decode(g, skip_special_tokens=True)[0][:120])
-print("label decodes to:", tok.decode(label_ids(train_df["raw_transcription"][0]), skip_special_tokens=True)[:120])
+print("model's own output ids start:", g[0][:6].tolist(), "| our label starts:", label_ids("x")[:4])
+print("correct :", train_df["raw_transcription"][0][:120])
+print("model   :", decode(g)[0][:120])
+print("label   :", decode(torch.tensor([label_ids(train_df["raw_transcription"][0])]))[0][:120])
 print("Average tokens per Armenian word with BuzzASR's tokenizer:",
       round(np.mean([len(tok(" " + t, add_special_tokens=False).input_ids) / max(len(t.split()), 1) for t in train_df["raw_transcription"][:300]]), 1),
       "(original Whisper tokenizer: 8.8, notebook 2)")
@@ -339,7 +349,7 @@ def transcribe(m, wavs, bs=8):
         feats = proc.feature_extractor(list(wavs[i:i + bs]), sampling_rate=16000, return_tensors="pt").input_features
         with torch.autocast("cuda", dtype=torch.float16):
             ids = m.generate(input_features=feats.to(DEVICE, torch.float16), **GEN)
-        out += proc.batch_decode(ids, skip_special_tokens=True)
+        out += decode(ids)
     return out
 
 def wer(refs, hyps):

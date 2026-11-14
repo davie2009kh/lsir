@@ -38,6 +38,7 @@ gcj = json.load(open(hf_hub_download(BASE, "generation_config.json")))
 for k in ["lang_to_id", "task_to_id", "language", "task", "no_timestamps_token_id"]:
     setattr(base.generation_config, k, gcj[k])          # restore BuzzASR's language table (dropped by newer transformers)
 base.generation_config.is_multilingual = True
+TEXT_VOCAB = gcj["eos_token_id"]          # special tokens start here; decode ordinary text tokens only
 model = PeftModel.from_pretrained(base, LSIR_ADAPTER).to(DEVICE).eval()
 
 SOS_PHONE = butter(4, [300, 3400], btype="band", fs=8000, output="sos")
@@ -77,7 +78,7 @@ def _transcribe(wav, use_adapter):
     else:
         with model.disable_adapter():
             ids = model.generate(input_features=feats, **GEN)
-    return processor.batch_decode(ids, skip_special_tokens=True)[0].strip()
+    return processor.tokenizer.decode([t for t in ids[0].tolist() if t < TEXT_VOCAB]).strip()
 
 
 @gpu

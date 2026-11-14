@@ -192,13 +192,16 @@ AUDIO = {"clean": clips["wav"].tolist(),
 
 # %%
 @torch.no_grad()
-def whisper_run(model, proc, wavs, bs=8, **gen):
+def whisper_run(model, proc, wavs, bs=8, text_vocab=None, **gen):
     out = []
     for i in range(0, len(wavs), bs):
         f = proc.feature_extractor(list(wavs[i:i + bs]), sampling_rate=16000, return_tensors="pt").input_features
         with torch.autocast("cuda", dtype=torch.float16):
             ids = model.generate(input_features=f.to(DEVICE, torch.float16), max_new_tokens=440, **gen)
-        out += proc.batch_decode(ids, skip_special_tokens=True)
+        if text_vocab:   # BuzzASR: decode ordinary text tokens only (see notebook 4)
+            out += [proc.tokenizer.decode([t for t in s.tolist() if t < text_vocab]).strip() for s in ids]
+        else:
+            out += proc.batch_decode(ids, skip_special_tokens=True)
     return out
 
 outputs = {}
@@ -209,9 +212,10 @@ GCJ = json.load(open(hf_hub_download("BuzzASR/armenian", "generation_config.json
 for k in ["lang_to_id", "task_to_id", "language", "task", "no_timestamps_token_id"]:   # restore BuzzASR's language table
     setattr(base.generation_config, k, GCJ[k])
 base.generation_config.is_multilingual = True
+TV = GCJ["eos_token_id"]
 gen = {k: v for k, v in GEN.items() if k != "max_new_tokens"}
 for ch, wavs in AUDIO.items():
-    outputs[("BuzzASR-armenian (original)", ch)] = whisper_run(base, proc, wavs, **gen)
+    outputs[("BuzzASR-armenian (original)", ch)] = whisper_run(base, proc, wavs, text_vocab=TV, **gen)
 
 adapters = sorted(glob.glob("/kaggle/input/**/lsir-buzzasr-armenian-phone-lora-*/adapter_config.json", recursive=True))
 print("adapters found:", adapters)
@@ -219,7 +223,7 @@ for cfg in adapters:
     d = os.path.dirname(cfg); part = d.rsplit("-", 1)[-1]
     m = PeftModel.from_pretrained(base, d).eval()
     for ch, wavs in AUDIO.items():
-        outputs[(f"Lsir: BuzzASR + phone LoRA ({part})", ch)] = whisper_run(m, proc, wavs, **gen)
+        outputs[(f"Lsir: BuzzASR + phone LoRA ({part})", ch)] = whisper_run(m, proc, wavs, text_vocab=TV, **gen)
     base = m.unload()          # remove the adapter again before loading the next one
 del base; torch.cuda.empty_cache()
 
