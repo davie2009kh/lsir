@@ -52,6 +52,7 @@ GEN = dict(num_beams=1, no_repeat_ngram_size=3, repetition_penalty=1.2, max_new_
 # %%
 import subprocess, sys
 subprocess.run([sys.executable, "-m", "pip", "install", "-q", "jiwer", "peft"], check=True)
+subprocess.run([sys.executable, "-m", "pip", "uninstall", "-y", "-q", "torchao"], check=False)   # Kaggle's old torchao breaks peft; we don't use it
 
 import io, os, re, time, json, random, shutil, urllib.request
 from collections import Counter

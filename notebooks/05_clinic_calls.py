@@ -28,6 +28,7 @@ VOICES = {"female": "hy-AM-AnahitNeural", "male": "hy-AM-HaykNeural"}
 # %%
 import subprocess, sys
 subprocess.run([sys.executable, "-m", "pip", "install", "-q", "jiwer", "peft", "edge-tts"], check=True)
+subprocess.run([sys.executable, "-m", "pip", "uninstall", "-y", "-q", "torchao"], check=False)   # Kaggle's old torchao breaks peft; we don't use it
 
 import asyncio, glob, io, os, re, json, time, shutil
 from collections import Counter
