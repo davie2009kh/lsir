@@ -132,7 +132,9 @@ print(f"{len(clips)} clips, {clips['wav'].map(len).sum()/16000/60:.1f} minutes")
 
 # %%
 encoders = subprocess.run([FFMPEG, "-hide_banner", "-encoders"], capture_output=True, text=True).stdout
-HAS_AMR = "libopencore_amrnb" in encoders
+UNSEEN_CODEC = next(((c, b) for c, b in [("libopencore_amrnb", "7.95k"), ("libgsm", "13k"), ("g723_1", "6.3k")] if c in encoders), None)
+CODEC_FMT = {"libopencore_amrnb": "amr", "libgsm": "gsm", "g723_1": "nut"}
+print("unseen codec (same rule as notebook 4):", UNSEEN_CODEC)
 SOS_PHONE = butter(4, [300, 3400], btype="band", fs=8000, output="sos")
 
 def mu_law(y, mu=255.0):
@@ -153,11 +155,13 @@ def phone_line(wav, snr_db=20, seed=0):
     y = mu_law(0.9 * y / (np.max(np.abs(y)) + 1e-9))
     return resample_poly(add_noise(y, snr_db, rng), 2, 1).astype(np.float32)
 
-def codec_roundtrip(wav16, codec, bitrate, fmt):
+def codec_roundtrip(wav16, codec, bitrate):
     x8 = resample_poly(wav16, 1, 2).astype(np.float32)
+    fmt = CODEC_FMT[codec]
     enc = subprocess.run([FFMPEG, "-loglevel", "error", "-f", "f32le", "-ar", "8000", "-ac", "1", "-i", "pipe:0",
                           "-c:a", codec, "-b:a", bitrate, "-f", fmt, "pipe:1"], input=x8.tobytes(), capture_output=True)
-    dec = subprocess.run([FFMPEG, "-loglevel", "error", "-i", "pipe:0", "-f", "f32le", "-ar", "8000", "-ac", "1", "pipe:1"],
+    dec_in = ["-f", "gsm"] if fmt == "gsm" else []
+    dec = subprocess.run([FFMPEG, "-loglevel", "error", *dec_in, "-i", "pipe:0", "-f", "f32le", "-ar", "8000", "-ac", "1", "pipe:1"],
                          input=enc.stdout, capture_output=True)
     y = np.frombuffer(dec.stdout, dtype=np.float32)
     y = x8 if len(y) < len(x8) // 2 else np.pad(y, (0, max(0, len(x8) - len(y))))[:len(x8)]
@@ -172,8 +176,8 @@ def packet_loss(y, rate, rng, frame=320):
 
 def amr_unseen(wav, seed):
     rng = np.random.default_rng(seed)
-    if HAS_AMR:
-        y = codec_roundtrip(wav, "libopencore_amrnb", "7.95k", "amr")
+    if UNSEEN_CODEC:
+        y = codec_roundtrip(wav, *UNSEEN_CODEC)
     else:
         y8 = sosfilt(SOS_PHONE, resample_poly(wav, 1, 2)); y8 = np.round(y8 / (np.max(np.abs(y8)) + 1e-9) * 15) / 15
         y = resample_poly(y8, 2, 1).astype(np.float32)
@@ -200,6 +204,11 @@ def whisper_run(model, proc, wavs, bs=8, **gen):
 outputs = {}
 proc = WhisperProcessor.from_pretrained("BuzzASR/armenian")
 base = WhisperForConditionalGeneration.from_pretrained("BuzzASR/armenian", torch_dtype=torch.float16).to(DEVICE).eval()
+from huggingface_hub import hf_hub_download
+GCJ = json.load(open(hf_hub_download("BuzzASR/armenian", "generation_config.json")))
+for k in ["lang_to_id", "task_to_id", "language", "task", "no_timestamps_token_id"]:   # restore BuzzASR's language table
+    setattr(base.generation_config, k, GCJ[k])
+base.generation_config.is_multilingual = True
 gen = {k: v for k, v in GEN.items() if k != "max_new_tokens"}
 for ch, wavs in AUDIO.items():
     outputs[("BuzzASR-armenian (original)", ch)] = whisper_run(base, proc, wavs, **gen)

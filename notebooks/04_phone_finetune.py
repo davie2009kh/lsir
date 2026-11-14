@@ -24,7 +24,7 @@
 #
 # **An honest test.** Besides clean audio and the fixed phone simulation from notebooks 1-3, we test on an
 # **unseen** condition: the **AMR-NB** codec used by mobile phone networks (GSM/3G calls), plus packet loss and noise.
-# AMR-NB is **never used in training**, so a gain there means the model learned "phone audio" in general, not our simulator.
+# The held-out codec (AMR-NB if available, else GSM or G.723.1) is **never used in training**, so a gain there means the model learned "phone audio" in general, not our simulator.
 #
 # **Architecture choice.** The model has 1.55B parameters, too many to train fully on a free 16 GB GPU, so we use
 # **LoRA**: the original weights are frozen and small extra matrices are trained. `LORA_PART` chooses where:
@@ -121,22 +121,31 @@ if SMOKE:
 # %%
 FFMPEG = shutil.which("ffmpeg")
 encoders = subprocess.run([FFMPEG, "-hide_banner", "-encoders"], capture_output=True, text=True).stdout if FFMPEG else ""
-HAS_OPUS, HAS_AMR = "libopus" in encoders, "libopencore_amrnb" in encoders
-print("ffmpeg:", FFMPEG, "| opus encoder:", HAS_OPUS, "| AMR-NB encoder:", HAS_AMR)
+HAS_OPUS = "libopus" in encoders
+print("ffmpeg:", FFMPEG, "| opus encoder:", HAS_OPUS)
+
+CODEC_FMT = {"libopus": "ogg", "libopencore_amrnb": "amr", "libgsm": "gsm", "g723_1": "nut"}
 
 def codec_roundtrip(wav16, codec, bitrate):
     """Encode 16 kHz audio with a real speech codec at 8 kHz and decode it back (via ffmpeg pipes)."""
     x8 = resample_poly(wav16, 1, 2).astype(np.float32)
-    fmt = {"libopus": "ogg", "libopencore_amrnb": "amr"}[codec]
+    fmt = CODEC_FMT[codec]
     enc = subprocess.run([FFMPEG, "-loglevel", "error", "-f", "f32le", "-ar", "8000", "-ac", "1", "-i", "pipe:0",
                           "-c:a", codec, "-b:a", bitrate, "-f", fmt, "pipe:1"], input=x8.tobytes(), capture_output=True)
-    dec = subprocess.run([FFMPEG, "-loglevel", "error", "-i", "pipe:0", "-f", "f32le", "-ar", "8000", "-ac", "1", "pipe:1"],
+    dec_in = ["-f", "gsm"] if fmt == "gsm" else []
+    dec = subprocess.run([FFMPEG, "-loglevel", "error", *dec_in, "-i", "pipe:0", "-f", "f32le", "-ar", "8000", "-ac", "1", "pipe:1"],
                          input=enc.stdout, capture_output=True)
     y = np.frombuffer(dec.stdout, dtype=np.float32)
     if len(y) < len(x8) // 2:      # codec failed -> fall back to plain narrow band
         y = x8
     y = np.pad(y, (0, max(0, len(x8) - len(y))))[:len(x8)]
     return resample_poly(y, 2, 1).astype(np.float32)
+
+# Held-out codec for the unseen test: the first one this ffmpeg can encode. It is never used in training.
+UNSEEN_CODEC = next(((c, b, n) for c, b, n in [("libopencore_amrnb", "7.95k", "AMR-NB mobile codec"),
+                                               ("libgsm", "13k", "GSM mobile codec"),
+                                               ("g723_1", "6.3k", "G.723.1 VoIP codec")] if c in encoders), None)
+print("unseen test codec:", UNSEEN_CODEC)
 
 SOS_PHONE = butter(4, [300, 3400], btype="band", fs=8000, output="sos")
 
@@ -218,17 +227,17 @@ def random_channel(wav, rng, babble_pool):
     return np.clip(y, -1, 1).astype(np.float32)
 
 def amr_unseen(wav, seed):
-    """Held-out test condition (never used in training): AMR-NB mobile codec + 5% packet loss + 15 dB pink noise."""
+    """Held-out test condition (never used in training): a mobile/VoIP codec + 5% packet loss + 15 dB pink noise."""
     rng = np.random.default_rng(seed)
-    if HAS_AMR:
-        y = codec_roundtrip(wav, "libopencore_amrnb", "7.95k")
-    else:   # fallback if this ffmpeg has no AMR encoder: unseen coarse quantisation at 8 kHz
+    if UNSEEN_CODEC:
+        y = codec_roundtrip(wav, UNSEEN_CODEC[0], UNSEEN_CODEC[1])
+    else:   # fallback if this ffmpeg has none of them: coarse quantisation at 8 kHz
         y8 = sosfilt(SOS_PHONE, resample_poly(wav, 1, 2)); y8 = np.round(y8 / (np.max(np.abs(y8)) + 1e-9) * 15) / 15
         y = resample_poly(y8, 2, 1).astype(np.float32)
     y = add_noise(y, 15, rng, kind="pink")
     return packet_loss(y, 0.05, rng).astype(np.float32)
 
-UNSEEN_NAME = "unseen: AMR-NB mobile codec + loss + noise" if HAS_AMR else "unseen: coarse 8 kHz + loss + noise"
+UNSEEN_NAME = f"unseen: {UNSEEN_CODEC[2] if UNSEEN_CODEC else 'coarse 8 kHz'} + loss + noise"
 test_df["wav_phone"] = [phone_line(w, seed=i) for i, w in enumerate(test_df["wav"])]       # same as notebooks 1-3
 test_df["wav_unseen"] = [amr_unseen(w, seed=50_000 + i) for i, w in enumerate(test_df["wav"])]
 val_df["wav_phone"] = [phone_line(w, seed=10_000 + i) for i, w in enumerate(val_df["wav"])]
@@ -253,9 +262,16 @@ plt.tight_layout(); plt.savefig(f"{OUT}/channels_spectrogram.png", dpi=110); plt
 proc = WhisperProcessor.from_pretrained(BASE)
 tok = proc.tokenizer
 model = WhisperForConditionalGeneration.from_pretrained(BASE, torch_dtype=torch.float16).to(DEVICE)
+# Newer transformers versions drop BuzzASR's language table when loading, so read it from the file and put it back.
+from huggingface_hub import hf_hub_download
+GCJ = json.load(open(hf_hub_download(BASE, "generation_config.json")))
 gc = model.generation_config
-PREFIX = [gc.decoder_start_token_id, gc.lang_to_id["<|hy|>"], gc.task_to_id["transcribe"], gc.no_timestamps_token_id]
-EOS = gc.eos_token_id
+for k in ["lang_to_id", "task_to_id", "language", "task", "no_timestamps_token_id"]:
+    setattr(gc, k, GCJ[k])
+gc.is_multilingual = True
+PREFIX = [GCJ["decoder_start_token_id"], GCJ["lang_to_id"]["<|hy|>"], GCJ["task_to_id"]["transcribe"], GCJ["no_timestamps_token_id"]]
+EOS = GCJ["eos_token_id"]
+assert tok.convert_ids_to_tokens(PREFIX) == ["<|startoftranscript|>", "<|hy|>", "<|transcribe|>", "<|notimestamps|>"], tok.convert_ids_to_tokens(PREFIX)
 print("prefix tokens:", tok.convert_ids_to_tokens(PREFIX), "| eos:", tok.convert_ids_to_tokens([EOS]))
 
 def label_ids(text):
@@ -482,7 +498,7 @@ for label, idx in [("biggest improvement", np.argsort(-gain)[:3]),
 
 json.dump({"lora_part": LORA_PART, "epochs": EPOCHS, "best_epoch": int(best_epoch), "lr": LR, "lora_r": LORA_R,
            "clean_prob": CLEAN_PROB, "batch": BATCH * ACCUM, "train_clips": len(train_df), "test_clips": len(test_df),
-           "has_opus": HAS_OPUS, "has_amr": HAS_AMR, "unseen_condition": UNSEEN_NAME,
+           "has_opus": HAS_OPUS, "unseen_codec": UNSEEN_CODEC, "unseen_condition": UNSEEN_NAME,
            "torch": torch.__version__, "transformers": transformers.__version__, "peft": peft.__version__},
           open(f"{OUT}/run_info_04_{LORA_PART}.json", "w"), indent=1)
 print(os.listdir(OUT))
