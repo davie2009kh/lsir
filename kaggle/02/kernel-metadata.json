@@ -1,0 +1,14 @@
+{
+  "id": "davit2009/lsir-02-finetune-whisper-armenian",
+  "title": "Lsir 02 finetune Whisper Armenian",
+  "code_file": "lsir-02-finetune.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "dataset_sources": [],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
+}

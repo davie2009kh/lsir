@@ -1,0 +1,14 @@
+{
+  "id": "davit2009/lsir-01-armenian-asr-baseline",
+  "title": "Lsir 01 Armenian ASR baseline",
+  "code_file": "lsir-01-baseline.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "dataset_sources": [],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
+}

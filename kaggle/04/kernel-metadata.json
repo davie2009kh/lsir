@@ -1,0 +1,14 @@
+{
+  "id": "davit2009/lsir-04-buzzasr-armenian-phone-lora",
+  "title": "Lsir 04 BuzzASR Armenian phone LoRA",
+  "code_file": "lsir-04-phone-finetune.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "dataset_sources": [],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
+}

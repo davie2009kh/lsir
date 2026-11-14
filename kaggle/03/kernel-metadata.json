@@ -1,0 +1,14 @@
+{
+  "id": "davit2009/lsir-03-armenian-asr-strong-models",
+  "title": "Lsir 03 Armenian ASR strong models",
+  "code_file": "lsir-03-strong-models.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "dataset_sources": [],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
+}
