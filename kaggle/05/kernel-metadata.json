@@ -1,0 +1,14 @@
+{
+  "id": "davit2009/lsir-05-clinic-calls",
+  "title": "Lsir 05 clinic calls",
+  "code_file": "lsir-05-clinic-calls.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "dataset_sources": [],
+  "competition_sources": [],
+  "kernel_sources": ["davit2009/lsir-04-phone-lora-encoder", "davit2009/lsir-04-phone-lora-all"],
+  "model_sources": []
+}
