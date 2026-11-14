@@ -250,11 +250,13 @@ def whisper_run(model, processor, wavs, language=None, bs=16):
             kwargs["language"] = language
         with torch.no_grad():
             ids = model.generate(feats, **kwargs)
-        full = processor.batch_decode(ids, skip_special_tokens=False)
         hyps += processor.batch_decode(ids, skip_special_tokens=True)
-        for t in full:
-            m = re.search(r"<\|([a-z]{2,3}(?:_[a-z]+)?)\|>", t.replace("<|startoftranscript|>", ""))
-            detected.append(m.group(1) if m else None)
+        if language is None:   # ask Whisper's own language detector what it heard
+            with torch.no_grad():
+                lang_ids = model.detect_language(feats)
+            detected += [t.strip("<|>") for t in processor.tokenizer.convert_ids_to_tokens(lang_ids.view(-1).tolist())]
+        else:
+            detected += [language] * len(ids)
     return hyps, detected
 
 def mms_run(model, processor, wavs, bs=8):
