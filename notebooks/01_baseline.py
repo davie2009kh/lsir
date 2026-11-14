@@ -46,6 +46,7 @@ from transformers import (WhisperProcessor, WhisperForConditionalGeneration,
                           AutoProcessor, Wav2Vec2ForCTC)
 from transformers.models.whisper.english_normalizer import BasicTextNormalizer
 import transformers
+transformers.logging.set_verbosity_error()   # hide repetitive library warnings
 
 random.seed(SEED); np.random.seed(SEED); torch.manual_seed(SEED)
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"

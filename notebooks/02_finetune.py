@@ -43,6 +43,7 @@ from transformers import (WhisperProcessor, WhisperForConditionalGeneration, Aut
                           get_linear_schedule_with_warmup)
 from transformers.models.whisper.english_normalizer import BasicTextNormalizer
 import transformers
+transformers.logging.set_verbosity_error()   # hide repetitive library warnings
 
 def seed_all(s):
     random.seed(s); np.random.seed(s); torch.manual_seed(s); torch.cuda.manual_seed_all(s)

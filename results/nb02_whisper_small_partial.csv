@@ -1,0 +1,5 @@
+run,epoch,train_loss,val_wer_clean,val_wer_phone,minutes
+A: whisper-small fine-tuned (clean audio),1,0.468,47.3,63.9,11
+A: whisper-small fine-tuned (clean audio),2,0.196,35.6,54.3,22
+A: whisper-small fine-tuned (clean audio),3,0.113,33.2,52.6,33
+A: whisper-small fine-tuned (clean audio),4,0.070,33.2,52.3,44
