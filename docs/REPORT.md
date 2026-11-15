@@ -162,7 +162,7 @@ is the best single model.
 Voting removes about 12-13% of errors, and our phone-trained model is the best pivot over the phone. Using the
 weaker Omnilingual as the pivot did *not* help (13.3%), which is why we use the best model as the pivot. The cost is
 running three models instead of one. Omnilingual and MMS were trained partly on FLEURS's training split.
-{{ROVER_GSM_CV}}
+*Voting on the unseen GSM codec and on Common Voice (to confirm the setup on data we didn't choose it on) is still running and will be added here.*
 
 ### 8. Beam search: letting the model consider 5 candidate transcripts instead of 1
 Until now every model wrote its single most likely next token at each step ("greedy" decoding). With **beam search**

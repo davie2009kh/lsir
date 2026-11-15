@@ -76,7 +76,7 @@ CTC) make *different* mistakes, so voting cancels many of them.
 **Baseline.** The simplest thing to compare against. Ours: the empty output (exactly 100% WER), whisper-small
 as most apps would use it, and the original BuzzASR before our training.
 
-## 3. Our main findings (fill in the final numbers from the README)
+## 3. Our main findings
 1. Off-the-shelf whisper-small is unusable for Armenian (111% WER vs 9% for English on the same sentences).
 2. The best free Armenian model (BuzzASR) is far better, but it still loses accuracy over a phone line.
 3. Our phone-trained LoRA reduces errors on phone audio, including a codec it never saw, while keeping clean
