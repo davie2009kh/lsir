@@ -122,7 +122,8 @@ BLOCKS_STYLE = STYLE if "css" in inspect.signature(gr.Blocks.__init__).parameter
 LAUNCH_STYLE = {} if BLOCKS_STYLE else STYLE
 
 with gr.Blocks(title="Lsir: Armenian speech-to-text over the phone", **BLOCKS_STYLE) as demo:
-    ref, row = gr.State(""), gr.State(-1)
+    ref = gr.Textbox("", visible=False)          # correct transcript of the chosen example ("" for your own audio)
+    row = gr.Number(-1, visible=False, precision=0)   # example row in the FLEURS test set (sets the line-noise seed)
     gr.HTML(HERO)
 
     gr.HTML('<div class="lsir-step-title"><span class="n">1</span><h2>Choose some Armenian speech</h2>'
