@@ -57,8 +57,8 @@ of words wrong (lower is better), both with beam search:</p>
 trained on a free Kaggle GPU with half the clips sent through randomised phone lines. The gain on the mobile codec it
 never saw also holds on a second dataset (Common Voice Armenian, 1,000 clips). The three example clips here were
 picked to show the difference; on average the gain is smaller.</p>
-<p><a href="https://huggingface.co/davitlive5/lsir-buzzasr-armenian-phone-lora">The model</a> and its card describe
-how it was trained and how to use it.</p>
+<p>Code, notebooks with outputs and the full write-up: <a href="https://github.com/davie2009kh/lsir">github.com/davie2009kh/lsir</a>.
+Model: <a href="https://huggingface.co/davitlive5/lsir-buzzasr-armenian-phone-lora">davitlive5/lsir-buzzasr-armenian-phone-lora</a>.</p>
 """
 
 FOOT = """<p class="lsir-foot">If a result box shows “Error”, Hugging Face's free GPU time for logged-out visitors has run
