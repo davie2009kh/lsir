@@ -20,7 +20,7 @@
 # * Background noise: white or pink noise, and **babble** (other people talking, mixed from other clips)
 # * Room echo (synthetic reverberation), speaking-speed changes (±10%) and volume changes
 # * SpecAugment (randomly hiding small time and frequency bands inside the model during training)
-# * 30% of clips stay clean so the model doesn't forget how to handle good microphones
+# * 50% of clips stay clean so the model doesn't forget how to handle good microphones
 #
 # **An honest test.** Besides clean audio and the fixed phone simulation from notebooks 1-3, we test on an
 # **unseen** condition: the **AMR-NB** codec used by mobile phone networks (GSM/3G calls), plus packet loss and noise.
@@ -41,10 +41,11 @@ LORA_PART = "encoder"     # "encoder" or "all"
 EPOCHS = 2
 BATCH = 4                 # clips per step on the GPU
 ACCUM = 4                 # gradient accumulation -> 16 clips per update
-LR = 2e-4
-LORA_R = 32
-CLEAN_PROB = 0.3
-N_VAL = 100
+LR = 5e-5                 # gentle: BuzzASR is already fine-tuned on this exact data
+LORA_R = 16
+CLEAN_PROB = 0.5
+N_VAL = 300               # more validation clips for a reliable choice of epoch
+LABEL_COL = "transcription"   # FLEURS normalised text (lower case, no punctuation) = the style BuzzASR writes
 SEED = 42
 BASE = "BuzzASR/armenian"
 GEN = dict(num_beams=1, no_repeat_ngram_size=3, repetition_penalty=1.2, max_new_tokens=440)   # BuzzASR card settings
@@ -328,7 +329,7 @@ class ArmenianPhoneSpeech(Dataset):
         rng = np.random.default_rng(SEED * 100003 + self.epoch * 1009 + i)
         wav = row["wav"] if rng.random() < CLEAN_PROB else random_channel(row["wav"], rng, babble_pool)
         feats = proc.feature_extractor(wav, sampling_rate=16000).input_features[0]
-        return feats, label_ids(row["raw_transcription"])
+        return feats, label_ids(row[LABEL_COL])
 
 def collate(batch):
     feats = torch.tensor(np.stack([b[0] for b in batch]), dtype=torch.float16)
@@ -508,7 +509,7 @@ for label, idx in [("biggest improvement", np.argsort(-gain)[:3]),
         print("  ours     :", outputs[(B, uch)][i][:250])
 
 json.dump({"lora_part": LORA_PART, "epochs": EPOCHS, "best_epoch": int(best_epoch), "lr": LR, "lora_r": LORA_R,
-           "clean_prob": CLEAN_PROB, "batch": BATCH * ACCUM, "train_clips": len(train_df), "test_clips": len(test_df),
+           "clean_prob": CLEAN_PROB, "label_col": LABEL_COL, "n_val": N_VAL, "batch": BATCH * ACCUM, "train_clips": len(train_df), "test_clips": len(test_df),
            "has_opus": HAS_OPUS, "unseen_codec": UNSEEN_CODEC, "unseen_condition": UNSEEN_NAME,
            "torch": torch.__version__, "transformers": transformers.__version__, "peft": peft.__version__},
           open(f"{OUT}/run_info_04_{LORA_PART}.json", "w"), indent=1)
