@@ -1,0 +1,116 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif+Armenian:wght@600;900&family=Noto+Sans+Armenian:wght@400;600;700&family=Noto+Sans:wght@400;600;700&display=swap");
+
+:root {
+  --tuff: #f4ecea;        /* pale pink tuff, the stone Yerevan is built from */
+  --surface: #ffffff;
+  --ink: #24222a;
+  --muted: #6b6370;
+  --line: #e2d4cf;
+  --pom: #8c1d3a;         /* pomegranate: Lsir */
+  --pom-soft: #f3dde2;
+  --ararat: #36577a;      /* Ararat blue: the original model */
+  --mark: #ffe28a;        /* highlighter on wrong words */
+  --mark-ink: #3b2f00;
+}
+.dark {
+  --tuff: #1d1a1f;
+  --surface: #27232a;
+  --ink: #f2ece9;
+  --muted: #b4aab0;
+  --line: #3b3439;
+  --pom: #e8708c;
+  --pom-soft: #43242d;
+  --ararat: #93b5da;
+  --mark: #7a6114;
+  --mark-ink: #fff3c9;
+}
+
+body, gradio-app, .gradio-container { background: var(--tuff) !important; }
+.gradio-container {
+  max-width: 1040px !important; margin: 0 auto !important; padding: 0 16px 48px !important;
+  font-family: "Noto Sans Armenian", "Noto Sans", system-ui, sans-serif !important; color: var(--ink);
+}
+footer { display: none !important; }
+
+/* ---------- hero: one bold element, the word itself ---------- */
+#lsir-hero { display: grid; grid-template-columns: auto 1fr; gap: 8px 40px; align-items: end; padding: 40px 0 28px;
+  border-bottom: 1px solid var(--line); margin-bottom: 8px; }
+#lsir-hero .word { font-family: "Noto Serif Armenian", serif; font-weight: 900; color: var(--pom);
+  font-size: clamp(5.5rem, 16vw, 11rem); line-height: .82; letter-spacing: -.02em; margin: 0; }
+#lsir-hero .gloss { grid-column: 1; align-self: start; font-size: .95rem; color: var(--muted); margin: 6px 0 0 6px; }
+#lsir-hero .pitch { grid-column: 2; grid-row: 1 / span 2; max-width: 34rem; }
+#lsir-hero .pitch h1 { font-size: 1.55rem; line-height: 1.25; font-weight: 700; margin: 0 0 12px; color: var(--ink); }
+#lsir-hero .pitch p { font-size: 1rem; line-height: 1.55; color: var(--muted); margin: 0 0 14px; }
+#lsir-hero .pitch strong { color: var(--ink); }
+.band { width: 100%; max-width: 30rem; height: auto; display: block; margin-top: 4px; }
+.band .full { fill: var(--line); }
+.band .kept { fill: var(--pom); }
+.band text { fill: var(--muted); font: 600 9px "Noto Sans", sans-serif; }
+.band .kept-label { fill: var(--ink); }
+
+@media (max-width: 760px) {
+  #lsir-hero { grid-template-columns: 1fr; padding-top: 24px; }
+  #lsir-hero .pitch { grid-column: 1; grid-row: auto; }
+}
+
+/* ---------- steps (a real sequence, so they are numbered) ---------- */
+.lsir-step-title { display: flex; gap: 12px; align-items: baseline; margin: 22px 0 6px; }
+.lsir-step-title .n { font-family: "Noto Serif Armenian", serif; font-weight: 900; font-size: 1.6rem; color: var(--pom); }
+.lsir-step-title h2 { font-size: 1.15rem; font-weight: 700; margin: 0; color: var(--ink); }
+.lsir-step-title p { margin: 0; color: var(--muted); font-size: .92rem; }
+
+.lsir-chip button, button.lsir-chip {
+  background: var(--surface) !important; color: var(--ink) !important; border: 1px solid var(--line) !important;
+  border-radius: 999px !important; font-weight: 600 !important; font-size: .92rem !important; text-align: left !important;
+  box-shadow: none !important; padding: 8px 16px !important;
+}
+#lsir-chips { flex-wrap: wrap !important; gap: 8px !important; }
+#lsir-chips > * { flex: 0 0 auto !important; width: auto !important; min-width: 0 !important; }
+.lsir-chip:hover, button.lsir-chip:hover { border-color: var(--pom) !important; }
+.lsir-chip.selected, button.lsir-chip.selected { background: var(--pom-soft) !important; border-color: var(--pom) !important; }
+
+#lsir-channel .wrap { gap: 8px !important; }
+#lsir-channel label { border-radius: 999px !important; border: 1px solid var(--line) !important;
+  background: var(--surface) !important; padding: 8px 16px !important; }
+#lsir-channel label.selected, #lsir-channel label:has(input:checked) { border-color: var(--pom) !important;
+  background: var(--pom-soft) !important; }
+#lsir-channel input { accent-color: var(--pom); }
+
+#lsir-go { background: var(--pom) !important; color: #fff !important; border: none !important; font-weight: 700 !important;
+  font-size: 1.05rem !important; border-radius: 10px !important; min-height: 48px; max-height: 64px; align-self: center; }
+.dark #lsir-go { color: #1d1a1f !important; }
+#lsir-go:hover { filter: brightness(1.08); }
+
+/* ---------- results ---------- */
+.lsir-card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px 16px;
+  min-height: 150px; }
+.lsir-card.orig { border-top: 4px solid var(--ararat); }
+.lsir-card.lsir { border-top: 4px solid var(--pom); }
+.lsir-card-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 8px; }
+.lsir-card-head h3 { margin: 0; font-size: 1.05rem; font-weight: 700; }
+.lsir-card.orig h3 { color: var(--ararat); }
+.lsir-card.lsir h3 { color: var(--pom); }
+.lsir-card-head span { color: var(--muted); font-size: .85rem; }
+.lsir-text { font-size: 1.2rem; line-height: 1.7; margin: 0; color: var(--ink); }
+.lsir-empty, .lsir-wait { color: var(--muted); font-size: 1rem; }
+.lsir-score { margin: 12px 0 0; font-weight: 700; font-size: .95rem; }
+.lsir-card.orig .lsir-score { color: var(--ararat); }
+.lsir-card.lsir .lsir-score { color: var(--pom); }
+mark.lsir-sub, mark.lsir-ins { background: var(--mark); color: var(--mark-ink); border-radius: 3px; padding: 0 2px; }
+mark.lsir-ins { text-decoration: underline wavy; text-underline-offset: 4px; }
+.lsir-del { color: var(--muted); text-decoration: line-through; text-decoration-thickness: 2px; opacity: .75; }
+
+.lsir-ref { margin: 14px 0 0; padding: 12px 16px; border-left: 3px solid var(--line); color: var(--muted); }
+.lsir-ref b { color: var(--ink); font-weight: 600; }
+.lsir-legend { color: var(--muted); font-size: .88rem; margin: 10px 0 0; }
+.lsir-legend mark { background: var(--mark); color: var(--mark-ink); border-radius: 3px; padding: 0 3px; }
+.lsir-time { color: var(--muted); font-size: .88rem; margin: 6px 0 0; }
+
+#lsir-about table { border-collapse: collapse; font-size: .95rem; }
+#lsir-about td, #lsir-about th { padding: 6px 14px 6px 0; border-bottom: 1px solid var(--line); text-align: left; }
+#lsir-about .lsir-us { color: var(--pom); font-weight: 700; }
+.lsir-foot { color: var(--muted); font-size: .85rem; margin-top: 28px; line-height: 1.5; }
+.lsir-foot a, #lsir-about a, .pitch a { color: var(--pom); }
+
+:focus-visible { outline: 3px solid var(--pom) !important; outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
