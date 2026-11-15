@@ -61,19 +61,21 @@ repeating one syllable hundreds of times. Its tokenizer needs **8.8 tokens per A
 |---|---|---|---|---|
 | **BuzzASR-armenian** | **13.6%** (12.9-14.5) | **17.4%** (16.5-18.3) | +3.8 | 5.2% |
 | mms-1b-all | 20.0% (19.1-21.0) | 28.3% (27.3-29.3) | +8.3 | 5.1% |
-| {{OMNI_ROW}} |  |  |  |  |
+| Omnilingual CTC-1B v2 (Meta) | 15.5% (14.6-16.4) | 21.7% (20.6-22.9) | +6.2 | **4.2%** |
 | whisper-large-v3-turbo | 46.0% (44.8-47.2) | 57.9% (56.6-59.2) | +11.9 | 11.7% |
 | whisper-small | 108.0% (102.1-114.1) | 117.8% (112.0-124.6) | +9.8 | 43.4% |
 | *Baseline: empty output* | *100%* | *100%* | | |
 
 A model trained specifically on Armenian beats general models that are bigger or newer, and it also loses the
-least accuracy over the phone.
+least accuracy over the phone. Meta's Omnilingual gets the fewest *letter* errors (CER 4.2%) but more whole-word
+errors, and it is hurt more by the phone line.
 
 ### 3. Who does it fail for? Every model is worse on women's voices
 | Model (phone audio) | Women (593 clips) | Men (339 clips) |
 |---|---|---|
 | BuzzASR-armenian | 19.0% | 14.6% |
 | mms-1b-all | 31.7% | 22.2% |
+| Omnilingual CTC-1B v2 | 23.9% | 17.9% |
 | whisper-large-v3-turbo | 61.8% | 51.1% |
 
 The gap appears on clean audio too (BuzzASR: 14.5% vs 12.0%). FLEURS doesn't say how many different speakers
