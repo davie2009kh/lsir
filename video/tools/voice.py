@@ -15,7 +15,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 KEY_FILE = Path.home() / ".config/elevenlabs/key"
 OUT = ROOT / "assets/audio/vo"
-DEFAULT_VOICE = "21m00Tcm4TlvDq8ikWAM"      # "Rachel", a calm premade ElevenLabs narrator voice
+DEFAULT_VOICE = "JBFqnCBsd6RMkjVDRZzb"      # "George", a calm premade ElevenLabs narrator voice
 
 
 def read_key():
@@ -29,9 +29,9 @@ def read_key():
 
 
 def tts(key, voice, model, text):
-    body = json.dumps({"text": text, "model_id": model,
-                       "voice_settings": {"stability": 0.55, "similarity_boost": 0.75, "style": 0.15,
-                                          "use_speaker_boost": True}}).encode()
+    settings = ({"stability": 0.5} if model == "eleven_v3"          # v3 takes 0 / 0.5 / 1 (creative / natural / robust)
+                else {"stability": 0.55, "similarity_boost": 0.75, "style": 0.15, "use_speaker_boost": True})
+    body = json.dumps({"text": text, "model_id": model, "voice_settings": settings}).encode()
     req = urllib.request.Request(f"https://api.elevenlabs.io/v1/text-to-speech/{voice}?output_format=mp3_44100_128",
                                  data=body, method="POST",
                                  headers={"xi-api-key": key, "Content-Type": "application/json", "Accept": "audio/mpeg"})
@@ -42,7 +42,7 @@ def tts(key, voice, model, text):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--voice", default=DEFAULT_VOICE)
-    ap.add_argument("--model", default="eleven_multilingual_v2")
+    ap.add_argument("--model", default="eleven_v3")
     ap.add_argument("--only", default="")
     a = ap.parse_args()
     key = read_key()

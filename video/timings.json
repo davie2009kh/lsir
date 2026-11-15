@@ -1,93 +1,93 @@
 {
- "total": 110.02,
+ "total": 113.85,
  "events": {
   "L1": {
    "start": 0.5,
-   "end": 2.72,
+   "end": 2.66,
    "scene": "hook",
    "kind": "vo"
   },
   "clean": {
-   "start": 2.97,
-   "end": 6.57,
+   "start": 2.91,
+   "end": 6.51,
    "scene": "hook",
    "kind": "clip"
   },
   "L2": {
-   "start": 6.87,
-   "end": 11.4,
+   "start": 6.81,
+   "end": 11.05,
    "scene": "hook",
    "kind": "vo"
   },
   "mobile": {
-   "start": 11.65,
-   "end": 19.21,
+   "start": 11.3,
+   "end": 18.86,
    "scene": "hook",
    "kind": "clip"
   },
   "L3": {
-   "start": 19.36,
-   "end": 23.89,
+   "start": 19.01,
+   "end": 22.93,
    "scene": "hook",
    "kind": "vo"
   },
   "L4": {
-   "start": 24.79,
-   "end": 32.4,
+   "start": 23.83,
+   "end": 32.15,
    "scene": "problem",
    "kind": "vo"
   },
   "L5": {
-   "start": 32.85,
-   "end": 40.46,
+   "start": 32.6,
+   "end": 38.76,
    "scene": "problem",
    "kind": "vo"
   },
   "L6": {
-   "start": 41.36,
-   "end": 50.89,
+   "start": 39.66,
+   "end": 50.14,
    "scene": "baseline",
    "kind": "vo"
   },
   "L7": {
-   "start": 51.79,
-   "end": 54.78,
+   "start": 51.04,
+   "end": 54.24,
    "scene": "demo",
    "kind": "vo"
   },
   "L8": {
-   "start": 55.13,
-   "end": 61.58,
+   "start": 54.59,
+   "end": 60.27,
    "scene": "demo",
    "kind": "vo"
   },
   "L9": {
-   "start": 62.18,
-   "end": 67.86,
+   "start": 60.87,
+   "end": 69.03,
    "scene": "demo",
    "kind": "vo"
   },
   "L10": {
-   "start": 68.86,
-   "end": 81.47,
+   "start": 70.03,
+   "end": 80.51,
    "scene": "how",
    "kind": "vo"
   },
   "L11": {
-   "start": 81.97,
-   "end": 91.5,
+   "start": 81.01,
+   "end": 93.17,
    "scene": "how",
    "kind": "vo"
   },
   "L12": {
-   "start": 94.1,
-   "end": 100.55,
+   "start": 95.77,
+   "end": 103.21,
    "scene": "next",
    "kind": "vo"
   },
   "L13": {
-   "start": 102.95,
-   "end": 104.02,
+   "start": 105.61,
+   "end": 107.85,
    "scene": "next",
    "kind": "vo"
   }
@@ -95,99 +95,99 @@
  "scenes": {
   "hook": {
    "start": 0.0,
-   "end": 24.34
+   "end": 23.38
   },
   "problem": {
-   "start": 24.34,
-   "end": 40.91
+   "start": 23.38,
+   "end": 39.21
   },
   "baseline": {
-   "start": 40.91,
-   "end": 51.34
+   "start": 39.21,
+   "end": 50.59
   },
   "demo": {
-   "start": 51.34,
-   "end": 68.41
+   "start": 50.59,
+   "end": 69.58
   },
   "how": {
-   "start": 68.41,
-   "end": 93.65
+   "start": 69.58,
+   "end": 95.32
   },
   "next": {
-   "start": 93.65,
-   "end": 110.02
+   "start": 95.32,
+   "end": 113.85
   }
  },
  "cues": {
   "hook": {
    "L1": 0.5,
-   "clean": 2.97,
-   "clean_end": 6.57,
-   "L2": 6.87,
-   "mobile": 11.65,
-   "mobile_end": 19.21,
-   "L3": 19.36,
-   "eleven": 21.73,
-   "dur": 24.34
+   "clean": 2.91,
+   "clean_end": 6.51,
+   "L2": 6.81,
+   "mobile": 11.3,
+   "mobile_end": 18.86,
+   "L3": 19.01,
+   "eleven": 21.06,
+   "dur": 23.38
   },
   "problem": {
    "L4": 0.45,
-   "when": 3.446,
-   "L5": 8.51,
-   "narrow": 10.469,
-   "nobody": 12.503,
-   "dur": 16.57
+   "when": 3.726,
+   "L5": 9.22,
+   "narrow": 10.806,
+   "nobody": 12.452,
+   "dur": 15.83
   },
   "baseline": {
    "L6": 0.45,
-   "whisper": 4.865,
-   "worse": 7.527,
-   "L6_end": 9.98,
-   "dur": 10.43
+   "whisper": 5.305,
+   "worse": 8.233,
+   "L6_end": 10.93,
+   "dur": 11.38
   },
   "demo": {
    "L7": 0.45,
-   "L8": 3.79,
-   "send": 5.08,
-   "compare": 9.557,
-   "L9": 10.84,
-   "eleven": 12.161,
-   "five": 13.878,
-   "both": 14.274,
-   "dur": 17.07
+   "L8": 4.0,
+   "send": 5.136,
+   "compare": 9.079,
+   "L9": 10.28,
+   "eleven": 12.178,
+   "five": 14.645,
+   "both": 15.214,
+   "dur": 18.99
   },
   "how": {
    "L10": 0.45,
-   "adapter": 3.178,
-   "percent": 6.792,
-   "clips": 10.184,
-   "L11": 13.56,
-   "from": 18.289,
-   "to": 19.006,
-   "second": 21.944,
-   "dur": 25.24
+   "adapter": 2.718,
+   "percent": 5.721,
+   "clips": 8.54,
+   "L11": 11.43,
+   "from": 17.464,
+   "to": 18.379,
+   "second": 22.127,
+   "dur": 25.74
   },
   "next": {
    "L12": 0.45,
-   "older": 2.457,
-   "public": 3.46,
-   "L13": 9.3,
-   "dur": 16.37
+   "older": 2.765,
+   "public": 3.922,
+   "L13": 10.29,
+   "dur": 18.53
   }
  },
  "voice_measured": {
-  "L1": false,
-  "L2": false,
-  "L3": false,
-  "L4": false,
-  "L5": false,
-  "L6": false,
-  "L7": false,
-  "L8": false,
-  "L9": false,
-  "L10": false,
-  "L11": false,
-  "L12": false,
-  "L13": false
+  "L1": true,
+  "L2": true,
+  "L3": true,
+  "L4": true,
+  "L5": true,
+  "L6": true,
+  "L7": true,
+  "L8": true,
+  "L9": true,
+  "L10": true,
+  "L11": true,
+  "L12": true,
+  "L13": true
  }
 }

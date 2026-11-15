@@ -69,12 +69,12 @@
       <div id="hw-ctitle">Over the mobile codec Lsir never trained on<span>Share of words wrong, 932 test recordings, both with beam search</span></div>
       <div id="hw-r1" class="hw-row"><span class="lab">BuzzASR</span><i class="bar"></i><span class="val">22.1%</span></div>
       <div id="hw-r2" class="hw-row"><span class="lab">Lsir</span><i class="bar"></i><span class="val">20.8%</span></div>
-      <div id="hw-axis"><span style="left: -8px">0%</span><span style="left: 1030px">25%</span></div>
+      <div id="hw-axis" data-layout-allow-overflow><span style="left: -8px">0%</span><span style="left: 1030px">25%</span></div>
       <div id="hw-cv">A second dataset agrees <span>(Common Voice, 1,000 clips): 18.9% to 17.8%</span></div>
     </div>
   </div>
   <script>
-  const C = /*CUES*/{"L10": 0.45, "adapter": 3.178, "percent": 6.792, "clips": 10.184, "L11": 13.56, "from": 18.289, "to": 19.006, "second": 21.944, "dur": 25.24}/*END*/;
+  const C = /*CUES*/{"L10": 0.45, "adapter": 2.718, "percent": 5.721, "clips": 8.54, "L11": 11.43, "from": 17.464, "to": 18.379, "second": 22.127, "dur": 25.74}/*END*/;
   const tl = gsap.timeline({ paused: true });
   // one diagram that grows: the model, its two halves, the adapter, the training clips
   tl.fromTo("#hw-name", { opacity: 0 }, { opacity: 1, duration: 0.4 }, C.L10);

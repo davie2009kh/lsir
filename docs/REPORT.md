@@ -263,7 +263,7 @@ dataset and model is downloaded inside the notebook, and no API keys are needed.
 - **ROVER** voting: Fiscus, 1997, *A post-processing system to yield reduced word error rates (ROVER)*, IEEE ASRU.
 - **Methods:** LoRA (Hu et al., 2021) via Hugging Face PEFT; SpecAugment (Park et al., 2019); the telephone-augmentation
   mix follows Dissen et al. (arXiv 2406.18928) and data-augmentation work on low-bit-rate telephony (Applied Sciences 12(3):1580, 2022).
-- **Demo video:** built with [HyperFrames](https://github.com/heygen-com/hyperframes) (HeyGen, Apache-2.0) from screenshots of a real run of the live demo; source in `video/`. Fonts: Noto Serif Armenian, Noto Sans Armenian, Noto Sans (SIL OFL).
+- **Demo video:** built with [HyperFrames](https://github.com/heygen-com/hyperframes) (HeyGen, Apache-2.0) from screenshots of a real run of the live demo, narrated by an AI voice (ElevenLabs, model eleven_v3); source in `video/`. Fonts: Noto Serif Armenian, Noto Sans Armenian, Noto Sans (SIL OFL).
 - **Libraries:** PyTorch, Transformers, PEFT, jiwer, SciPy, pandas, matplotlib, Gradio, ffmpeg.
 - **Compute:** free Kaggle T4 GPUs.
 - **AI tools:** We used Claude (Anthropic) as an AI coding assistant. It wrote and debugged most of the code and drafted the documents; we chose the problem, the user and the tests, checked every result, and can explain each step.
