@@ -103,7 +103,13 @@ def to_16k(b):
     return np.frombuffer(r.stdout, dtype=np.float32).copy()
 
 urllib.request.urlretrieve("https://huggingface.co/api/datasets/Chillarmo/common_voice_20_armenian/parquet/default/train/0.parquet", "/tmp/cv_train.parquet")
-cv = pd.read_parquet("/tmp/cv_train.parquet").sample(CV_TRAIN, random_state=SEED)
+cv_all = pd.read_parquet("/tmp/cv_train.parquet")
+urllib.request.urlretrieve("https://huggingface.co/api/datasets/Chillarmo/common_voice_20_armenian/parquet/default/test/0.parquet", "/tmp/cv_test.parquet")
+cv_test_sents = set(pd.read_parquet("/tmp/cv_test.parquet", columns=["sentence"])["sentence"].map(style))
+overlap = cv_all["sentence"].map(style).isin(cv_test_sents)
+print(f"Common Voice train clips whose sentence also appears in Common Voice test: {int(overlap.sum())} of {len(cv_all)} "
+      "(removed from our training so notebook 6's Common Voice test stays clean for our model)")
+cv = cv_all[~overlap].sample(CV_TRAIN, random_state=SEED)
 cv = pd.DataFrame({"wav": [to_16k(a["bytes"]) for a in cv["audio"]], "label": cv["sentence"].map(style), "source": "Common Voice"})
 
 import glob as _glob
