@@ -83,11 +83,12 @@ as most apps would use it, and the original BuzzASR before our training.
    audio about the same.
 4. On FLEURS every model makes more mistakes on women's voices, but with Common Voice speaker IDs the gap disappears,
    so it's probably a few individual speakers. Public data has no Armenian speakers over 59.
-5. Letting three different models vote word by word (ROVER) gave the best result: FLEURS clean 13.6% -> 11.9%,
-   phone 17.4% -> 15.1% (about 12-13% fewer errors), with no extra training.
+5. Letting three different models vote word by word (ROVER) helped on FLEURS (clean 13.6% -> 11.9%) but FAILED on
+   Common Voice (clean 4.0% -> 8.3%, worse everywhere): the other two models are much weaker there and outvote ours.
+   So we don't use it. A good example of why we test on a second dataset.
 6. Beam search (5 beams) helps every model and ours the most: over the unseen codec 24.3% -> 20.8% (14% fewer errors
    than the original as normally run), and our model is then significantly better than the original over the phone too.
-   Beam search plus voting gives the best results: phone 14.3%, unseen codec 19.6% (19% fewer errors than 24.3%).
+   This is our headline: same decoding for both, 22.1% -> 20.8% over the unseen codec.
 
 ## 4. Questions judges will probably ask
 
@@ -114,9 +115,11 @@ Armenian), people talking over each other, names and numbers (we measure these s
 split. The test sentences are different, but the recording style is familiar to them, which may flatter all three
 a little. We say so in the write-up.
 
-**"Why does voting help if every model is weaker alone?"** Because their mistakes don't overlap much: a CTC model
-(MMS/Omnilingual) spells sounds letter by letter and never loops, while our Whisper-style model knows Armenian words
-better. Where one slips, the other two usually agree on the right word. The cost is running three models.
+**"You tried voting between models. Why isn't it in your results?"** It helped on FLEURS but made things worse on
+Common Voice. Majority voting only works when the models are about equally good. On Common Voice the two other models
+make 5-10 times more mistakes than ours, so when they agree on a wrong word they outvote the right one. On FLEURS they
+looked better than they are, because they were trained on FLEURS data. We report it as a failed idea; a vote weighted
+by each model's confidence would be the next thing to try.
 
 **"Why are women's voices worse?"** On FLEURS every model was worse for women, but FLEURS doesn't say how many
 different speakers there are. On Common Voice, which has speaker IDs (73 women, 49 men in our sample), women were

@@ -173,10 +173,23 @@ change against the pivot model alone):
 | Phone, Lsir beam 5 pivot | 15.2% | **14.3%** | -0.9 (-1.4 to -0.4) |
 | Clean, Lsir beam 5 pivot | 12.3% | **11.6%** | -0.7 (-1.2 to -0.1) |
 
-Our best system (Lsir with beam search, voting with Omnilingual and MMS) gets **19.6%** over the unseen codec, against
-24.3% for the original BuzzASR as normally run: 19% fewer errors (change -4.7, CI -5.4 to -4.0). We chose the voting
-setup on the FLEURS clean and phone conditions; the codec condition and Common Voice (still running) check it on data
-we did not choose it on.
+On FLEURS, Lsir with beam search plus voting gets 19.6% over the unseen codec, against 24.3% for the original BuzzASR
+as normally run (change -4.7, CI -5.4 to -4.0). We chose the voting setup on FLEURS, so we then checked it on
+Common Voice, data we did not choose it on.
+
+**It does not replicate.** Common Voice, 1,000 clips, 252 speakers (strict CI resampling whole speakers; greedy pivots):
+
+| Common Voice test | Pivot alone | Vote | Change |
+|---|---|---|---|
+| Clean, Lsir pivot | 4.0% | 8.3% | +4.3 (+3.7 to +5.0) |
+| Phone, Lsir pivot | 12.8% | 15.1% | +2.4 (+1.7 to +2.9) |
+| Unseen GSM codec, Lsir pivot | 17.8% | 19.9% | +2.1 (+1.5 to +2.8) |
+
+Voting made every condition worse. On Common Voice the two CTC models are far weaker than BuzzASR (MMS 30-46% WER,
+Omnilingual 19-47%, against 4-18%), so where they agree on a wrong word they outvote the right one. On FLEURS all three
+were similarly accurate, partly because MMS and Omnilingual were trained on FLEURS's training split. Word-level voting
+only helps between systems of similar accuracy; a weighted vote (by each model's confidence) is the version worth
+trying next. **We do not use voting in our results or demo.** This is the reason we tested a second dataset.
 
 ### 8. Beam search: letting the model consider 5 candidate transcripts instead of 1
 Until now every model wrote its single most likely next token at each step ("greedy" decoding). With **beam search**
@@ -202,9 +215,8 @@ over the unseen codec (24.3% → 20.8%, CI of change -4.0 to -2.9). The cost is 
 | Clean | 12.3% | **11.6%** | -0.66 (-1.24 to -0.07) |
 | Phone | 15.2% | **14.3%** | -0.90 (-1.42 to -0.38) |
 
-Voting still helps, but less than with greedy decoding (beam search already fixes some of the same errors). The best
-phone result, 14.3%, is about 18% fewer errors than the original BuzzASR with greedy decoding (17.4%). (These use the
-MMS and Omnilingual transcripts re-run in notebook 8.)
+Voting still helps on FLEURS, but less than with greedy decoding. **However, it fails on Common Voice (section 7), so
+we do not count it as a result.**
 
 *Strict confidence intervals resample whole sentences (FLEURS) or whole speakers (Common Voice) instead of single
 clips (`tools/cluster_bootstrap.py`); all conclusions above hold under them.*
