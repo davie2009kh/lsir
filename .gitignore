@@ -4,3 +4,4 @@ __pycache__/
 kaggle_out/
 app/lsir-whisper-small-hy/
 *.safetensors
+hf/
