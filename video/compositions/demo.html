@@ -3,65 +3,95 @@
     @font-face { font-family: "Lsir Serif"; src: url("assets/fonts/NotoSerifArmenian.ttf"); font-weight: 100 900; }
     @font-face { font-family: "Lsir Arm"; src: url("assets/fonts/NotoSansArmenian.ttf"); font-weight: 100 900; }
     @font-face { font-family: "Lsir Latin"; src: url("assets/fonts/NotoSans.ttf"); font-weight: 100 900; }
+    #root { position: absolute; inset: 0; background: #f4ecea; color: #24222a; overflow: hidden;
+            font-family: "Lsir Latin", "Lsir Arm", sans-serif; }
+    .wd { display: inline-block; white-space: pre; }
+    .lt { display: inline-block; white-space: pre; }
+    .nw { white-space: nowrap; }
+    em { font-style: normal; }
 
-    #root { position: absolute; inset: 0; background: #f4ecea; overflow: hidden; font-family: "Lsir Latin", sans-serif; }
-    .dm-shot { position: absolute; inset: 0; opacity: 0; }
+    #dm-b, #dm-c, #dm-cursor, #dm-both, #dm-l-0, #dm-l-1, #dm-l-2, #dm-l-3 { opacity: 0; }
+    .dm-shot { position: absolute; inset: 0; }
     .dm-cam { position: absolute; left: 0; top: 0; width: 1920px; height: 1200px; }
     .dm-cam img { display: block; width: 1920px; height: 1200px; }
-    #dm-cursor { position: absolute; left: 0; top: 0; width: 56px; height: 56px; z-index: 10; opacity: 0; }
-    #dm-cursor svg { width: 56px; height: 56px; overflow: visible; }
+    #dm-a { clip-path: circle(0px at 668px 284px); }
+    #dm-flood { position: absolute; inset: 0; background: #8c1d3a; clip-path: circle(0% at 50% 50%); }
+    #dm-word { position: absolute; left: 407px; top: 127px; font-family: "Lsir Serif", serif; font-size: 212px; line-height: 1.2;
+               color: #ffffff; white-space: nowrap; letter-spacing: -0.02em; font-weight: 900; }
+    #dm-gloss { position: absolute; left: 470px; top: 790px; font-size: 64px; font-weight: 600; color: #f3dde2; }
+    #dm-cursor { position: absolute; left: 0; top: 0; width: 64px; height: 64px; z-index: 10; }
+    #dm-cursor svg { width: 64px; height: 64px; overflow: visible; }
     #dm-cursor path { fill: #ffffff; stroke: #24222a; stroke-width: 1.6; stroke-linejoin: round; }
-    .dm-ring { position: absolute; left: 0; top: 0; width: 64px; height: 64px; margin: -32px 0 0 -32px; border-radius: 50%;
-               border: 4px solid #8c1d3a; opacity: 0; z-index: 9; }
-    #dm-both { position: absolute; left: 0; right: 0; top: 120px; text-align: center; font-size: 46px; font-weight: 700;
-               color: #8c1d3a; opacity: 0; z-index: 11; }
-    #dm-both span { background: #ffffff; padding: 12px 28px; border-radius: 12px;
-                    box-shadow: 0 18px 40px rgba(36, 34, 42, 0.12); }
+    #dm-both { position: absolute; left: 0; right: 0; top: 90px; text-align: center; z-index: 11; }
+    #dm-both span { display: inline-block; font-size: 60px; font-weight: 800; color: #8c1d3a; background: #ffffff; padding: 18px 40px;
+                    border-radius: 14px; box-shadow: 0 24px 60px rgba(36, 34, 42, 0.16); }
   </style>
   <div id="root" data-composition-id="demo" data-width="1920" data-height="1080">
-    <div id="dm-a" class="dm-shot"><div id="dm-cam-a" class="dm-cam"><img src="assets/img/s1_hero.png" alt="Lsir demo, top of the page" /></div></div>
-    <div id="dm-b" class="dm-shot"><div id="dm-cam-b" class="dm-cam"><img src="assets/img/s2_example_loaded.png" alt="Example sentence loaded, mobile line selected" /></div></div>
+    <div id="dm-all">
     <div id="dm-c" class="dm-shot"><div id="dm-cam-c" class="dm-cam"><img src="assets/img/s3_results.png" alt="Both models' transcripts with wrong words highlighted" /></div></div>
-    <i id="dm-r1" class="dm-ring"></i><i id="dm-r2" class="dm-ring"></i><i id="dm-r3" class="dm-ring"></i>
+    <div id="dm-b" class="dm-shot"><div id="dm-cam-b" class="dm-cam"><img src="assets/img/s2_example_loaded.png" alt="Example sentence loaded, mobile line selected" /></div></div>
+    <div id="dm-flood"></div>
+    <div id="dm-word" lang="hy"><span class="nw"><span id="dm-l-0" class="lt">Լ</span><span id="dm-l-1" class="lt">ս</span><span id="dm-l-2" class="lt">ի</span><span id="dm-l-3" class="lt">ր</span></span></div>
+    <div id="dm-gloss"><span id="dm-g-0" class="wd">“Listen!”</span> <span id="dm-g-1" class="wd">in</span> <span id="dm-g-2" class="wd">Armenian</span></div>
+    <div id="dm-a" class="dm-shot"><div id="dm-cam-a" class="dm-cam"><img src="assets/img/s1_hero.png" alt="Lsir demo, top of the page" /></div></div>
     <div id="dm-cursor"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3 L5 19 L9 15 L12 22 L15 20.5 L11.5 14 L18 14 Z" /></svg></div>
     <div id="dm-both"><span>Both models answered in 1.6 s</span></div>
+    </div>
   </div>
   <script>
   const C = /*CUES*/{"L7": 0.45, "L8": 4.0, "send": 5.136, "compare": 9.079, "L9": 10.28, "eleven": 12.178, "five": 14.645, "both": 15.214, "dur": 18.99}/*END*/;
   const tl = gsap.timeline({ paused: true });
-  // camera helper: centre image point (cx, cy) in the frame at zoom z (image drawn at 1920 px wide)
+
   const cam = (z, cx, cy) => ({ scale: z, x: 960 - z * cx, y: 540 - z * cy, transformOrigin: "0 0" });
-  // shot A: the live demo's front page, slow push toward the word
-  tl.fromTo("#dm-a", { opacity: 0 }, { opacity: 1, duration: 0.35 }, 0);
-  tl.fromTo("#dm-cam-a", cam(1.0, 960, 560), { ...cam(1.18, 760, 420), duration: C.L8 - 0.3, ease: "power1.inOut" }, 0);
-  // shot B: pick the sentence, choose the mobile line, transcribe
-  tl.fromTo("#dm-b", { opacity: 0 }, { opacity: 1, duration: 0.3 }, C.L8 - 0.3);
-  tl.set("#dm-a", { opacity: 0 }, C.L8);
-  tl.fromTo("#dm-cam-b", cam(1.0, 960, 540), cam(1.0, 960, 540), C.L8 - 0.3);
-  const P = { chip: [580, 218], mobile: [531, 659], go: [1406, 659] };
-  const tip = (p) => ({ x: p[0] - 10, y: p[1] - 6 });            // the arrow's tip sits at (10, 6) in its box
-  tl.fromTo("#dm-cursor", { opacity: 0, x: 1500, y: 900 }, { opacity: 1, duration: 0.2 }, C.L8);
-  tl.to("#dm-cursor", { ...tip(P.chip), duration: 0.7, ease: "power3.out" }, C.L8);
-  const click = (ring, p, t) => {
-    tl.to("#dm-cursor", { scale: 0.84, duration: 0.08, ease: "power2.in", transformOrigin: "18% 12%" }, t);
-    tl.to("#dm-cursor", { scale: 1, duration: 0.14, ease: "power2.out" }, t + 0.08);
-    tl.set(ring, { x: p[0], y: p[1], scale: 0.4, opacity: 0.9 }, t);         // placed only at its click, never before
-    tl.to(ring, { scale: 1.6, opacity: 0, duration: 0.5, ease: "power2.out" }, t);
+  const B = { z: 1.35, cx: 990, cy: 470 };
+  const onB = (ix, iy) => [960 + B.z * (ix - B.cx), 540 + B.z * (iy - B.cy)];   // image point -> screen in shot B
+  // 1. colour flood from the centre, then the name prints letter by letter while its weight swells from thin to black
+  tl.to("#dm-flood", { clipPath: "circle(80% at 50% 50%)", duration: 0.5, ease: "power2.inOut" }, 0);
+  tl.fromTo("#dm-word", { x: 292, y: 176, scale: 1.9, fontWeight: 150, transformOrigin: "50% 50%" },
+            { fontWeight: 900, duration: 1.1, ease: "power2.out" }, 0.3);
+  [0, 1, 2, 3].forEach((i) => tl.fromTo(`#dm-l-${i}`, { opacity: 0.3, filter: "blur(6px)" },
+                                        { opacity: 1, filter: "blur(0px)", duration: 0.18, immediateRender: false }, 0.3 + i * 0.1));
+  tl.fromTo("#dm-gloss .wd", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.15, stagger: 0.08 }, 0.9);
+  // 2. carry: the name shrinks onto the spot where the live demo prints it, then an iris opens the demo around it
+  const tc = Math.max(1.7, C.L8 - 1.6);
+  tl.to("#dm-gloss", { opacity: 0, filter: "blur(8px)", duration: 0.15 }, tc - 0.1);
+  tl.to("#dm-word", { x: 0, y: 0, scale: 1, duration: 0.6, ease: "power3.inOut" }, tc);
+  tl.fromTo("#dm-cam-a", cam(1.0, 960, 540), { ...cam(1.0, 960, 540), duration: 0.01 }, tc);
+  tl.to("#dm-a", { clipPath: "circle(2300px at 668px 284px)", duration: 0.55, ease: "power3.in" }, tc + 0.55);
+  tl.set(["#dm-flood", "#dm-word"], { opacity: 0 }, tc + 1.15);            // covered by the demo by now
+  tl.to("#dm-cam-a", { ...cam(1.12, 900, 470), duration: 1.2, ease: "power2.inOut" }, tc + 1.1);
+  // 3. vertical whip down the page to the controls
+  const tb = C.L8 + 0.1;
+  tl.to("#dm-a", { y: -320, filter: "blur(16px)", opacity: 0, duration: 0.3, ease: "power3.in" }, tb - 0.3);
+  tl.fromTo("#dm-b", { y: 320, filter: "blur(16px)", opacity: 0 }, { y: 0, filter: "blur(0px)", opacity: 1, duration: 0.4, ease: "expo.out" }, tb);
+  tl.fromTo("#dm-cam-b", cam(B.z, B.cx, B.cy), { ...cam(B.z, B.cx, B.cy), duration: 0.01 }, tb);
+  // the pointer: pick the sentence, choose the mobile line, press Transcribe
+  const P = { chip: onB(580, 218), mobile: onB(531, 659), go: onB(1406, 659) };
+  const tip = (p) => ({ x: p[0] - 12, y: p[1] - 7 });
+  tl.fromTo("#dm-cursor", { opacity: 0, x: 1700, y: 1000 }, { opacity: 1, duration: 0.15 }, tb + 0.2);
+  tl.to("#dm-cursor", { ...tip(P.chip), duration: 0.6, ease: "expo.out" }, tb + 0.2);
+  const press = (t) => {
+    tl.to("#dm-cursor", { scale: 0.82, duration: 0.07, ease: "power2.in", transformOrigin: "18% 12%" }, t);
+    tl.to("#dm-cursor", { scale: 1, duration: 0.16, ease: "power2.out" }, t + 0.07);
   };
-  click("#dm-r1", P.chip, C.L8 + 0.75);
-  tl.to("#dm-cursor", { ...tip(P.mobile), duration: 0.6, ease: "power2.inOut" }, C.send);
-  click("#dm-r2", P.mobile, C.send + 0.65);
-  tl.to("#dm-cursor", { ...tip(P.go), duration: 0.7, ease: "power2.inOut" }, C.compare - 0.75);
-  click("#dm-r3", P.go, C.compare);
-  tl.to("#dm-cursor", { opacity: 0, duration: 0.2 }, C.L9 - 0.35);
-  // shot C: the results; push into the original's card, then Lsir's, then both
-  tl.fromTo("#dm-c", { opacity: 0 }, { opacity: 1, duration: 0.3 }, C.L9 - 0.35);
-  tl.set("#dm-b", { opacity: 0 }, C.L9);
-  tl.fromTo("#dm-cam-c", cam(1.0, 960, 600), { ...cam(1.0, 960, 600), duration: 0.01 }, C.L9 - 0.35);
-  tl.to("#dm-cam-c", { ...cam(1.55, 672, 742), duration: 1.0, ease: "power2.inOut" }, C.eleven - 0.7);
-  tl.to("#dm-cam-c", { ...cam(1.55, 1248, 722), duration: 1.0, ease: "power2.inOut" }, C.five - 0.6);
-  tl.to("#dm-cam-c", { ...cam(1.08, 960, 720), duration: 1.0, ease: "power2.inOut" }, C.both - 0.2);
-  tl.fromTo("#dm-both", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, C.both + 0.6);
+  press(tb + 0.85);
+  tl.to("#dm-cursor", { ...tip(P.mobile), duration: 0.55, ease: "power3.inOut" }, C.send);
+  press(C.send + 0.6);
+  tl.to("#dm-cursor", { ...tip(P.go), duration: 0.6, ease: "power3.inOut" }, C.compare - 0.65);
+  press(C.compare);
+  // 4. the click on Transcribe: the results arrive slightly large and settle (match cut on the click's rebound)
+  const tr = Math.min(C.compare + 0.25, C.L9 - 0.2);
+  tl.to("#dm-cursor", { opacity: 0, duration: 0.1 }, tr);
+  tl.set("#dm-b", { opacity: 0 }, tr);
+  tl.set("#dm-c", { opacity: 1 }, tr);
+  tl.fromTo("#dm-cam-c", cam(1.12, 960, 640), { ...cam(1.0, 960, 640), duration: 0.5, ease: "expo.out" }, tr);
+  tl.to("#dm-cam-c", { ...cam(1.75, 672, 742), duration: 0.9, ease: "power3.inOut" }, C.eleven - 0.6);
+  tl.to("#dm-cam-c", { ...cam(1.75, 1248, 722), duration: 0.9, ease: "power3.inOut" }, C.five - 0.55);
+  tl.to("#dm-cam-c", { ...cam(1.18, 960, 700), duration: 0.9, ease: "power3.inOut" }, C.both - 0.2);
+  tl.fromTo("#dm-both", { opacity: 0, scale: 0.85, filter: "blur(8px)" },
+            { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.45, ease: "back.out(1.4)" }, C.both + 0.5);
+  // 5. horizontal whip out
+  tl.to("#dm-all", { x: -260, filter: "blur(14px)", opacity: 0, duration: 0.3, ease: "power3.in" }, C.dur - 0.3);
   tl.to("#root", { opacity: 1, duration: 0.01 }, C.dur - 0.01);
   window.__timelines["demo"] = tl;
   </script>

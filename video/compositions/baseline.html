@@ -3,43 +3,62 @@
     @font-face { font-family: "Lsir Serif"; src: url("assets/fonts/NotoSerifArmenian.ttf"); font-weight: 100 900; }
     @font-face { font-family: "Lsir Arm"; src: url("assets/fonts/NotoSansArmenian.ttf"); font-weight: 100 900; }
     @font-face { font-family: "Lsir Latin"; src: url("assets/fonts/NotoSans.ttf"); font-weight: 100 900; }
+    #root { position: absolute; inset: 0; background: #f4ecea; color: #24222a; overflow: hidden;
+            font-family: "Lsir Latin", "Lsir Arm", sans-serif; }
+    .wd { display: inline-block; white-space: pre; }
+    .lt { display: inline-block; white-space: pre; }
+    .nw { white-space: nowrap; }
+    em { font-style: normal; }
 
-    #root { position: absolute; inset: 0; background: #f4ecea; color: #24222a; font-family: "Lsir Latin", sans-serif; }
-    #bl-setup { position: absolute; left: 210px; top: 150px; font-size: 40px; font-weight: 700; }
-    #bl-setup span { display: block; font-size: 30px; font-weight: 600; color: #6b6370; margin-top: 10px; }
-    #bl-who { position: absolute; left: 210px; top: 300px; font-size: 36px; font-weight: 700; color: #24222a; }
-    #bl-num { position: absolute; left: 196px; top: 340px; font-size: 230px; font-weight: 800; letter-spacing: -0.02em;
-              line-height: 1; font-variant-numeric: tabular-nums; }
-    #bl-unit { position: absolute; left: 210px; top: 590px; font-size: 32px; font-weight: 600; color: #6b6370; }
-    #bl-track { position: absolute; left: 210px; top: 700px; width: 1500px; height: 28px; border-radius: 4px; background: #e2d4cf; }
-    #bl-fill { position: absolute; left: 0; top: 0; height: 28px; width: 1350.0px; border-radius: 4px;
-               background: #24222a; transform-origin: 0 50%; }
-    #bl-mark { position: absolute; left: 1458.0px; top: 676px; width: 4px; height: 76px; background: #8c1d3a; }
-    #bl-markl { position: absolute; left: 1080.0px; top: 770px; width: 380px; text-align: right;
-                font-size: 30px; font-weight: 700; color: #8c1d3a; }
+    #bl-setup .wd, #bl-setup2 .wd, #bl-who .wd, #bl-num, #bl-unit .wd, #bl-mark, #bl-markl { opacity: 0; }
+    #bl-all { position: absolute; inset: 0; }
+    #bl-setup { position: absolute; left: 120px; top: 90px; font-size: 66px; font-weight: 800; line-height: 1.1; }
+    #bl-setup2 { position: absolute; left: 120px; top: 178px; font-size: 42px; font-weight: 600; color: #6b6370; }
+    #bl-who { position: absolute; left: 120px; top: 90px; font-size: 58px; font-weight: 800; }
+    #bl-num { position: absolute; left: 100px; top: 168px; font-size: 440px; font-weight: 900; line-height: 1; letter-spacing: -0.04em;
+              font-variant-numeric: tabular-nums; }
+    #bl-unit { position: absolute; left: 128px; top: 632px; width: 1600px; font-size: 52px; font-weight: 700; color: #6b6370; line-height: 1.15; }
+    #bl-track { position: absolute; left: 120px; top: 330px; width: 1680px; height: 130px; border-radius: 10px; background: #e2d4cf; }
+    #bl-fill { position: absolute; left: 0; top: 0; bottom: 0; width: 1512.0px; border-radius: 10px; background: #24222a; transform-origin: 0 50%; }
+    #bl-mark { position: absolute; left: 1517.0px; top: 744px; width: 6px; height: 104px; border-radius: 3px; background: #8c1d3a; }
+    #bl-markl { position: absolute; left: 880.0px; top: 856px; width: 620px; text-align: right; font-size: 46px; font-weight: 700; color: #8c1d3a; }
   </style>
   <div id="root" data-composition-id="baseline" data-width="1920" data-height="1080">
-    <div id="bl-setup">5 free speech models<span>932 Armenian test recordings, sentences never used in training</span></div>
-    <div id="bl-who">whisper-small, the default most apps use</div>
-    <div id="bl-num">0%</div>
-    <div id="bl-unit">of words wrong (word error rate)</div>
-    <div id="bl-track"><div id="bl-fill"></div></div>
+    <div id="bl-all">
+    <div id="bl-setup"><span id="bl-s-0" class="wd">5</span> <span id="bl-s-1" class="wd">free</span> <span id="bl-s-2" class="wd">speech</span> <span id="bl-s-3" class="wd">models</span></div>
+    <div id="bl-setup2"><span id="bl-s2-0" class="wd">932</span> <span id="bl-s2-1" class="wd">Armenian</span> <span id="bl-s2-2" class="wd">test</span> <span id="bl-s2-3" class="wd">recordings,</span> <span id="bl-s2-4" class="wd">sentences</span> <span id="bl-s2-5" class="wd">never</span> <span id="bl-s2-6" class="wd">used</span> <span id="bl-s2-7" class="wd">in</span> <span id="bl-s2-8" class="wd">training</span></div>
+    <div id="bl-who"><span id="bl-w-0" class="wd">whisper-small,</span> <span id="bl-w-1" class="wd">the</span> <span id="bl-w-2" class="wd">default</span> <span id="bl-w-3" class="wd">most</span> <span id="bl-w-4" class="wd">apps</span> <span id="bl-w-5" class="wd">use</span></div>
+    <div id="bl-num"><em id="bl-n">0</em>%</div>
+    <div id="bl-unit"><span id="bl-u-0" class="wd">of</span> <span id="bl-u-1" class="wd">words</span> <span id="bl-u-2" class="wd">wrong</span> <span id="bl-u-3" class="wd">(word</span> <span id="bl-u-4" class="wd">error</span> <span id="bl-u-5" class="wd">rate)</span></div>
+    <div id="bl-track"><i id="bl-fill"></i></div>
     <div id="bl-mark"></div>
     <div id="bl-markl">writing nothing: 100%</div>
+    </div>
   </div>
   <script>
   const C = /*CUES*/{"L6": 0.45, "whisper": 5.305, "worse": 8.233, "L6_end": 10.93, "dur": 11.38}/*END*/;
   const tl = gsap.timeline({ paused: true });
-  const num = document.querySelector("#bl-num");
-  const v = { x: 0 };
-  tl.fromTo("#bl-setup", { opacity: 0 }, { opacity: 1, duration: 0.45, ease: "power3.out" }, C.L6);
-  tl.to("#bl-setup", { opacity: 0, duration: 0.25, ease: "power2.in" }, C.whisper - 0.3);
-  tl.fromTo("#bl-who", { opacity: 0 }, { opacity: 1, duration: 0.4 }, C.whisper);
-  tl.fromTo(["#bl-num", "#bl-unit", "#bl-track"], { opacity: 0 }, { opacity: 1, duration: 0.4 }, C.whisper + 0.2);
-  tl.fromTo(["#bl-mark", "#bl-markl"], { opacity: 0 }, { opacity: 1, duration: 0.4 }, C.whisper + 0.5);
-  tl.fromTo("#bl-fill", { scaleX: 0 }, { scaleX: 1, duration: 1.3, ease: "power2.out" }, C.worse - 0.4);
-  tl.fromTo(v, { x: 0 }, { x: 108, duration: 1.3, ease: "power2.out",
-            onUpdate: () => { num.textContent = Math.round(v.x) + "%"; } }, C.worse - 0.4);
+
+  // the previous scene's strip slides down and becomes the error bar (morph)
+  tl.fromTo("#bl-track", { y: 0, scaleY: 1, transformOrigin: "50% 0%" }, { y: 440, scaleY: 0.55, duration: 0.8, ease: "power3.inOut" }, 0.05);
+  tl.fromTo("#bl-setup .wd", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.15, stagger: 0.08 }, C.L6);
+  tl.to("#bl-setup2 .wd", { opacity: 1, duration: 0.12, stagger: 0.05 }, C.L6 + 0.5);
+  // blur swap to the one model that matters here
+  tl.to(["#bl-setup", "#bl-setup2"], { opacity: 0, filter: "blur(8px)", duration: 0.18, ease: "power2.in" }, C.whisper - 0.25);
+  tl.fromTo("#bl-who .wd", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.15, stagger: 0.07 }, C.whisper);
+  tl.fromTo("#bl-num", { opacity: 0, scale: 0.9, transformOrigin: "0% 60%" }, { opacity: 1, scale: 1, duration: 0.5, ease: "expo.out" }, C.whisper + 0.3);
+  tl.to("#bl-unit .wd", { opacity: 1, duration: 0.12, stagger: 0.06 }, C.whisper + 0.6);
+  tl.fromTo(["#bl-mark", "#bl-markl"], { opacity: 0 }, { opacity: 1, duration: 0.3 }, C.whisper + 0.9);
+  // the count and the bar run together; passing 100% (0.95 s in, on this ease) the marker takes a punch
+  const n = { v: 0 }, el = document.querySelector("#bl-n"), t0 = C.worse - 0.4;
+  tl.fromTo(n, { v: 0 }, { v: 108, duration: 1.3, ease: "power2.out", onUpdate: () => { el.textContent = Math.round(n.v); } }, t0);
+  tl.fromTo("#bl-fill", { scaleX: 0 }, { scaleX: 1, duration: 1.3, ease: "power2.out" }, t0);
+  tl.to("#bl-mark", { scaleY: 1.45, duration: 0.12, ease: "power2.out" }, t0 + 0.95);
+  tl.to("#bl-mark", { scaleY: 1, duration: 0.35, ease: "elastic.out(1, 0.5)" }, t0 + 1.07);
+  tl.fromTo("#bl-markl", { scale: 1, transformOrigin: "100% 50%" }, { scale: 1.12, duration: 0.12, ease: "power2.out", immediateRender: false }, t0 + 0.95);
+  tl.to("#bl-markl", { scale: 1, duration: 0.3, ease: "power2.out" }, t0 + 1.07);
+  // out: a quick blur before the colour flood of the next scene
+  tl.to("#bl-all", { opacity: 0, filter: "blur(10px)", duration: 0.2, ease: "power2.in" }, C.dur - 0.22);
   tl.to("#root", { opacity: 1, duration: 0.01 }, C.dur - 0.01);
   window.__timelines["baseline"] = tl;
   </script>

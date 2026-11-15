@@ -3,47 +3,60 @@
     @font-face { font-family: "Lsir Serif"; src: url("assets/fonts/NotoSerifArmenian.ttf"); font-weight: 100 900; }
     @font-face { font-family: "Lsir Arm"; src: url("assets/fonts/NotoSansArmenian.ttf"); font-weight: 100 900; }
     @font-face { font-family: "Lsir Latin"; src: url("assets/fonts/NotoSans.ttf"); font-weight: 100 900; }
+    #root { position: absolute; inset: 0; background: #f4ecea; color: #24222a; overflow: hidden;
+            font-family: "Lsir Latin", "Lsir Arm", sans-serif; }
+    .wd { display: inline-block; white-space: pre; }
+    .lt { display: inline-block; white-space: pre; }
+    .nw { white-space: nowrap; }
+    em { font-style: normal; }
 
-    #root { position: absolute; inset: 0; background: #f4ecea; color: #24222a; font-family: "Lsir Latin", sans-serif; }
+    #nx-a .wd, #nx-b .wd, #nx-tag, #nx-word .lt, #nx-pitch .wd, #nx-team, #nx-links, #nx-fact .wd { opacity: 0; }
     #nx-steps, #nx-end { position: absolute; inset: 0; }
-    .nx-line { position: absolute; left: 210px; font-size: 72px; font-weight: 800; letter-spacing: -0.01em; }
-    #nx-a { top: 230px; } #nx-b { top: 350px; }
-    .nx-line span { color: #8c1d3a; margin-right: 24px; }
-    #nx-fact { position: absolute; left: 210px; top: 500px; width: 1300px; font-size: 38px; font-weight: 600;
-               color: #6b6370; line-height: 1.35; }
-    #nx-word { position: absolute; left: 196px; top: 120px; font-family: "Lsir Serif", serif; font-weight: 900;
-               font-size: 330px; line-height: 1; color: #8c1d3a; }
-    #nx-pitch { position: absolute; left: 210px; top: 520px; width: 1300px; font-size: 46px; font-weight: 700; line-height: 1.25; }
-    #nx-team { position: absolute; left: 210px; top: 650px; font-size: 32px; font-weight: 600; color: #6b6370; }
-    #nx-links { position: absolute; left: 210px; top: 720px; font-size: 32px; font-weight: 600; color: #24222a; line-height: 1.5; }
-    #nx-links b { color: #8c1d3a; font-weight: 700; }
+    .nx-line { position: absolute; left: 120px; font-size: 130px; font-weight: 800; letter-spacing: -0.025em; line-height: 1; }
+    #nx-a { top: 150px; } #nx-b { top: 330px; }
+    #nx-tag { position: absolute; left: 124px; top: 90px; font-size: 46px; font-weight: 800; color: #8c1d3a; }
+    #nx-fact { position: absolute; left: 120px; top: 560px; width: 1680px; font-size: 62px; font-weight: 700; line-height: 1.2; }
+    #nx-flood { position: absolute; inset: 0; background: #8c1d3a; clip-path: circle(0% at 12% 88%); }
+    #nx-word { position: absolute; left: 110px; top: 30px; font-family: "Lsir Serif", serif; font-size: 350px; line-height: 1.2;
+               color: #fff; letter-spacing: -0.02em; font-weight: 900; }
+    #nx-pitch { position: absolute; left: 120px; top: 545px; width: 1680px; font-size: 58px; font-weight: 800; line-height: 1.15; color: #fff; }
+    #nx-team { position: absolute; left: 120px; top: 726px; font-size: 38px; font-weight: 600; color: #f3dde2; }
+    #nx-links { position: absolute; left: 120px; top: 796px; font-size: 42px; font-weight: 700; color: #fff; line-height: 1.45; }
+    #nx-links b { color: #f3dde2; font-weight: 600; margin-right: 18px; }
   </style>
   <div id="root" data-composition-id="next" data-width="1920" data-height="1080">
     <div id="nx-steps">
-      <div id="nx-a" class="nx-line"><span>Next</span>Real phone calls</div>
-      <div id="nx-b" class="nx-line">Older voices</div>
-      <div id="nx-fact">Public Armenian speech data has no speakers over 59.</div>
+      <div id="nx-tag">Next</div>
+      <div id="nx-a" class="nx-line"><span id="nx-a-0" class="wd">Real</span> <span id="nx-a-1" class="wd">phone</span> <span id="nx-a-2" class="wd">calls</span></div>
+      <div id="nx-b" class="nx-line"><span id="nx-b-0" class="wd">Older</span> <span id="nx-b-1" class="wd">voices</span></div>
+      <div id="nx-fact"><span id="nx-f-0" class="wd">Public</span> <span id="nx-f-1" class="wd">Armenian</span> <span id="nx-f-2" class="wd">speech</span> <span id="nx-f-3" class="wd">data</span> <span id="nx-f-4" class="wd">has</span> <span id="nx-f-5" class="wd">no</span> <span id="nx-f-6" class="wd">speakers</span> <span id="nx-f-7" class="wd">over</span> <span id="nx-f-8" class="wd">59.</span></div>
     </div>
     <div id="nx-end">
-      <div id="nx-word" lang="hy">Լսիր</div>
-      <div id="nx-pitch">Armenian speech-to-text that keeps working over the phone</div>
+      <div id="nx-flood"></div>
+      <div id="nx-word" lang="hy"><span class="nw"><span id="nx-l-0" class="lt">Լ</span><span id="nx-l-1" class="lt">ս</span><span id="nx-l-2" class="lt">ի</span><span id="nx-l-3" class="lt">ր</span></span></div>
+      <div id="nx-pitch"><span id="nx-p-0" class="wd">Armenian</span> <span id="nx-p-1" class="wd">speech-to-text</span> <span id="nx-p-2" class="wd">that</span> <span id="nx-p-3" class="wd">keeps</span> <span id="nx-p-4" class="wd">working</span> <span id="nx-p-5" class="wd">over</span> <span id="nx-p-6" class="wd">the</span> <span id="nx-p-7" class="wd">phone</span></div>
       <div id="nx-team">Alen Gevorgyan, Koryun Gaboyan, David Ghazaryan. Veritas AI High School Hackathon 2026</div>
-      <div id="nx-links"><b>Try it</b> huggingface.co/spaces/davitlive5/lsir-armenian-phone-asr<br /><b>Code</b> github.com/davie2009kh/lsir</div>
+      <div id="nx-links"><b>Try it</b>huggingface.co/spaces/davitlive5/lsir-armenian-phone-asr<br /><b>Code</b>github.com/davie2009kh/lsir</div>
     </div>
   </div>
   <script>
   const C = /*CUES*/{"L12": 0.45, "older": 2.765, "public": 3.922, "L13": 10.29, "dur": 18.53}/*END*/;
   const tl = gsap.timeline({ paused: true });
-  tl.fromTo("#nx-a", { opacity: 0 }, { opacity: 1, duration: 0.45, ease: "power3.out" }, C.L12);
-  tl.fromTo("#nx-b", { opacity: 0 }, { opacity: 1, duration: 0.45, ease: "power3.out" }, C.older);
-  tl.fromTo("#nx-fact", { opacity: 0 }, { opacity: 1, duration: 0.45 }, C.public);
-  tl.to("#nx-steps", { opacity: 0, duration: 0.3, ease: "power2.in" }, C.L13 - 0.35);
-  // end card: the word is printed big, then the pitch, team and links settle under it
-  tl.fromTo("#nx-word", { opacity: 0, clipPath: "inset(0 100% 0 0)" },
-            { opacity: 1, clipPath: "inset(0 0% 0 0)", duration: 0.9, ease: "power2.inOut" }, C.L13);
-  tl.fromTo("#nx-pitch", { opacity: 0 }, { opacity: 1, duration: 0.4 }, C.L13 + 0.8);
-  tl.fromTo("#nx-team", { opacity: 0 }, { opacity: 1, duration: 0.4 }, C.L13 + 1.1);
-  tl.fromTo("#nx-links", { opacity: 0 }, { opacity: 1, duration: 0.4 }, C.L13 + 1.4);
+
+  // blur swap in; each line lands per word while its weight swells from light to heavy
+  tl.fromTo("#nx-tag", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.18 }, C.L12 - 0.2);
+  tl.fromTo("#nx-a .wd", { opacity: 0, filter: "blur(8px)", fontWeight: 300 }, { opacity: 1, filter: "blur(0px)", fontWeight: 800, duration: 0.5, ease: "power2.out", stagger: 0.09 }, C.L12 + 0.1);
+  tl.fromTo("#nx-b .wd", { opacity: 0, filter: "blur(8px)", fontWeight: 300 }, { opacity: 1, filter: "blur(0px)", fontWeight: 800, duration: 0.5, ease: "power2.out", stagger: 0.09 }, C.older - 0.1);
+  tl.set("#nx-fact .wd", { opacity: 1, color: "#d8cbc6" }, C.public - 0.1);
+  tl.to("#nx-fact .wd", { color: "#24222a", duration: 0.12, stagger: 0.08 }, C.public);
+  // colour flood from the lower left; the name prints letter by letter as its weight swells
+  tl.to("#nx-flood", { clipPath: "circle(150% at 12% 88%)", duration: 0.6, ease: "power2.inOut" }, C.L13 - 0.45);
+  tl.to("#nx-steps", { opacity: 0, duration: 0.2 }, C.L13 - 0.1);
+  [0, 1, 2, 3].forEach((i) => tl.fromTo(`#nx-l-${i}`, { opacity: 0.3, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, immediateRender: false }, C.L13 + i * 0.1));
+  tl.fromTo("#nx-word", { fontWeight: 150 }, { fontWeight: 900, duration: 1.1, ease: "power2.out" }, C.L13);
+  tl.fromTo("#nx-pitch .wd", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.15, stagger: 0.06 }, C.L13 + 0.9);
+  tl.fromTo("#nx-team", { opacity: 0 }, { opacity: 1, duration: 0.3 }, C.L13 + 1.6);
+  tl.fromTo("#nx-links", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.3 }, C.L13 + 1.9);
   tl.to("#root", { opacity: 1, duration: 0.01 }, C.dur - 0.01);
   window.__timelines["next"] = tl;
   </script>

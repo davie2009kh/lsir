@@ -3,76 +3,93 @@
     @font-face { font-family: "Lsir Serif"; src: url("assets/fonts/NotoSerifArmenian.ttf"); font-weight: 100 900; }
     @font-face { font-family: "Lsir Arm"; src: url("assets/fonts/NotoSansArmenian.ttf"); font-weight: 100 900; }
     @font-face { font-family: "Lsir Latin"; src: url("assets/fonts/NotoSans.ttf"); font-weight: 100 900; }
-
-    #root { position: absolute; inset: 0; background: #f4ecea; color: #24222a;
+    #root { position: absolute; inset: 0; background: #f4ecea; color: #24222a; overflow: hidden;
             font-family: "Lsir Latin", "Lsir Arm", sans-serif; }
-    #pb-call { position: absolute; inset: 0; }
-    #pb-tag { position: absolute; left: 210px; top: 150px; font-size: 32px; font-weight: 600; color: #6b6370; }
-    #pb-bubble { position: absolute; left: 210px; top: 230px; width: 980px; padding: 40px 48px; background: #ffffff;
-                 border-radius: 28px 28px 28px 6px; box-shadow: 0 18px 40px rgba(36, 34, 42, 0.12); }
-    #pb-hy { font-family: "Lsir Arm", sans-serif; font-size: 60px; line-height: 1.3; font-weight: 600; margin: 0; }
-    #pb-en { font-size: 32px; color: #6b6370; margin: 18px 0 0; }
-    #pb-phone { position: absolute; left: 1360px; top: 150px; width: 330px; height: 640px; border: 12px solid #24222a;
-                border-radius: 52px; background: #ffffff; }
-    #pb-phone .spk { position: absolute; left: 50%; top: 26px; width: 90px; height: 10px; margin-left: -45px;
-                     border-radius: 5px; background: #24222a; }
-    #pb-phone .scr { position: absolute; left: 30px; right: 30px; top: 90px; font-size: 30px; font-weight: 700;
-                     color: #24222a; line-height: 1.3; }
-    #pb-phone .scr span { display: block; font-size: 28px; font-weight: 600; color: #6b6370; margin-top: 8px; }
-    #pb-phone .dots { position: absolute; left: 30px; bottom: 60px; display: flex; gap: 14px; }
-    #pb-phone .dots i { display: block; width: 22px; height: 22px; border-radius: 11px; background: #8c1d3a; }
-    #pb-band { position: absolute; inset: 0; }
-    #pb-bt { position: absolute; left: 210px; top: 250px; font-size: 32px; font-weight: 600; color: #6b6370; }
-    #pb-strip { position: absolute; left: 210px; top: 390px; width: 1500px; height: 90px; border-radius: 8px;
-                background: #e2d4cf; overflow: hidden; }
-    #pb-full { position: absolute; inset: 0; background: #8c1d3a; transform-origin: 0 50%; }
-    #pb-kept { position: absolute; left: 56px; top: 0; width: 581px; height: 90px; background: #8c1d3a; }
-    .pb-ax { position: absolute; top: 500px; font-size: 30px; font-weight: 600; color: #6b6370; }
-    #pb-keptl { position: absolute; left: 266px; top: 330px; font-size: 34px; font-weight: 700; color: #8c1d3a; }
-    #pb-lostl { position: absolute; left: 1060px; top: 330px; font-size: 34px; font-weight: 700; color: #6b6370; }
-    #pb-none { position: absolute; left: 210px; top: 640px; width: 1500px; font-size: 52px; font-weight: 700; line-height: 1.25; }
+    .wd { display: inline-block; white-space: pre; }
+    .lt { display: inline-block; white-space: pre; }
+    .nw { white-space: nowrap; }
+    em { font-style: normal; }
+
+    #pb-band, #pb-scr, #pb-en .wd, #pb-k-0, #pb-keptl .wd, #pb-lostl .wd, .pb-ax, #pb-none .wd, #pb-bt .wd, #pb-hy .lt { opacity: 0; }
+    #pb-all, #pb-call, #pb-band { position: absolute; inset: 0; }
+    #pb-tag { position: absolute; left: 120px; top: 110px; font-size: 46px; font-weight: 600; color: #6b6370; }
+    #pb-bubble { position: absolute; left: 120px; top: 200px; width: 1140px; min-height: 330px; padding: 52px 60px; background: #fff;
+                 border-radius: 36px 36px 36px 8px; box-shadow: 0 24px 60px rgba(36, 34, 42, 0.13); }
+    #pb-hy { font-family: "Lsir Arm", sans-serif; font-size: 84px; line-height: 1.25; font-weight: 700; margin: 0; }
+    #pb-en { font-size: 44px; color: #6b6370; margin: 26px 0 0; font-weight: 500; }
+    #pb-phone { position: absolute; left: 1390px; top: 110px; width: 410px; height: 740px; border: 14px solid #24222a;
+                border-radius: 64px; background: #fff; }
+    #pb-phone .spk { position: absolute; left: 50%; top: 30px; width: 110px; height: 12px; margin-left: -55px; border-radius: 6px; background: #24222a; }
+    #pb-scr { position: absolute; left: 38px; right: 38px; top: 110px; font-size: 44px; font-weight: 800; line-height: 1.2; }
+    #pb-scr span { display: block; font-size: 32px; font-weight: 600; color: #6b6370; margin-top: 12px; }
+    #pb-dots { position: absolute; left: 38px; bottom: 70px; display: flex; gap: 18px; }
+    #pb-dots i { display: block; width: 30px; height: 30px; border-radius: 15px; background: #8c1d3a; opacity: 0.25; }
+    #pb-bt { position: absolute; left: 120px; top: 120px; font-size: 52px; font-weight: 700; }
+    #pb-strip { position: absolute; left: 120px; top: 330px; width: 1680px; height: 130px; border-radius: 10px; background: #8c1d3a; overflow: hidden; }
+    #pb-cutl, #pb-cutr { position: absolute; top: 0; height: 130px; background: #e2d4cf; }
+    #pb-cutl { left: 0; width: 63.0px; transform-origin: 0 50%; }
+    #pb-cutr { left: 714.0px; right: 0; transform-origin: 100% 50%; }
+    #pb-keptl { position: absolute; left: 183.0px; top: 250px; font-size: 48px; font-weight: 800; color: #8c1d3a; }
+    #pb-lostl { position: absolute; left: 874.0px; top: 250px; font-size: 48px; font-weight: 700; color: #6b6370; }
+    .pb-ax { position: absolute; top: 480px; font-size: 38px; font-weight: 600; color: #6b6370; }
+    #pb-none { position: absolute; left: 120px; top: 600px; width: 1680px; font-size: 70px; font-weight: 800; line-height: 1.18; }
   </style>
   <div id="root" data-composition-id="problem" data-width="1920" data-height="1080">
+    <div id="pb-all">
     <div id="pb-call">
-      <div id="pb-tag">A first sentence to a clinic phone line</div>
-      <div id="pb-bubble">
-        <p id="pb-hy" lang="hy">Բարև Ձեզ, ուզում եմ գրանցվել բժշկի մոտ։</p>
-        <p id="pb-en">Hello, I would like to book a doctor's appointment.</p>
-      </div>
-      <div id="pb-phone"><i class="spk"></i>
-        <div class="scr">Clinic line<span>Voice assistant answering</span></div>
-        <div class="dots"><i></i><i></i><i></i></div>
-      </div>
+      <div id="pb-tag"><span id="pb-t-0" class="wd">A</span> <span id="pb-t-1" class="wd">first</span> <span id="pb-t-2" class="wd">sentence</span> <span id="pb-t-3" class="wd">to</span> <span id="pb-t-4" class="wd">a</span> <span id="pb-t-5" class="wd">clinic</span> <span id="pb-t-6" class="wd">phone</span> <span id="pb-t-7" class="wd">line</span></div>
+      <div id="pb-bubble"><p id="pb-hy" lang="hy"><span class="nw"><span id="pb-l-0" class="lt">Բ</span><span id="pb-l-1" class="lt">ա</span><span id="pb-l-2" class="lt">ր</span><span id="pb-l-3" class="lt">և</span></span> <span class="nw"><span id="pb-l-5" class="lt">Ձ</span><span id="pb-l-6" class="lt">ե</span><span id="pb-l-7" class="lt">զ</span><span id="pb-l-8" class="lt">,</span></span> <span class="nw"><span id="pb-l-10" class="lt">ո</span><span id="pb-l-11" class="lt">ւ</span><span id="pb-l-12" class="lt">զ</span><span id="pb-l-13" class="lt">ո</span><span id="pb-l-14" class="lt">ւ</span><span id="pb-l-15" class="lt">մ</span></span> <span class="nw"><span id="pb-l-17" class="lt">ե</span><span id="pb-l-18" class="lt">մ</span></span> <span class="nw"><span id="pb-l-20" class="lt">գ</span><span id="pb-l-21" class="lt">ր</span><span id="pb-l-22" class="lt">ա</span><span id="pb-l-23" class="lt">ն</span><span id="pb-l-24" class="lt">ց</span><span id="pb-l-25" class="lt">վ</span><span id="pb-l-26" class="lt">ե</span><span id="pb-l-27" class="lt">լ</span></span> <span class="nw"><span id="pb-l-29" class="lt">բ</span><span id="pb-l-30" class="lt">ժ</span><span id="pb-l-31" class="lt">շ</span><span id="pb-l-32" class="lt">կ</span><span id="pb-l-33" class="lt">ի</span></span> <span class="nw"><span id="pb-l-35" class="lt">մ</span><span id="pb-l-36" class="lt">ո</span><span id="pb-l-37" class="lt">տ</span><span id="pb-l-38" class="lt">։</span></span></p>
+        <p id="pb-en"><span id="pb-e-0" class="wd">Hello,</span> <span id="pb-e-1" class="wd">I</span> <span id="pb-e-2" class="wd">would</span> <span id="pb-e-3" class="wd">like</span> <span id="pb-e-4" class="wd">to</span> <span id="pb-e-5" class="wd">book</span> <span id="pb-e-6" class="wd">a</span> <span id="pb-e-7" class="wd">doctor&#x27;s</span> <span id="pb-e-8" class="wd">appointment.</span></p></div>
+      <div id="pb-phone"><i class="spk"></i><div id="pb-scr">Clinic line<span>Voice assistant answering</span></div>
+        <div id="pb-dots"><i></i><i></i><i></i></div></div>
     </div>
     <div id="pb-band">
-      <div id="pb-bt">The sound of a voice, 0 to 8,000 Hz</div>
-      <div id="pb-keptl">What a phone line keeps</div>
-      <div id="pb-lostl">What it throws away</div>
-      <div id="pb-strip"><div id="pb-full"></div><div id="pb-kept"></div></div>
-      <div class="pb-ax" style="left: 210px">0 Hz</div>
-      <div class="pb-ax" style="left: 800px">3,400 Hz</div>
-      <div class="pb-ax" style="left: 1590px">8,000 Hz</div>
-      <div id="pb-none">No published test had measured Armenian speech recognition over the phone.</div>
+      <div id="pb-bt"><span id="pb-b-0" class="wd">The</span> <span id="pb-b-1" class="wd">sound</span> <span id="pb-b-2" class="wd">of</span> <span id="pb-b-3" class="wd">a</span> <span id="pb-b-4" class="wd">voice,</span> <span id="pb-b-5" class="wd">0</span> <span id="pb-b-6" class="wd">to</span> <span id="pb-b-7" class="wd">8,000</span> <span id="pb-b-8" class="wd">Hz</span></div>
+      <div id="pb-keptl"><span id="pb-k-0" class="wd">What</span> <span id="pb-k-1" class="wd">a</span> <span id="pb-k-2" class="wd">phone</span> <span id="pb-k-3" class="wd">line</span> <span id="pb-k-4" class="wd">keeps</span></div>
+      <div id="pb-lostl"><span id="pb-o-0" class="wd">What</span> <span id="pb-o-1" class="wd">it</span> <span id="pb-o-2" class="wd">throws</span> <span id="pb-o-3" class="wd">away</span></div>
+      <div id="pb-strip"><i id="pb-cutl"></i><i id="pb-cutr"></i></div>
+      <div class="pb-ax" style="left: 120px">0 Hz</div>
+      <div class="pb-ax" style="left: 754px">3,400 Hz</div>
+      <div class="pb-ax" style="left: 1640px">8,000 Hz</div>
+      <div id="pb-none"><span id="pb-n-0" class="wd">No</span> <span id="pb-n-1" class="wd">published</span> <span id="pb-n-2" class="wd">test</span> <span id="pb-n-3" class="wd">had</span> <span id="pb-n-4" class="wd">measured</span> <span id="pb-n-5" class="wd">Armenian</span> <span id="pb-n-6" class="wd">speech</span> <span id="pb-n-7" class="wd">recognition</span> <span id="pb-n-8" class="wd">over</span> <span id="pb-n-9" class="wd">the</span> <span id="pb-n-10" class="wd">phone.</span></div>
+    </div>
     </div>
   </div>
   <script>
   const C = /*CUES*/{"L4": 0.45, "when": 3.726, "L5": 9.22, "narrow": 10.806, "nobody": 12.452, "dur": 15.83}/*END*/;
   const tl = gsap.timeline({ paused: true });
-  // a caller's first sentence, then the voice assistant that has to understand it
-  tl.fromTo("#pb-tag", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 0.2);
-  tl.fromTo("#pb-bubble", { opacity: 0, scale: 0.96, transformOrigin: "0% 100%" },
-            { opacity: 1, scale: 1, duration: 0.5, ease: "power3.out" }, 0.35);
-  tl.fromTo("#pb-phone", { opacity: 0, x: 60 }, { opacity: 1, x: 0, duration: 0.6, ease: "power3.out" }, C.when);
-  tl.fromTo("#pb-phone .dots i", { opacity: 0.25 }, { opacity: 1, duration: 0.3, stagger: 0.25, ease: "none" }, C.when + 0.7);
-  tl.to("#pb-call", { opacity: 0, duration: 0.3, ease: "power2.in" }, C.L5 - 0.35);
-  // the phone band: start with the whole voice, then grey out what the line throws away
-  tl.fromTo("#pb-bt", { opacity: 0 }, { opacity: 1, duration: 0.4 }, C.L5);
-  tl.fromTo("#pb-strip", { opacity: 0 }, { opacity: 1, duration: 0.4 }, C.L5);
-  tl.fromTo(".pb-ax", { opacity: 0 }, { opacity: 1, duration: 0.4 }, C.L5 + 0.1);
-  tl.fromTo("#pb-full", { scaleX: 1 }, { scaleX: 0, duration: 1.0, ease: "power2.inOut" }, C.narrow);
-  tl.fromTo("#pb-keptl", { opacity: 0 }, { opacity: 1, duration: 0.4 }, C.narrow + 0.3);
-  tl.fromTo("#pb-lostl", { opacity: 0 }, { opacity: 1, duration: 0.4 }, C.narrow + 0.6);
-  tl.fromTo("#pb-none", { opacity: 0 }, { opacity: 1, duration: 0.45, ease: "power3.out" }, C.nobody);
+
+  // whip in from the right (matches the hook's exit)
+  tl.fromTo("#pb-all", { x: 260, filter: "blur(14px)", opacity: 0 }, { x: 0, filter: "blur(0px)", opacity: 1, duration: 0.4, ease: "expo.out" }, 0);
+  tl.fromTo("#pb-tag .wd", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.15, stagger: 0.06 }, 0.3);
+  tl.fromTo("#pb-bubble", { scale: 0.9, transformOrigin: "0% 100%" }, { scale: 1, duration: 0.6, ease: "expo.out" }, 0.25);
+  // the caller's sentence types itself in, letter by letter
+  const ls = gsap.utils.toArray("#pb-hy .lt");
+  ls.forEach((l, i) => tl.to(l, { opacity: 1, duration: 0.05 }, 0.7 + i * 0.045));
+  tl.to("#pb-en .wd", { opacity: 1, duration: 0.15, stagger: 0.07 }, 0.7 + ls.length * 0.045 + 0.15);
+  // the clinic line rings, then the voice assistant picks up
+  tl.fromTo("#pb-phone", { x: 120, opacity: 0, rotation: 0 }, { x: 0, opacity: 1, duration: 0.6, ease: "expo.out" }, 0.4);
+  [0, 1, 2, 3, 4, 5].forEach((k) => tl.to("#pb-phone", { rotation: k % 2 ? -3 : 3, duration: 0.07, ease: "sine.inOut" }, C.when - 0.6 + k * 0.07));
+  tl.to("#pb-phone", { rotation: 0, duration: 0.1 }, C.when - 0.6 + 6 * 0.07);
+  tl.to("#pb-scr", { opacity: 1, duration: 0.2 }, C.when);
+  [0, 1, 2].forEach((k) => tl.to(`#pb-dots i:nth-child(${k + 1})`, { opacity: 1, duration: 0.15 }, C.when + 0.4 + k * 0.2));
+  // blur swap to the phone band
+  tl.to("#pb-call", { opacity: 0, filter: "blur(10px)", duration: 0.2, ease: "power2.in" }, C.L5 - 0.25);
+  tl.set("#pb-band", { opacity: 1 }, C.L5 - 0.05);
+  tl.fromTo("#pb-strip", { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, duration: 0.7, ease: "expo.out" }, C.L5);
+  tl.to("#pb-bt .wd", { opacity: 1, duration: 0.15, stagger: 0.06 }, C.L5 + 0.1);
+  tl.to(".pb-ax", { opacity: 1, duration: 0.3, stagger: 0.08 }, C.L5 + 0.4);
+  // the line throws away everything outside 300-3,400 Hz: two wipes close in on the kept band
+  tl.fromTo("#pb-cutr", { scaleX: 0 }, { scaleX: 1, duration: 0.8, ease: "power3.inOut" }, C.narrow - 0.1);
+  tl.fromTo("#pb-cutl", { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: "power3.inOut" }, C.narrow + 0.2);
+  tl.to("#pb-keptl .wd", { opacity: 1, duration: 0.15, stagger: 0.06 }, C.narrow + 0.5);
+  tl.to("#pb-lostl .wd", { opacity: 1, duration: 0.15, stagger: 0.06 }, C.narrow + 0.8);
+  // the claim: each word goes from light grey to ink
+  tl.set("#pb-none .wd", { opacity: 1, color: "#d8cbc6" }, C.nobody);
+  tl.to("#pb-none .wd", { color: "#24222a", duration: 0.12, stagger: 0.08 }, C.nobody + 0.02);
+  // hand-off: everything leaves except the strip, which turns neutral; the next scene takes it over
+  tl.to(["#pb-bt", "#pb-keptl", "#pb-lostl", ".pb-ax", "#pb-none"], { opacity: 0, filter: "blur(8px)", duration: 0.2, ease: "power2.in" }, C.dur - 0.5);
+  tl.to(["#pb-strip", "#pb-cutl", "#pb-cutr"], { backgroundColor: "#e2d4cf", duration: 0.3 }, C.dur - 0.45);
   tl.to("#root", { opacity: 1, duration: 0.01 }, C.dur - 0.01);
   window.__timelines["problem"] = tl;
   </script>
