@@ -103,12 +103,12 @@ print(len(CLINIC), "sentences,", sum(len(t) for _, t in CLINIC), "medical terms,
 # ## 2. Speak them with two Armenian neural voices
 
 # %%
-import edge_tts
 FFMPEG = shutil.which("ffmpeg")
 os.makedirs("/tmp/tts", exist_ok=True)
 
-async def speak(text, voice, path):
-    await edge_tts.Communicate(text, voice).save(path)
+def speak(text, voice, path):
+    # the edge-tts command-line tool (Jupyter already runs an event loop, so we don't call asyncio here)
+    subprocess.run(["edge-tts", "--voice", voice, "--text", text, "--write-media", path], check=True, capture_output=True)
 
 def mp3_to_16k(path):
     r = subprocess.run([FFMPEG, "-loglevel", "error", "-i", path, "-f", "f32le", "-ar", "16000", "-ac", "1", "pipe:1"],
@@ -121,7 +121,7 @@ for i, (sent, terms) in enumerate(CLINIC):
         p = f"/tmp/tts/{i:02d}_{g}.mp3"
         for attempt in range(3):
             try:
-                asyncio.run(speak(sent, voice, p)); break
+                speak(sent, voice, p); break
             except Exception as e:
                 print("retry", i, g, repr(e)[:100]); time.sleep(2)
         rows.append(dict(sid=i, voice=g, text=sent, terms=terms, wav=mp3_to_16k(p)))
