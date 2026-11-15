@@ -1,0 +1,13 @@
+model,audio,gender,clips,WER %,CER %
+BuzzASR-armenian (original),clean,female,593,14.532019704433498,5.4748996349258325
+BuzzASR-armenian (original),clean,male,339,12.107553621386385,4.647907919199516
+Lsir: BuzzASR + phone LoRA (encoder),clean,female,593,16.528852920478535,6.496137005906681
+Lsir: BuzzASR + phone LoRA (encoder),clean,male,339,13.459745104134287,5.157611079776901
+BuzzASR-armenian (original),phone (fixed sim),female,593,19.123856439127376,7.202027920290119
+BuzzASR-armenian (original),phone (fixed sim),male,339,14.392290954305253,5.575400555660003
+Lsir: BuzzASR + phone LoRA (encoder),phone (fixed sim),female,593,20.531315974665727,7.962498029084646
+Lsir: BuzzASR + phone LoRA (encoder),phone (fixed sim),male,339,15.713397575380789,6.07048108458148
+BuzzASR-armenian (original),unseen: GSM mobile codec + loss + noise,female,593,28.685784658691063,11.410690244878653
+BuzzASR-armenian (original),unseen: GSM mobile codec + loss + noise,male,339,16.50606154802611,6.045413716028493
+Lsir: BuzzASR + phone LoRA (encoder),unseen: GSM mobile codec + loss + noise,female,593,29.152005629838143,12.119006901235915
+Lsir: BuzzASR + phone LoRA (encoder),unseen: GSM mobile codec + loss + noise,male,339,17.267640658999067,6.734766351235613

@@ -1,0 +1,7 @@
+model,audio,WER %,WER 95% CI,CER %,numbers kept %,clips with numbers
+BuzzASR-armenian (original),clean,13.655769014717448,12.9-14.5,5.171117249846532,86.15819209039547,177
+Lsir: BuzzASR + phone LoRA (encoder),clean,15.419615773508594,14.6-16.3,6.004450583179865,86.34651600753294,177
+BuzzASR-armenian (original),phone (fixed sim),17.413773733288394,16.6-18.4,6.60451197053407,82.7683615819209,177
+Lsir: BuzzASR + phone LoRA (encoder),phone (fixed sim),18.790023592854734,17.9-19.8,7.267495395948434,84.36911487758945,177
+BuzzASR-armenian (original),unseen: GSM mobile codec + loss + noise,24.283788338388945,23.2-25.4,9.439840392879066,72.06214689265535,177
+Lsir: BuzzASR + phone LoRA (encoder),unseen: GSM mobile codec + loss + noise,24.85675766767779,23.8-26.0,10.141190914671578,79.23728813559322,177
