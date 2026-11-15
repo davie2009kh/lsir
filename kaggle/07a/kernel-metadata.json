@@ -1,0 +1,14 @@
+{
+  "id": "davit2009/lsir-07a-synthetic-armenian-speech",
+  "title": "Lsir 07a synthetic Armenian speech",
+  "code_file": "lsir-07a-synthetic-speech.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "dataset_sources": [],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
+}
