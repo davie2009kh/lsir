@@ -1,0 +1,14 @@
+{
+  "id": "davit2009/lsir-08-fleurs",
+  "title": "Lsir 08 fleurs",
+  "code_file": "lsir-08-fleurs.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "dataset_sources": [],
+  "competition_sources": [],
+  "kernel_sources": ["davit2009/lsir-04-phone-lora-encoder"],
+  "model_sources": []
+}
