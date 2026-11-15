@@ -1,0 +1,14 @@
+{
+  "id": "davit2009/lsir-06-cv",
+  "title": "Lsir 06 cv",
+  "code_file": "lsir-06-cv.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "dataset_sources": [],
+  "competition_sources": [],
+  "kernel_sources": ["davit2009/lsir-04-phone-lora-encoder"],
+  "model_sources": []
+}
