@@ -258,6 +258,7 @@ dataset and model is downloaded inside the notebook, and no API keys are needed.
 | `notebooks/05_clinic_calls.py` | [Kaggle](https://www.kaggle.com/code/davit2009/lsir-05-clinic-calls) | Clinic-call test with a synthetic Armenian voice (Piper) | ~40 min |
 | `notebooks/06_cv_and_beam.py` | [Common Voice](https://www.kaggle.com/code/davit2009/lsir-06-cv), [beam search](https://www.kaggle.com/code/davit2009/lsir-06-beam) | Second test set with age/gender groups; greedy vs beam search | ~1.5 h, ~3.5 h |
 | `notebooks/07a_synthetic_speech.py` | [Kaggle](https://www.kaggle.com/code/davit2009/lsir-07a-synthetic-armenian-speech) | Synthetic Armenian training speech (Anadil, MMS-TTS), filtered by ASR | ~1.5 h |
+| `notebooks/08_combination_inputs.py` | [FLEURS](https://www.kaggle.com/code/davit2009/lsir-08-fleurs), [Common Voice](https://www.kaggle.com/code/davit2009/lsir-08-cv) | MMS and Omnilingual transcripts on all three conditions, for the voting test | ~1.5 h each |
 | `tools/rover.py`, `tools/cluster_bootstrap.py` | run locally on the saved transcripts in `results/` | Word-level voting between models; sentence/speaker-level significance tests | seconds |
 | `app/app.py` | [Live demo](https://huggingface.co/spaces/davitlive5/lsir-armenian-phone-asr) | Gradio demo, the same code as the Hugging Face Space | |
 
