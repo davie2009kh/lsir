@@ -304,11 +304,11 @@ with torch.no_grad():
     f = proc.feature_extractor(train_df["wav"][0], sampling_rate=16000, return_tensors="pt").input_features.to(DEVICE, torch.float16)
     g = model.generate(input_features=f, **GEN)
 print("model's own output ids start:", g[0][:6].tolist(), "| our label starts:", label_ids("x")[:4])
-print("correct :", train_df["raw_transcription"][0][:120])
+print("correct :", train_df["label"][0][:120])
 print("model   :", decode(g)[0][:120])
-print("label   :", decode(torch.tensor([label_ids(train_df["raw_transcription"][0])]))[0][:120])
+print("label   :", decode(torch.tensor([label_ids(train_df["label"][0])]))[0][:120])
 print("Average tokens per Armenian word with BuzzASR's tokenizer:",
-      round(np.mean([len(tok(" " + t, add_special_tokens=False).input_ids) / max(len(t.split()), 1) for t in train_df["raw_transcription"][:300]]), 1),
+      round(np.mean([len(tok(" " + t, add_special_tokens=False).input_ids) / max(len(t.split()), 1) for t in train_df["label"][:300]]), 1),
       "(original Whisper tokenizer: 8.8, notebook 2)")
 
 if LORA_PART == "encoder":
