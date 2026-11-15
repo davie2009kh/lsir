@@ -1,7 +1,9 @@
 # Lsir (Լսիր): Armenian speech-to-text over the phone
 
-**Track:** AI + Languages
-**Team:** {{TEAM NAMES}}
+**Track:** AI + Languages  
+**Team:** {{TEAM NAMES}}  
+**Live demo:** https://huggingface.co/spaces/davitlive5/lsir-armenian-phone-asr  
+**Model:** https://huggingface.co/davitlive5/lsir-buzzasr-armenian-phone-lora
 
 *"Lsir" (Լսիր) means "listen!" in Armenian. This project is a prototype and is not medical advice.*
 
@@ -18,7 +20,7 @@ phone line**, the callers who most need help are the ones who get misunderstood.
    tested on a mobile codec it never saw in training.
 3. **A clinic-call test**: 40 sentences a caller to an Armenian clinic might say (appointments, phone numbers,
    doses, medicine names), spoken by an Armenian text-to-speech voice at two speaking paces, scored on whether **numbers and medical terms** survive.
-4. **A demo app**: speak or upload Armenian, optionally send it through a phone line, and compare models side by side.
+4. **A demo app**: speak or upload Armenian, optionally send it through a phone line, and compare models side by side. Try it live: https://huggingface.co/spaces/davitlive5/lsir-armenian-phone-asr
 
 ## What we added
 Starting point: suggested project **4.4.3 Speech recognition across accents**. We added:
@@ -103,7 +105,25 @@ numbers), the details that matter most to a clinic, survive noticeably more ofte
 improve from 28.7% to 27.2% WER, so the gender gap narrows slightly but remains.
 
 ### 5. Clinic-call test (40 sentences, one synthetic voice at two speaking paces)
-{{CLINIC_RESULTS}}
+40 short clinic and pharmacy sentences we wrote (appointments, phone numbers, doses, medicine names), spoken by the
+Piper Armenian voice at a normal and a slow pace (80 clips). Besides WER we count how many of the 29 numbers and 44
+medical terms per pace come out exactly right. Both paces are pooled below.
+
+| Audio | Model | WER | Numbers kept | Medical terms kept |
+|---|---|---|---|---|
+| Clean | BuzzASR | 37.2% | 44.8% | 55.7% |
+| Clean | **Lsir** | **36.8%** | **53.4%** | 55.7% |
+| Phone | BuzzASR | 44.1% | 43.1% | 39.8% |
+| Phone | **Lsir** | **43.3%** | **50.0%** | **45.5%** |
+| Unseen mobile codec | BuzzASR | 50.2% | 43.1% | 33.0% |
+| Unseen mobile codec | **Lsir** | **47.2%** | **46.6%** | **42.0%** |
+| Unseen mobile codec | whisper-large-v3-turbo | 173.2% | 6.9% | 11.4% |
+| Unseen mobile codec | mms-1b-all | 76.0% | 10.3% | 21.6% |
+
+Lsir keeps more numbers and medicine names than the original model in every condition, and the gap is largest over the
+unseen codec (medical terms 33% -> 42%). **Caveats:** this is a small set (80 clips, one synthetic voice), so these
+are directions, not significant results. WER is much higher than on FLEURS because the sentences are packed with
+numbers and rare drug names, and numbers can be written several ways (digits or words). A real test needs real callers.
 
 ### 6. A second, independent test: Common Voice Armenian (1,000 test clips, volunteers on their own devices)
 | Test audio | Original BuzzASR | **Lsir (ours)** | Change in WER (95% CI) |
@@ -188,6 +208,11 @@ with all outputs are linked below. Every dataset and model is downloaded inside 
 - **MMS:** Pratap et al., 2023. https://huggingface.co/facebook/mms-1b-all (CC-BY-NC-4.0)
 - **Omnilingual ASR:** Meta AI, 2025. https://github.com/facebookresearch/omnilingual-asr (Apache-2.0)
 - **Piper Armenian voice** `hy_AM-gor-medium` (davit312/piper-TTS-Armenian, GPL-2.0), used only to synthesise the clinic-call test. https://huggingface.co/davit312/piper-TTS-Armenian
+- **Common Voice 20 Armenian** (Mozilla, CC0-1.0), via the mirror https://huggingface.co/datasets/Chillarmo/common_voice_20_armenian
+- **Synthetic training speech:** Anadil Armenian TTS (https://huggingface.co/Anadilorg/Anadil_Armenian_TTS, MIT) on
+  VoxCPM2 (https://huggingface.co/openbmb/VoxCPM2, Apache-2.0), and https://huggingface.co/facebook/mms-tts-hyw
+  (CC-BY-NC-4.0); sentences from https://huggingface.co/datasets/EdUarD0110/daily_dialog_armenian (no licence stated)
+- **ROVER** voting: Fiscus, 1997, *A post-processing system to yield reduced word error rates (ROVER)*, IEEE ASRU.
 - **Methods:** LoRA (Hu et al., 2021) via Hugging Face PEFT; SpecAugment (Park et al., 2019); the telephone-augmentation
   mix follows Dissen et al. (arXiv 2406.18928) and data-augmentation work on low-bit-rate telephony (Applied Sciences 12(3):1580, 2022).
 - **Libraries:** PyTorch, Transformers, PEFT, jiwer, SciPy, pandas, matplotlib, Gradio, ffmpeg.
