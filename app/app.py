@@ -39,7 +39,7 @@ for k in ["lang_to_id", "task_to_id", "language", "task", "no_timestamps_token_i
     setattr(base.generation_config, k, gcj[k])          # restore BuzzASR's language table (dropped by newer transformers)
 base.generation_config.is_multilingual = True
 TEXT_VOCAB = gcj["eos_token_id"]          # special tokens start here; decode ordinary text tokens only
-model = PeftModel.from_pretrained(base, LSIR_ADAPTER).to(DEVICE).eval()
+model = PeftModel.from_pretrained(base, LSIR_ADAPTER, torch_device="cpu").to(DEVICE).eval()   # load on CPU, then move (ZeroGPU)
 
 SOS_PHONE = butter(4, [300, 3400], btype="band", fs=8000, output="sos")
 
