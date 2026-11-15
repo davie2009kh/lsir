@@ -1,0 +1,14 @@
+{
+  "id": "davit2009/lsir-07b-retrain-more-data",
+  "title": "Lsir 07b retrain more data",
+  "code_file": "lsir-07b-retrain.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "dataset_sources": [],
+  "competition_sources": [],
+  "kernel_sources": ["davit2009/lsir-04-phone-lora-encoder", "davit2009/lsir-07a-synthetic-armenian-speech"],
+  "model_sources": []
+}
