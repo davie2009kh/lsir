@@ -56,5 +56,5 @@ instead of sounds. The FLEURS gender gap disappeared on Common Voice, and public
 ## Sources
 FLEURS (Google, CC-BY-4.0); Common Voice 20 Armenian (Mozilla, CC0); BuzzASR/armenian (MIT); OpenAI Whisper (MIT);
 Meta MMS and Omnilingual ASR; Piper Armenian voice (davit312/piper-TTS-Armenian) for the clinic test; PEFT/LoRA;
-ROVER (Fiscus, 1997). Full list with links: [docs/REPORT.md#sources](docs/REPORT.md#sources).
+ROVER (Fiscus, 1997); the demo video is built with HyperFrames (HeyGen, Apache-2.0), source in `video/`. Full list with links: [docs/REPORT.md#sources](docs/REPORT.md#sources).
 **AI tools:** We used Claude (Anthropic) as an AI coding assistant. It wrote and debugged most of the code and drafted the documents; we chose the problem, the user and the tests, checked every result, and can explain each step.

@@ -1,0 +1,76 @@
+{
+ "note": "Narration source. 'at' = planned start (s) in the film; 'est' = estimated spoken length at ~2.6 words/s. After the real voiceover is generated, tools/build.py re-times from the measured clip lengths. 'tts' is what the voice engine reads (phonetic spelling of Lsir).",
+ "lines": [
+  {
+   "id": "L1",
+   "at": 0.4,
+   "text": "This is one Armenian sentence."
+  },
+  {
+   "id": "L2",
+   "at": 6.4,
+   "text": "And this is the same sentence, over a mobile phone line."
+  },
+  {
+   "id": "L3",
+   "at": 18.0,
+   "text": "The best free Armenian model gets eleven of sixteen words wrong."
+  },
+  {
+   "id": "L4",
+   "at": 23.4,
+   "text": "Many older people in Armenia speak only Armenian. When clinics answer calls with voice assistants, these callers get misheard."
+  },
+  {
+   "id": "L5",
+   "at": 32.4,
+   "text": "A phone line keeps only a narrow slice of the voice. Nobody had measured what that does to Armenian."
+  },
+  {
+   "id": "L6",
+   "at": 40.6,
+   "text": "We tested five free models on 932 test recordings. The default Whisper model that most apps use does worse than writing nothing at all."
+  },
+  {
+   "id": "L7",
+   "at": 50.4,
+   "text": "So we built Lsir: listen, in Armenian.",
+   "tts": "So we built Luh-seer: listen, in Armenian."
+  },
+  {
+   "id": "L8",
+   "at": 54.2,
+   "text": "Pick a sentence, send it down a mobile line our model never trained on, and compare."
+  },
+  {
+   "id": "L9",
+   "at": 60.6,
+   "text": "The original model: eleven words wrong. Lsir: five. Both answer in about two seconds.",
+   "tts": "The original model: eleven words wrong. Luh-seer: five. Both answer in about two seconds."
+  },
+  {
+   "id": "L10",
+   "at": 70.4,
+   "text": "Lsir is that same model with a small adapter on the part that listens: one and a half percent of its weights, trained with half the clips sent through random phone lines.",
+   "tts": "Luh-seer is that same model with a small adapter on the part that listens: one and a half percent of its weights, trained with half the clips sent through random phone lines."
+  },
+  {
+   "id": "L11",
+   "at": 83.4,
+   "text": "On 932 test recordings over that unseen mobile codec, errors fall from 22.1 to 20.8 percent, and the gain holds on a second dataset.",
+   "tts": "On nine hundred thirty-two test recordings over that unseen mobile codec, errors fall from twenty-two point one to twenty point eight percent, and the gain holds on a second dataset."
+  },
+  {
+   "id": "L12",
+   "at": 93.4,
+   "text": "Next: real phone calls, and older voices. Public Armenian speech data has no one over 59.",
+   "tts": "Next: real phone calls, and older voices. Public Armenian speech data has no one over fifty-nine."
+  },
+  {
+   "id": "L13",
+   "at": 100.2,
+   "text": "Lsir. Listen.",
+   "tts": "Luh-seer. Listen."
+  }
+ ]
+}

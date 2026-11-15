@@ -1,0 +1,79 @@
+<template>
+  <style>
+    @font-face { font-family: "Lsir Serif"; src: url("assets/fonts/NotoSerifArmenian.ttf"); font-weight: 100 900; }
+    @font-face { font-family: "Lsir Arm"; src: url("assets/fonts/NotoSansArmenian.ttf"); font-weight: 100 900; }
+    @font-face { font-family: "Lsir Latin"; src: url("assets/fonts/NotoSans.ttf"); font-weight: 100 900; }
+
+    #root { position: absolute; inset: 0; background: #f4ecea; color: #24222a;
+            font-family: "Lsir Latin", "Lsir Arm", sans-serif; }
+    #pb-call { position: absolute; inset: 0; }
+    #pb-tag { position: absolute; left: 210px; top: 150px; font-size: 32px; font-weight: 600; color: #6b6370; }
+    #pb-bubble { position: absolute; left: 210px; top: 230px; width: 980px; padding: 40px 48px; background: #ffffff;
+                 border-radius: 28px 28px 28px 6px; box-shadow: 0 18px 40px rgba(36, 34, 42, 0.12); }
+    #pb-hy { font-family: "Lsir Arm", sans-serif; font-size: 60px; line-height: 1.3; font-weight: 600; margin: 0; }
+    #pb-en { font-size: 32px; color: #6b6370; margin: 18px 0 0; }
+    #pb-phone { position: absolute; left: 1360px; top: 150px; width: 330px; height: 640px; border: 12px solid #24222a;
+                border-radius: 52px; background: #ffffff; }
+    #pb-phone .spk { position: absolute; left: 50%; top: 26px; width: 90px; height: 10px; margin-left: -45px;
+                     border-radius: 5px; background: #24222a; }
+    #pb-phone .scr { position: absolute; left: 30px; right: 30px; top: 90px; font-size: 30px; font-weight: 700;
+                     color: #24222a; line-height: 1.3; }
+    #pb-phone .scr span { display: block; font-size: 28px; font-weight: 600; color: #6b6370; margin-top: 8px; }
+    #pb-phone .dots { position: absolute; left: 30px; bottom: 60px; display: flex; gap: 14px; }
+    #pb-phone .dots i { display: block; width: 22px; height: 22px; border-radius: 11px; background: #8c1d3a; }
+    #pb-band { position: absolute; inset: 0; }
+    #pb-bt { position: absolute; left: 210px; top: 250px; font-size: 32px; font-weight: 600; color: #6b6370; }
+    #pb-strip { position: absolute; left: 210px; top: 390px; width: 1500px; height: 90px; border-radius: 8px;
+                background: #e2d4cf; overflow: hidden; }
+    #pb-full { position: absolute; inset: 0; background: #8c1d3a; transform-origin: 0 50%; }
+    #pb-kept { position: absolute; left: 56px; top: 0; width: 581px; height: 90px; background: #8c1d3a; }
+    .pb-ax { position: absolute; top: 500px; font-size: 30px; font-weight: 600; color: #6b6370; }
+    #pb-keptl { position: absolute; left: 266px; top: 330px; font-size: 34px; font-weight: 700; color: #8c1d3a; }
+    #pb-lostl { position: absolute; left: 1060px; top: 330px; font-size: 34px; font-weight: 700; color: #6b6370; }
+    #pb-none { position: absolute; left: 210px; top: 640px; width: 1500px; font-size: 52px; font-weight: 700; line-height: 1.25; }
+  </style>
+  <div id="root" data-composition-id="problem" data-width="1920" data-height="1080">
+    <div id="pb-call">
+      <div id="pb-tag">A first sentence to a clinic phone line</div>
+      <div id="pb-bubble">
+        <p id="pb-hy" lang="hy">Բարև Ձեզ, ուզում եմ գրանցվել բժշկի մոտ։</p>
+        <p id="pb-en">Hello, I would like to book a doctor's appointment.</p>
+      </div>
+      <div id="pb-phone"><i class="spk"></i>
+        <div class="scr">Clinic line<span>Voice assistant answering</span></div>
+        <div class="dots"><i></i><i></i><i></i></div>
+      </div>
+    </div>
+    <div id="pb-band">
+      <div id="pb-bt">The sound of a voice, 0 to 8,000 Hz</div>
+      <div id="pb-keptl">What a phone line keeps</div>
+      <div id="pb-lostl">What it throws away</div>
+      <div id="pb-strip"><div id="pb-full"></div><div id="pb-kept"></div></div>
+      <div class="pb-ax" style="left: 210px">0 Hz</div>
+      <div class="pb-ax" style="left: 800px">3,400 Hz</div>
+      <div class="pb-ax" style="left: 1590px">8,000 Hz</div>
+      <div id="pb-none">No published test had measured Armenian speech recognition over the phone.</div>
+    </div>
+  </div>
+  <script>
+  const C = /*CUES*/{"L4": 0.45, "when": 3.446, "L5": 8.51, "narrow": 10.469, "nobody": 12.503, "dur": 16.57}/*END*/;
+  const tl = gsap.timeline({ paused: true });
+  // a caller's first sentence, then the voice assistant that has to understand it
+  tl.fromTo("#pb-tag", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 0.2);
+  tl.fromTo("#pb-bubble", { opacity: 0, scale: 0.96, transformOrigin: "0% 100%" },
+            { opacity: 1, scale: 1, duration: 0.5, ease: "power3.out" }, 0.35);
+  tl.fromTo("#pb-phone", { opacity: 0, x: 60 }, { opacity: 1, x: 0, duration: 0.6, ease: "power3.out" }, C.when);
+  tl.fromTo("#pb-phone .dots i", { opacity: 0.25 }, { opacity: 1, duration: 0.3, stagger: 0.25, ease: "none" }, C.when + 0.7);
+  tl.to("#pb-call", { opacity: 0, duration: 0.3, ease: "power2.in" }, C.L5 - 0.35);
+  // the phone band: start with the whole voice, then grey out what the line throws away
+  tl.fromTo("#pb-bt", { opacity: 0 }, { opacity: 1, duration: 0.4 }, C.L5);
+  tl.fromTo("#pb-strip", { opacity: 0 }, { opacity: 1, duration: 0.4 }, C.L5);
+  tl.fromTo(".pb-ax", { opacity: 0 }, { opacity: 1, duration: 0.4 }, C.L5 + 0.1);
+  tl.fromTo("#pb-full", { scaleX: 1 }, { scaleX: 0, duration: 1.0, ease: "power2.inOut" }, C.narrow);
+  tl.fromTo("#pb-keptl", { opacity: 0 }, { opacity: 1, duration: 0.4 }, C.narrow + 0.3);
+  tl.fromTo("#pb-lostl", { opacity: 0 }, { opacity: 1, duration: 0.4 }, C.narrow + 0.6);
+  tl.fromTo("#pb-none", { opacity: 0 }, { opacity: 1, duration: 0.45, ease: "power3.out" }, C.nobody);
+  tl.to("#root", { opacity: 1, duration: 0.01 }, C.dur - 0.01);
+  window.__timelines["problem"] = tl;
+  </script>
+</template>

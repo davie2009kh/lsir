@@ -1,0 +1,212 @@
+<template>
+  <style>
+    @font-face { font-family: "Lsir Serif"; src: url("assets/fonts/NotoSerifArmenian.ttf"); font-weight: 100 900; }
+    @font-face { font-family: "Lsir Arm"; src: url("assets/fonts/NotoSansArmenian.ttf"); font-weight: 100 900; }
+    @font-face { font-family: "Lsir Latin"; src: url("assets/fonts/NotoSans.ttf"); font-weight: 100 900; }
+
+    #root { position: absolute; inset: 0; background: #f4ecea; color: #24222a;
+            font-family: "Lsir Latin", "Lsir Arm", sans-serif; }
+    #hk-label { position: absolute; left: 210px; top: 96px; font-size: 34px; font-weight: 600; color: #6b6370; }
+    #hk-label b { color: #24222a; font-weight: 700; }
+    #hk-label .alt { position: absolute; left: 0; top: 0; white-space: nowrap; opacity: 0; }
+    #hk-wave { position: absolute; left: 210px; top: 160px; width: 1500px; height: 220px; display: flex;
+               align-items: center; gap: 4.5px; }
+    #hk-wave .bar { display: block; flex: 0 0 8px; height: 220px; border-radius: 4px; background: #24222a;
+                    transform: scaleY(var(--c)); transform-origin: 50% 50%; }
+    #hk-head { position: absolute; left: 210px; top: 160px; width: 4px; height: 220px; background: #8c1d3a;
+               border-radius: 2px; opacity: 0; }
+    #hk-who { position: absolute; left: 210px; top: 430px; font-size: 30px; font-weight: 600; color: #36577a; opacity: 0; }
+    #hk-text { position: absolute; left: 210px; top: 478px; width: 1500px; font-family: "Lsir Arm", sans-serif;
+               font-size: 48px; line-height: 1.5; font-weight: 500; }
+    #hk-text .w { display: inline-block; margin-right: 0.28em; padding: 0 4px; border-radius: 4px; opacity: 0;
+                  background: rgba(255, 226, 138, 0); }
+    #hk-text .w.missed { color: #6b6370; }
+    #hk-text .w.missed::after { content: ""; position: absolute; }
+    #hk-score { position: absolute; left: 210px; top: 800px; font-size: 56px; font-weight: 700; color: #36577a; opacity: 0; }
+  </style>
+  <div id="root" data-composition-id="hook" data-width="1920" data-height="1080">
+    <div id="hk-label"><span id="hk-l1">Clean recording, one Armenian sentence</span><span id="hk-l2" class="alt">The same sentence after a <b>mobile phone line</b></span></div>
+    <div id="hk-wave">
+        <i class="bar" style="--c:0.040;--m:0.101"></i>
+        <i class="bar" style="--c:0.040;--m:0.110"></i>
+        <i class="bar" style="--c:0.040;--m:0.082"></i>
+        <i class="bar" style="--c:0.040;--m:0.064"></i>
+        <i class="bar" style="--c:0.059;--m:0.086"></i>
+        <i class="bar" style="--c:0.858;--m:0.819"></i>
+        <i class="bar" style="--c:0.968;--m:0.961"></i>
+        <i class="bar" style="--c:0.731;--m:0.695"></i>
+        <i class="bar" style="--c:1.000;--m:1.000"></i>
+        <i class="bar" style="--c:0.441;--m:0.468"></i>
+        <i class="bar" style="--c:0.075;--m:0.089"></i>
+        <i class="bar" style="--c:0.102;--m:0.101"></i>
+        <i class="bar" style="--c:0.945;--m:0.877"></i>
+        <i class="bar" style="--c:0.904;--m:0.978"></i>
+        <i class="bar" style="--c:0.249;--m:0.250"></i>
+        <i class="bar" style="--c:0.049;--m:0.114"></i>
+        <i class="bar" style="--c:0.391;--m:0.427"></i>
+        <i class="bar" style="--c:0.326;--m:0.356"></i>
+        <i class="bar" style="--c:0.240;--m:0.246"></i>
+        <i class="bar" style="--c:0.477;--m:0.496"></i>
+        <i class="bar" style="--c:0.161;--m:0.189"></i>
+        <i class="bar" style="--c:0.470;--m:0.473"></i>
+        <i class="bar" style="--c:0.558;--m:0.441"></i>
+        <i class="bar" style="--c:0.569;--m:0.571"></i>
+        <i class="bar" style="--c:0.265;--m:0.290"></i>
+        <i class="bar" style="--c:0.151;--m:0.085"></i>
+        <i class="bar" style="--c:0.313;--m:0.314"></i>
+        <i class="bar" style="--c:0.405;--m:0.396"></i>
+        <i class="bar" style="--c:0.200;--m:0.327"></i>
+        <i class="bar" style="--c:0.490;--m:0.496"></i>
+        <i class="bar" style="--c:0.195;--m:0.182"></i>
+        <i class="bar" style="--c:0.414;--m:0.387"></i>
+        <i class="bar" style="--c:0.468;--m:0.513"></i>
+        <i class="bar" style="--c:0.461;--m:0.095"></i>
+        <i class="bar" style="--c:0.317;--m:0.198"></i>
+        <i class="bar" style="--c:0.413;--m:0.438"></i>
+        <i class="bar" style="--c:0.380;--m:0.531"></i>
+        <i class="bar" style="--c:0.107;--m:0.174"></i>
+        <i class="bar" style="--c:0.569;--m:0.636"></i>
+        <i class="bar" style="--c:0.242;--m:0.149"></i>
+        <i class="bar" style="--c:0.049;--m:0.082"></i>
+        <i class="bar" style="--c:0.452;--m:0.485"></i>
+        <i class="bar" style="--c:0.223;--m:0.242"></i>
+        <i class="bar" style="--c:0.052;--m:0.103"></i>
+        <i class="bar" style="--c:0.040;--m:0.063"></i>
+        <i class="bar" style="--c:0.326;--m:0.317"></i>
+        <i class="bar" style="--c:0.531;--m:0.614"></i>
+        <i class="bar" style="--c:0.328;--m:0.406"></i>
+        <i class="bar" style="--c:0.109;--m:0.141"></i>
+        <i class="bar" style="--c:0.476;--m:0.454"></i>
+        <i class="bar" style="--c:0.461;--m:0.385"></i>
+        <i class="bar" style="--c:0.147;--m:0.089"></i>
+        <i class="bar" style="--c:0.294;--m:0.093"></i>
+        <i class="bar" style="--c:0.407;--m:0.407"></i>
+        <i class="bar" style="--c:0.655;--m:0.803"></i>
+        <i class="bar" style="--c:0.439;--m:0.473"></i>
+        <i class="bar" style="--c:0.477;--m:0.486"></i>
+        <i class="bar" style="--c:0.412;--m:0.421"></i>
+        <i class="bar" style="--c:0.383;--m:0.509"></i>
+        <i class="bar" style="--c:0.250;--m:0.306"></i>
+        <i class="bar" style="--c:0.078;--m:0.082"></i>
+        <i class="bar" style="--c:0.255;--m:0.280"></i>
+        <i class="bar" style="--c:0.395;--m:0.398"></i>
+        <i class="bar" style="--c:0.070;--m:0.113"></i>
+        <i class="bar" style="--c:0.334;--m:0.350"></i>
+        <i class="bar" style="--c:0.432;--m:0.424"></i>
+        <i class="bar" style="--c:0.086;--m:0.116"></i>
+        <i class="bar" style="--c:0.261;--m:0.287"></i>
+        <i class="bar" style="--c:0.247;--m:0.258"></i>
+        <i class="bar" style="--c:0.286;--m:0.287"></i>
+        <i class="bar" style="--c:0.286;--m:0.327"></i>
+        <i class="bar" style="--c:0.140;--m:0.233"></i>
+        <i class="bar" style="--c:0.242;--m:0.254"></i>
+        <i class="bar" style="--c:0.341;--m:0.322"></i>
+        <i class="bar" style="--c:0.071;--m:0.096"></i>
+        <i class="bar" style="--c:0.069;--m:0.120"></i>
+        <i class="bar" style="--c:0.385;--m:0.382"></i>
+        <i class="bar" style="--c:0.232;--m:0.244"></i>
+        <i class="bar" style="--c:0.063;--m:0.117"></i>
+        <i class="bar" style="--c:0.225;--m:0.222"></i>
+        <i class="bar" style="--c:0.302;--m:0.129"></i>
+        <i class="bar" style="--c:0.087;--m:0.094"></i>
+        <i class="bar" style="--c:0.250;--m:0.380"></i>
+        <i class="bar" style="--c:0.407;--m:0.517"></i>
+        <i class="bar" style="--c:0.249;--m:0.413"></i>
+        <i class="bar" style="--c:0.178;--m:0.198"></i>
+        <i class="bar" style="--c:0.223;--m:0.237"></i>
+        <i class="bar" style="--c:0.244;--m:0.307"></i>
+        <i class="bar" style="--c:0.207;--m:0.190"></i>
+        <i class="bar" style="--c:0.052;--m:0.097"></i>
+        <i class="bar" style="--c:0.280;--m:0.306"></i>
+        <i class="bar" style="--c:0.379;--m:0.509"></i>
+        <i class="bar" style="--c:0.185;--m:0.234"></i>
+        <i class="bar" style="--c:0.293;--m:0.310"></i>
+        <i class="bar" style="--c:0.337;--m:0.379"></i>
+        <i class="bar" style="--c:0.122;--m:0.211"></i>
+        <i class="bar" style="--c:0.049;--m:0.114"></i>
+        <i class="bar" style="--c:0.271;--m:0.222"></i>
+        <i class="bar" style="--c:0.210;--m:0.286"></i>
+        <i class="bar" style="--c:0.165;--m:0.231"></i>
+        <i class="bar" style="--c:0.108;--m:0.083"></i>
+        <i class="bar" style="--c:0.271;--m:0.304"></i>
+        <i class="bar" style="--c:0.223;--m:0.253"></i>
+        <i class="bar" style="--c:0.044;--m:0.105"></i>
+        <i class="bar" style="--c:0.087;--m:0.121"></i>
+        <i class="bar" style="--c:0.117;--m:0.191"></i>
+        <i class="bar" style="--c:0.100;--m:0.201"></i>
+        <i class="bar" style="--c:0.042;--m:0.104"></i>
+        <i class="bar" style="--c:0.098;--m:0.091"></i>
+        <i class="bar" style="--c:0.070;--m:0.091"></i>
+        <i class="bar" style="--c:0.040;--m:0.127"></i>
+        <i class="bar" style="--c:0.043;--m:0.101"></i>
+        <i class="bar" style="--c:0.040;--m:0.079"></i>
+        <i class="bar" style="--c:0.040;--m:0.111"></i>
+        <i class="bar" style="--c:0.040;--m:0.102"></i>
+        <i class="bar" style="--c:0.040;--m:0.083"></i>
+        <i class="bar" style="--c:0.040;--m:0.086"></i>
+        <i class="bar" style="--c:0.040;--m:0.064"></i>
+        <i class="bar" style="--c:0.040;--m:0.093"></i>
+        <i class="bar" style="--c:0.040;--m:0.077"></i>
+    </div>
+    <div id="hk-head"></div>
+    <div id="hk-who">BuzzASR, the best free Armenian model, hears:</div>
+    <div id="hk-text">
+          <span id="hk-w0" class="w bad">կանանց</span>
+          <span id="hk-w1" class="w ok">խորհուրդ</span>
+          <span id="hk-w2" class="w ok">է</span>
+          <span id="hk-w3" class="w ok">տրվում</span>
+          <span id="hk-w4" class="w missed">որ</span>
+          <span id="hk-w5" class="w ok">ցանկացած</span>
+          <span id="hk-w6" class="w bad">ճամփոստողքին</span>
+          <span id="hk-w7" class="w bad">արծաթի</span>
+          <span id="hk-w8" class="w bad">կորանում</span>
+          <span id="hk-w9" class="w bad">նստած</span>
+          <span id="hk-w10" class="w missed">ամուսնացած</span>
+          <span id="hk-w11" class="w ok">է</span>
+          <span id="hk-w12" class="w ok">անկախ</span>
+          <span id="hk-w13" class="w bad">տափաստանին</span>
+          <span id="hk-w14" class="w bad">տանեկան</span>
+          <span id="hk-w15" class="w bad">կառցալի</span>
+          <span id="hk-w16" class="w bad">ճաճուն</span>
+    </div>
+    <div id="hk-score">11 of 16 words wrong</div>
+  </div>
+  <script>
+  const C = /*CUES*/{"L1": 0.5, "clean": 2.97, "clean_end": 6.57, "L2": 6.87, "mobile": 11.65, "mobile_end": 19.21, "L3": 19.36, "eleven": 21.73, "dur": 24.34}/*END*/;
+  const tl = gsap.timeline({ paused: true });
+  const bars = gsap.utils.toArray("#hk-wave .bar");
+  const words = gsap.utils.toArray("#hk-text .w");
+  // the clean recording plays: a playhead sweeps the part we hear
+  tl.set("#hk-head", { opacity: 0, x: 0 }, 0);
+  tl.to("#hk-head", { opacity: 1, duration: 0.2 }, C.clean - 0.2);
+  tl.to("#hk-head", { x: 1500 * (C.clean_end - C.clean) / 7.56, duration: C.clean_end - C.clean, ease: "none" }, C.clean);
+  tl.to("#hk-head", { opacity: 0, duration: 0.2 }, C.clean_end);
+  // the phone line squeezes it: bars fall to the mobile envelope and lose colour
+  tl.to("#hk-l1", { opacity: 0, duration: 0.25, ease: "power2.in" }, C.L2);
+  tl.fromTo("#hk-l2", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "power3.out" }, C.L2 + 0.25);
+  bars.forEach((b, i) => {
+    const m = parseFloat(b.style.getPropertyValue("--m"));
+    const c = parseFloat(b.style.getPropertyValue("--c"));
+    tl.fromTo(b, { scaleY: c, backgroundColor: "#24222a" },
+              { scaleY: m, backgroundColor: "#9a8f95", duration: 0.7, ease: "power2.inOut" }, C.L2 + 0.6 + i * 0.006);
+  });
+  // the degraded clip plays, and the original model's real transcript arrives word by word
+  tl.set("#hk-head", { x: 0 }, C.mobile - 0.25);
+  tl.to("#hk-head", { opacity: 1, duration: 0.2 }, C.mobile - 0.2);
+  tl.to("#hk-head", { x: 1500, duration: C.mobile_end - C.mobile, ease: "none" }, C.mobile);
+  tl.to("#hk-head", { opacity: 0, duration: 0.2 }, C.mobile_end);
+  tl.fromTo("#hk-who", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "power3.out" }, C.mobile + 0.3);
+  words.forEach((w, i) => {
+    tl.fromTo(w, { opacity: 0 }, { opacity: 1, duration: 0.18, ease: "power2.out" },
+              C.mobile + 0.6 + i * (C.mobile_end - C.mobile - 0.8) / words.length);
+  });
+  // the verdict: wrong words get the demo's highlighter, missed words are struck through
+  words.forEach((w, i) => {
+    if (w.classList.contains("bad")) tl.to(w, { backgroundColor: "rgba(255, 226, 138, 1)", duration: 0.25 }, C.eleven - 0.4 + i * 0.03);
+  });
+  tl.set("#hk-text .w.missed", { textDecoration: "line-through", textDecorationThickness: "4px" }, C.eleven - 0.4);
+  tl.fromTo("#hk-score", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, C.eleven);
+  tl.to("#root", { opacity: 1, duration: 0.01 }, C.dur - 0.01);
+  window.__timelines["hook"] = tl;
+  </script>
+</template>

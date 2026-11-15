@@ -1,0 +1,50 @@
+<template>
+  <style>
+    @font-face { font-family: "Lsir Serif"; src: url("assets/fonts/NotoSerifArmenian.ttf"); font-weight: 100 900; }
+    @font-face { font-family: "Lsir Arm"; src: url("assets/fonts/NotoSansArmenian.ttf"); font-weight: 100 900; }
+    @font-face { font-family: "Lsir Latin"; src: url("assets/fonts/NotoSans.ttf"); font-weight: 100 900; }
+
+    #root { position: absolute; inset: 0; background: #f4ecea; color: #24222a; font-family: "Lsir Latin", sans-serif; }
+    #nx-steps, #nx-end { position: absolute; inset: 0; }
+    .nx-line { position: absolute; left: 210px; font-size: 72px; font-weight: 800; letter-spacing: -0.01em; }
+    #nx-a { top: 230px; } #nx-b { top: 350px; }
+    .nx-line span { color: #8c1d3a; margin-right: 24px; }
+    #nx-fact { position: absolute; left: 210px; top: 500px; width: 1300px; font-size: 38px; font-weight: 600;
+               color: #6b6370; line-height: 1.35; }
+    #nx-word { position: absolute; left: 196px; top: 120px; font-family: "Lsir Serif", serif; font-weight: 900;
+               font-size: 330px; line-height: 1; color: #8c1d3a; }
+    #nx-pitch { position: absolute; left: 210px; top: 520px; width: 1300px; font-size: 46px; font-weight: 700; line-height: 1.25; }
+    #nx-team { position: absolute; left: 210px; top: 650px; font-size: 32px; font-weight: 600; color: #6b6370; }
+    #nx-links { position: absolute; left: 210px; top: 720px; font-size: 32px; font-weight: 600; color: #24222a; line-height: 1.5; }
+    #nx-links b { color: #8c1d3a; font-weight: 700; }
+  </style>
+  <div id="root" data-composition-id="next" data-width="1920" data-height="1080">
+    <div id="nx-steps">
+      <div id="nx-a" class="nx-line"><span>Next</span>Real phone calls</div>
+      <div id="nx-b" class="nx-line">Older voices</div>
+      <div id="nx-fact">Public Armenian speech data has no speakers over 59.</div>
+    </div>
+    <div id="nx-end">
+      <div id="nx-word" lang="hy">Լսիր</div>
+      <div id="nx-pitch">Armenian speech-to-text that keeps working over the phone</div>
+      <div id="nx-team">Alen Gevorgyan, Koryun Gaboyan, David Ghazaryan. Veritas AI High School Hackathon 2026</div>
+      <div id="nx-links"><b>Try it</b> huggingface.co/spaces/davitlive5/lsir-armenian-phone-asr<br /><b>Code</b> github.com/davie2009kh/lsir</div>
+    </div>
+  </div>
+  <script>
+  const C = /*CUES*/{"L12": 0.45, "older": 2.457, "public": 3.46, "L13": 9.3, "dur": 16.37}/*END*/;
+  const tl = gsap.timeline({ paused: true });
+  tl.fromTo("#nx-a", { opacity: 0 }, { opacity: 1, duration: 0.45, ease: "power3.out" }, C.L12);
+  tl.fromTo("#nx-b", { opacity: 0 }, { opacity: 1, duration: 0.45, ease: "power3.out" }, C.older);
+  tl.fromTo("#nx-fact", { opacity: 0 }, { opacity: 1, duration: 0.45 }, C.public);
+  tl.to("#nx-steps", { opacity: 0, duration: 0.3, ease: "power2.in" }, C.L13 - 0.35);
+  // end card: the word is printed big, then the pitch, team and links settle under it
+  tl.fromTo("#nx-word", { opacity: 0, clipPath: "inset(0 100% 0 0)" },
+            { opacity: 1, clipPath: "inset(0 0% 0 0)", duration: 0.9, ease: "power2.inOut" }, C.L13);
+  tl.fromTo("#nx-pitch", { opacity: 0 }, { opacity: 1, duration: 0.4 }, C.L13 + 0.8);
+  tl.fromTo("#nx-team", { opacity: 0 }, { opacity: 1, duration: 0.4 }, C.L13 + 1.1);
+  tl.fromTo("#nx-links", { opacity: 0 }, { opacity: 1, duration: 0.4 }, C.L13 + 1.4);
+  tl.to("#root", { opacity: 1, duration: 0.01 }, C.dur - 0.01);
+  window.__timelines["next"] = tl;
+  </script>
+</template>

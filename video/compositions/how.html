@@ -1,0 +1,99 @@
+<template>
+  <style>
+    @font-face { font-family: "Lsir Serif"; src: url("assets/fonts/NotoSerifArmenian.ttf"); font-weight: 100 900; }
+    @font-face { font-family: "Lsir Arm"; src: url("assets/fonts/NotoSansArmenian.ttf"); font-weight: 100 900; }
+    @font-face { font-family: "Lsir Latin"; src: url("assets/fonts/NotoSans.ttf"); font-weight: 100 900; }
+
+    #root { position: absolute; inset: 0; background: #f4ecea; color: #24222a; font-family: "Lsir Latin", sans-serif; }
+    #hw-diagram, #hw-chart { position: absolute; inset: 0; }
+    #hw-block { position: absolute; left: 360px; top: 250px; width: 1200px; height: 300px; background: #ffffff;
+                border-radius: 16px; box-shadow: 0 18px 40px rgba(36, 34, 42, 0.12); }
+    #hw-name { position: absolute; left: 360px; top: 140px; font-size: 40px; font-weight: 700; }
+    #hw-name span { font-size: 30px; font-weight: 600; color: #6b6370; margin-left: 16px; }
+    .hw-half { position: absolute; top: 0; width: 600px; height: 300px; display: flex; flex-direction: column;
+               justify-content: center; padding-left: 56px; font-size: 52px; font-weight: 700; }
+    .hw-half span { font-size: 30px; font-weight: 600; color: #6b6370; margin-top: 6px; }
+    #hw-enc { left: 0; }
+    #hw-dec { left: 600px; border-left: 2px solid #e2d4cf; }
+    #hw-tab { position: absolute; left: 400px; top: 212px; width: 300px; height: 76px; border-radius: 10px;
+              background: #8c1d3a; color: #ffffff; font-size: 34px; font-weight: 700; display: flex; align-items: center;
+              justify-content: center; }
+    #hw-pct { position: absolute; left: 724px; top: 224px; font-size: 34px; font-weight: 700; color: #8c1d3a;
+              background: #f4ecea; padding: 2px 10px; }
+    #hw-feed { position: absolute; left: 360px; top: 640px; display: flex; gap: 22px; }
+    .hw-tile { display: flex; align-items: center; gap: 7px; width: 150px; height: 90px; padding: 0 18px;
+               border-radius: 10px; background: #ffffff; }
+    .hw-tile b { display: block; width: 10px; border-radius: 5px; background: #24222a; height: 56px; }
+    .hw-tile b:nth-child(2n) { height: 30px; } .hw-tile b:nth-child(3n) { height: 70px; }
+    .hw-tile.ph { background: #e2d4cf; }
+    .hw-tile.ph b { background: #9a8f95; height: 18px; }
+    .hw-tile.ph b:nth-child(3n) { height: 26px; }
+    #hw-feedl { position: absolute; left: 1420px; top: 640px; width: 360px; font-size: 30px; font-weight: 600;
+                color: #6b6370; line-height: 1.3; }
+    #hw-feedl b { color: #24222a; }
+    #hw-ctitle { position: absolute; left: 210px; top: 170px; font-size: 44px; font-weight: 700; }
+    #hw-ctitle span { display: block; font-size: 30px; font-weight: 600; color: #6b6370; margin-top: 10px; }
+    .hw-row { position: absolute; left: 210px; height: 72px; display: flex; align-items: center; }
+    .hw-row .lab { width: 290px; font-size: 40px; font-weight: 700; }
+    .hw-row .bar { height: 72px; border-radius: 0 4px 4px 0; transform-origin: 0 50%; }
+    .hw-row .val { margin-left: 22px; font-size: 44px; font-weight: 800; font-variant-numeric: tabular-nums; }
+    #hw-r1 { top: 400px; } #hw-r2 { top: 500px; }
+    #hw-r1 .bar { width: 972.4px; background: #2e6db5; }
+    #hw-r2 .bar { width: 915.2px; background: #b8344f; }
+    #hw-r2 .lab { color: #8c1d3a; }
+    #hw-axis { position: absolute; left: 500px; top: 590px; width: 1100px; border-top: 2px solid #cdbcb6; }
+    #hw-axis span { position: absolute; top: 8px; font-size: 28px; font-weight: 600; color: #6b6370; }
+    #hw-cv { position: absolute; left: 210px; top: 700px; font-size: 36px; font-weight: 600; color: #24222a; }
+    #hw-cv span { color: #6b6370; }
+  </style>
+  <div id="root" data-composition-id="how" data-width="1920" data-height="1080">
+    <div id="hw-diagram">
+      <div id="hw-name">BuzzASR-Armenian<span>Whisper-large-v3 trained on Armenian, 1.55 billion weights</span></div>
+      <div id="hw-block">
+        <div id="hw-enc" class="hw-half">Listens<span>the audio encoder</span></div>
+        <div id="hw-dec" class="hw-half">Writes<span>the text decoder</span></div>
+      </div>
+      <div id="hw-tab">Lsir adapter</div>
+      <div id="hw-pct">1.5% of the weights</div>
+      <div id="hw-feed">
+          <i class="hw-tile" id="hw-t0"><b></b><b></b><b></b><b></b><b></b><b></b><b></b></i>
+          <i class="hw-tile ph" id="hw-t1"><b></b><b></b><b></b><b></b><b></b><b></b><b></b></i>
+          <i class="hw-tile" id="hw-t2"><b></b><b></b><b></b><b></b><b></b><b></b><b></b></i>
+          <i class="hw-tile ph" id="hw-t3"><b></b><b></b><b></b><b></b><b></b><b></b><b></b></i>
+          <i class="hw-tile" id="hw-t4"><b></b><b></b><b></b><b></b><b></b><b></b><b></b></i>
+          <i class="hw-tile ph" id="hw-t5"><b></b><b></b><b></b><b></b><b></b><b></b><b></b></i>
+      </div>
+      <div id="hw-feedl"><b>Training clips:</b> half sent through random phone lines</div>
+    </div>
+    <div id="hw-chart">
+      <div id="hw-ctitle">Over the mobile codec Lsir never trained on<span>Share of words wrong, 932 test recordings, both with beam search</span></div>
+      <div id="hw-r1" class="hw-row"><span class="lab">BuzzASR</span><i class="bar"></i><span class="val">22.1%</span></div>
+      <div id="hw-r2" class="hw-row"><span class="lab">Lsir</span><i class="bar"></i><span class="val">20.8%</span></div>
+      <div id="hw-axis"><span style="left: -8px">0%</span><span style="left: 1030px">25%</span></div>
+      <div id="hw-cv">A second dataset agrees <span>(Common Voice, 1,000 clips): 18.9% to 17.8%</span></div>
+    </div>
+  </div>
+  <script>
+  const C = /*CUES*/{"L10": 0.45, "adapter": 3.178, "percent": 6.792, "clips": 10.184, "L11": 13.56, "from": 18.289, "to": 19.006, "second": 21.944, "dur": 25.24}/*END*/;
+  const tl = gsap.timeline({ paused: true });
+  // one diagram that grows: the model, its two halves, the adapter, the training clips
+  tl.fromTo("#hw-name", { opacity: 0 }, { opacity: 1, duration: 0.4 }, C.L10);
+  tl.fromTo("#hw-block", { opacity: 0, scale: 0.97 }, { opacity: 1, scale: 1, duration: 0.5, ease: "power3.out" }, C.L10 + 0.2);
+  tl.fromTo("#hw-tab", { opacity: 0, y: -70 }, { opacity: 1, y: 0, duration: 0.5, ease: "back.out(1.6)" }, C.adapter);
+  tl.fromTo("#hw-pct", { opacity: 0 }, { opacity: 1, duration: 0.4 }, C.percent - 0.2);
+  tl.fromTo(".hw-tile", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out", stagger: 0.12 }, C.clips - 1.0);
+  tl.fromTo("#hw-feedl", { opacity: 0 }, { opacity: 1, duration: 0.4 }, C.clips - 0.2);
+  tl.to(".hw-tile", { y: -90, opacity: 0, duration: 0.5, ease: "power2.in", stagger: 0.1 }, C.clips + 1.0);
+  tl.to("#hw-diagram", { opacity: 0, duration: 0.3, ease: "power2.in" }, C.L11 - 0.35);
+  // the result: two bars on one zero-based axis, values labelled directly
+  tl.fromTo("#hw-chart", { opacity: 0 }, { opacity: 1, duration: 0.01 }, C.L11 - 0.05);
+  tl.fromTo(["#hw-ctitle", "#hw-axis", ".hw-row .lab"], { opacity: 0 }, { opacity: 1, duration: 0.4 }, C.L11);
+  tl.fromTo("#hw-r1 .bar", { scaleX: 0 }, { scaleX: 1, duration: 0.8, ease: "power2.out" }, C.from - 0.2);
+  tl.fromTo("#hw-r1 .val", { opacity: 0 }, { opacity: 1, duration: 0.3 }, C.from + 0.5);
+  tl.fromTo("#hw-r2 .bar", { scaleX: 0 }, { scaleX: 1, duration: 0.8, ease: "power2.out" }, C.to - 0.2);
+  tl.fromTo("#hw-r2 .val", { opacity: 0 }, { opacity: 1, duration: 0.3 }, C.to + 0.5);
+  tl.fromTo("#hw-cv", { opacity: 0 }, { opacity: 1, duration: 0.4 }, C.second - 1.2);
+  tl.to("#root", { opacity: 1, duration: 0.01 }, C.dur - 0.01);
+  window.__timelines["how"] = tl;
+  </script>
+</template>

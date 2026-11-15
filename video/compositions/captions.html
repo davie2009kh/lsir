@@ -1,0 +1,157 @@
+<template>
+  <style>
+    @font-face { font-family: "Lsir Sans"; src: url("assets/fonts/NotoSans.ttf"); font-weight: 100 900; }
+    #root { position: absolute; inset: 0; pointer-events: none; }
+    .cap { position: absolute; left: 0; right: 0; bottom: 96px; margin: 0; padding: 0 240px; text-align: center;
+           font-family: "Lsir Sans", sans-serif; font-weight: 600; font-size: 40px; line-height: 1.2; opacity: 0; }
+    .cap span { display: inline-block; padding: 10px 24px; border-radius: 10px; color: #24222a;
+                background: rgba(255, 255, 255, 0.92); box-shadow: 0 6px 18px rgba(36, 34, 42, 0.10); }
+  </style>
+  <div id="root" data-composition-id="captions" data-width="1920" data-height="1080">
+    <p id="cap-l1-0" class="clip cap" data-start="0.500" data-duration="2.220"><span>This is one Armenian sentence.</span></p>
+    <p id="cap-l2-0" class="clip cap" data-start="6.870" data-duration="2.464"><span>And this is the same sentence,</span></p>
+    <p id="cap-l2-1" class="clip cap" data-start="9.334" data-duration="2.066"><span>over a mobile phone line.</span></p>
+    <p id="cap-l3-0" class="clip cap" data-start="19.360" data-duration="2.021"><span>The best free Armenian model</span></p>
+    <p id="cap-l3-1" class="clip cap" data-start="21.381" data-duration="2.509"><span>gets eleven of sixteen words wrong.</span></p>
+    <p id="cap-l4-0" class="clip cap" data-start="24.790" data-duration="1.738"><span>Many older people in Armenia</span></p>
+    <p id="cap-l4-1" class="clip cap" data-start="26.528" data-duration="1.258"><span>speak only Armenian.</span></p>
+    <p id="cap-l4-2" class="clip cap" data-start="27.786" data-duration="1.858"><span>When clinics answer calls with</span></p>
+    <p id="cap-l4-3" class="clip cap" data-start="29.644" data-duration="1.079"><span>voice assistants,</span></p>
+    <p id="cap-l4-4" class="clip cap" data-start="30.722" data-duration="1.678"><span>these callers get misheard.</span></p>
+    <p id="cap-l5-0" class="clip cap" data-start="32.850" data-duration="1.808"><span>A phone line keeps only</span></p>
+    <p id="cap-l5-1" class="clip cap" data-start="34.658" data-duration="2.185"><span>a narrow slice of the voice.</span></p>
+    <p id="cap-l5-2" class="clip cap" data-start="36.843" data-duration="2.260"><span>Nobody had measured what that</span></p>
+    <p id="cap-l5-3" class="clip cap" data-start="39.104" data-duration="1.356"><span>does to Armenian.</span></p>
+    <p id="cap-l6-0" class="clip cap" data-start="41.360" data-duration="1.892"><span>We tested five free models</span></p>
+    <p id="cap-l6-1" class="clip cap" data-start="43.252" data-duration="1.682"><span>on 932 test recordings.</span></p>
+    <p id="cap-l6-2" class="clip cap" data-start="44.934" data-duration="2.172"><span>The default Whisper model that</span></p>
+    <p id="cap-l6-3" class="clip cap" data-start="47.106" data-duration="1.752"><span>most apps use does worse</span></p>
+    <p id="cap-l6-4" class="clip cap" data-start="48.858" data-duration="2.032"><span>than writing nothing at all.</span></p>
+    <p id="cap-l7-0" class="clip cap" data-start="51.790" data-duration="1.993"><span>So we built Lsir: listen,</span></p>
+    <p id="cap-l7-1" class="clip cap" data-start="53.783" data-duration="0.997"><span>in Armenian.</span></p>
+    <p id="cap-l8-0" class="clip cap" data-start="55.130" data-duration="1.290"><span>Pick a sentence,</span></p>
+    <p id="cap-l8-1" class="clip cap" data-start="56.420" data-duration="1.669"><span>send it down a mobile</span></p>
+    <p id="cap-l8-2" class="clip cap" data-start="58.089" data-duration="2.504"><span>line our model never trained on,</span></p>
+    <p id="cap-l8-3" class="clip cap" data-start="60.594" data-duration="0.986"><span>and compare.</span></p>
+    <p id="cap-l9-0" class="clip cap" data-start="62.180" data-duration="1.321"><span>The original model:</span></p>
+    <p id="cap-l9-1" class="clip cap" data-start="63.501" data-duration="2.113"><span>eleven words wrong. Lsir: five.</span></p>
+    <p id="cap-l9-2" class="clip cap" data-start="65.614" data-duration="2.246"><span>Both answer in about two seconds.</span></p>
+    <p id="cap-l10-0" class="clip cap" data-start="68.860" data-duration="1.770"><span>Lsir is that same model</span></p>
+    <p id="cap-l10-1" class="clip cap" data-start="70.630" data-duration="1.770"><span>with a small adapter on</span></p>
+    <p id="cap-l10-2" class="clip cap" data-start="72.400" data-duration="1.696"><span>the part that listens:</span></p>
+    <p id="cap-l10-3" class="clip cap" data-start="74.096" data-duration="1.696"><span>one and a half percent</span></p>
+    <p id="cap-l10-4" class="clip cap" data-start="75.792" data-duration="1.180"><span>of its weights,</span></p>
+    <p id="cap-l10-5" class="clip cap" data-start="76.972" data-duration="2.065"><span>trained with half the clips</span></p>
+    <p id="cap-l10-6" class="clip cap" data-start="79.036" data-duration="2.434"><span>sent through random phone lines.</span></p>
+    <p id="cap-l11-0" class="clip cap" data-start="81.970" data-duration="2.006"><span>On 932 test recordings over</span></p>
+    <p id="cap-l11-1" class="clip cap" data-start="83.976" data-duration="1.863"><span>that unseen mobile codec,</span></p>
+    <p id="cap-l11-2" class="clip cap" data-start="85.839" data-duration="1.791"><span>errors fall from 22.1 to</span></p>
+    <p id="cap-l11-3" class="clip cap" data-start="87.631" data-duration="1.003"><span>20.8 percent,</span></p>
+    <p id="cap-l11-4" class="clip cap" data-start="88.634" data-duration="1.576"><span>and the gain holds on</span></p>
+    <p id="cap-l11-5" class="clip cap" data-start="90.210" data-duration="1.290"><span>a second dataset.</span></p>
+    <p id="cap-l12-0" class="clip cap" data-start="94.100" data-duration="0.430"><span>Next:</span></p>
+    <p id="cap-l12-1" class="clip cap" data-start="94.530" data-duration="1.290"><span>real phone calls,</span></p>
+    <p id="cap-l12-2" class="clip cap" data-start="95.820" data-duration="1.290"><span>and older voices.</span></p>
+    <p id="cap-l12-3" class="clip cap" data-start="97.110" data-duration="2.293"><span>Public Armenian speech data has</span></p>
+    <p id="cap-l12-4" class="clip cap" data-start="99.403" data-duration="1.147"><span>no one over 59.</span></p>
+    <p id="cap-l13-0" class="clip cap" data-start="102.950" data-duration="1.070"><span>Lsir. Listen.</span></p>
+  </div>
+  <script>
+  const tl = gsap.timeline({ paused: true });
+  tl.fromTo("#cap-l1-0", {opacity: 0}, {opacity: 1, duration: 0.12, ease: "power2.out"}, 0.500);
+  tl.to("#cap-l1-0", {opacity: 0, duration: 0.1, ease: "power2.in"}, 2.620);
+  tl.fromTo("#cap-l2-0", {opacity: 0}, {opacity: 1, duration: 0.12, ease: "power2.out"}, 6.870);
+  tl.to("#cap-l2-0", {opacity: 0, duration: 0.1, ease: "power2.in"}, 9.234);
+  tl.fromTo("#cap-l2-1", {opacity: 0}, {opacity: 1, duration: 0.12, ease: "power2.out"}, 9.334);
+  tl.to("#cap-l2-1", {opacity: 0, duration: 0.1, ease: "power2.in"}, 11.300);
+  tl.fromTo("#cap-l3-0", {opacity: 0}, {opacity: 1, duration: 0.12, ease: "power2.out"}, 19.360);
+  tl.to("#cap-l3-0", {opacity: 0, duration: 0.1, ease: "power2.in"}, 21.281);
+  tl.fromTo("#cap-l3-1", {opacity: 0}, {opacity: 1, duration: 0.12, ease: "power2.out"}, 21.381);
+  tl.to("#cap-l3-1", {opacity: 0, duration: 0.1, ease: "power2.in"}, 23.790);
+  tl.fromTo("#cap-l4-0", {opacity: 0}, {opacity: 1, duration: 0.12, ease: "power2.out"}, 24.790);
+  tl.to("#cap-l4-0", {opacity: 0, duration: 0.1, ease: "power2.in"}, 26.428);
+  tl.fromTo("#cap-l4-1", {opacity: 0}, {opacity: 1, duration: 0.12, ease: "power2.out"}, 26.528);
+  tl.to("#cap-l4-1", {opacity: 0, duration: 0.1, ease: "power2.in"}, 27.686);
+  tl.fromTo("#cap-l4-2", {opacity: 0}, {opacity: 1, duration: 0.12, ease: "power2.out"}, 27.786);
+  tl.to("#cap-l4-2", {opacity: 0, duration: 0.1, ease: "power2.in"}, 29.544);
+  tl.fromTo("#cap-l4-3", {opacity: 0}, {opacity: 1, duration: 0.12, ease: "power2.out"}, 29.644);
+  tl.to("#cap-l4-3", {opacity: 0, duration: 0.1, ease: "power2.in"}, 30.622);
+  tl.fromTo("#cap-l4-4", {opacity: 0}, {opacity: 1, duration: 0.12, ease: "power2.out"}, 30.722);
+  tl.to("#cap-l4-4", {opacity: 0, duration: 0.1, ease: "power2.in"}, 32.300);
+  tl.fromTo("#cap-l5-0", {opacity: 0}, {opacity: 1, duration: 0.12, ease: "power2.out"}, 32.850);
+  tl.to("#cap-l5-0", {opacity: 0, duration: 0.1, ease: "power2.in"}, 34.558);
+  tl.fromTo("#cap-l5-1", {opacity: 0}, {opacity: 1, duration: 0.12, ease: "power2.out"}, 34.658);
+  tl.to("#cap-l5-1", {opacity: 0, duration: 0.1, ease: "power2.in"}, 36.743);
+  tl.fromTo("#cap-l5-2", {opacity: 0}, {opacity: 1, duration: 0.12, ease: "power2.out"}, 36.843);
+  tl.to("#cap-l5-2", {opacity: 0, duration: 0.1, ease: "power2.in"}, 39.004);
+  tl.fromTo("#cap-l5-3", {opacity: 0}, {opacity: 1, duration: 0.12, ease: "power2.out"}, 39.104);
+  tl.to("#cap-l5-3", {opacity: 0, duration: 0.1, ease: "power2.in"}, 40.360);
+  tl.fromTo("#cap-l6-0", {opacity: 0}, {opacity: 1, duration: 0.12, ease: "power2.out"}, 41.360);
+  tl.to("#cap-l6-0", {opacity: 0, duration: 0.1, ease: "power2.in"}, 43.152);
+  tl.fromTo("#cap-l6-1", {opacity: 0}, {opacity: 1, duration: 0.12, ease: "power2.out"}, 43.252);
+  tl.to("#cap-l6-1", {opacity: 0, duration: 0.1, ease: "power2.in"}, 44.834);
+  tl.fromTo("#cap-l6-2", {opacity: 0}, {opacity: 1, duration: 0.12, ease: "power2.out"}, 44.934);
+  tl.to("#cap-l6-2", {opacity: 0, duration: 0.1, ease: "power2.in"}, 47.006);
+  tl.fromTo("#cap-l6-3", {opacity: 0}, {opacity: 1, duration: 0.12, ease: "power2.out"}, 47.106);
+  tl.to("#cap-l6-3", {opacity: 0, duration: 0.1, ease: "power2.in"}, 48.758);
+  tl.fromTo("#cap-l6-4", {opacity: 0}, {opacity: 1, duration: 0.12, ease: "power2.out"}, 48.858);
+  tl.to("#cap-l6-4", {opacity: 0, duration: 0.1, ease: "power2.in"}, 50.790);
+  tl.fromTo("#cap-l7-0", {opacity: 0}, {opacity: 1, duration: 0.12, ease: "power2.out"}, 51.790);
+  tl.to("#cap-l7-0", {opacity: 0, duration: 0.1, ease: "power2.in"}, 53.683);
+  tl.fromTo("#cap-l7-1", {opacity: 0}, {opacity: 1, duration: 0.12, ease: "power2.out"}, 53.783);
+  tl.to("#cap-l7-1", {opacity: 0, duration: 0.1, ease: "power2.in"}, 54.680);
+  tl.fromTo("#cap-l8-0", {opacity: 0}, {opacity: 1, duration: 0.12, ease: "power2.out"}, 55.130);
+  tl.to("#cap-l8-0", {opacity: 0, duration: 0.1, ease: "power2.in"}, 56.320);
+  tl.fromTo("#cap-l8-1", {opacity: 0}, {opacity: 1, duration: 0.12, ease: "power2.out"}, 56.420);
+  tl.to("#cap-l8-1", {opacity: 0, duration: 0.1, ease: "power2.in"}, 57.989);
+  tl.fromTo("#cap-l8-2", {opacity: 0}, {opacity: 1, duration: 0.12, ease: "power2.out"}, 58.089);
+  tl.to("#cap-l8-2", {opacity: 0, duration: 0.1, ease: "power2.in"}, 60.494);
+  tl.fromTo("#cap-l8-3", {opacity: 0}, {opacity: 1, duration: 0.12, ease: "power2.out"}, 60.594);
+  tl.to("#cap-l8-3", {opacity: 0, duration: 0.1, ease: "power2.in"}, 61.480);
+  tl.fromTo("#cap-l9-0", {opacity: 0}, {opacity: 1, duration: 0.12, ease: "power2.out"}, 62.180);
+  tl.to("#cap-l9-0", {opacity: 0, duration: 0.1, ease: "power2.in"}, 63.401);
+  tl.fromTo("#cap-l9-1", {opacity: 0}, {opacity: 1, duration: 0.12, ease: "power2.out"}, 63.501);
+  tl.to("#cap-l9-1", {opacity: 0, duration: 0.1, ease: "power2.in"}, 65.514);
+  tl.fromTo("#cap-l9-2", {opacity: 0}, {opacity: 1, duration: 0.12, ease: "power2.out"}, 65.614);
+  tl.to("#cap-l9-2", {opacity: 0, duration: 0.1, ease: "power2.in"}, 67.760);
+  tl.fromTo("#cap-l10-0", {opacity: 0}, {opacity: 1, duration: 0.12, ease: "power2.out"}, 68.860);
+  tl.to("#cap-l10-0", {opacity: 0, duration: 0.1, ease: "power2.in"}, 70.530);
+  tl.fromTo("#cap-l10-1", {opacity: 0}, {opacity: 1, duration: 0.12, ease: "power2.out"}, 70.630);
+  tl.to("#cap-l10-1", {opacity: 0, duration: 0.1, ease: "power2.in"}, 72.300);
+  tl.fromTo("#cap-l10-2", {opacity: 0}, {opacity: 1, duration: 0.12, ease: "power2.out"}, 72.400);
+  tl.to("#cap-l10-2", {opacity: 0, duration: 0.1, ease: "power2.in"}, 73.996);
+  tl.fromTo("#cap-l10-3", {opacity: 0}, {opacity: 1, duration: 0.12, ease: "power2.out"}, 74.096);
+  tl.to("#cap-l10-3", {opacity: 0, duration: 0.1, ease: "power2.in"}, 75.692);
+  tl.fromTo("#cap-l10-4", {opacity: 0}, {opacity: 1, duration: 0.12, ease: "power2.out"}, 75.792);
+  tl.to("#cap-l10-4", {opacity: 0, duration: 0.1, ease: "power2.in"}, 76.872);
+  tl.fromTo("#cap-l10-5", {opacity: 0}, {opacity: 1, duration: 0.12, ease: "power2.out"}, 76.972);
+  tl.to("#cap-l10-5", {opacity: 0, duration: 0.1, ease: "power2.in"}, 78.936);
+  tl.fromTo("#cap-l10-6", {opacity: 0}, {opacity: 1, duration: 0.12, ease: "power2.out"}, 79.036);
+  tl.to("#cap-l10-6", {opacity: 0, duration: 0.1, ease: "power2.in"}, 81.370);
+  tl.fromTo("#cap-l11-0", {opacity: 0}, {opacity: 1, duration: 0.12, ease: "power2.out"}, 81.970);
+  tl.to("#cap-l11-0", {opacity: 0, duration: 0.1, ease: "power2.in"}, 83.876);
+  tl.fromTo("#cap-l11-1", {opacity: 0}, {opacity: 1, duration: 0.12, ease: "power2.out"}, 83.976);
+  tl.to("#cap-l11-1", {opacity: 0, duration: 0.1, ease: "power2.in"}, 85.739);
+  tl.fromTo("#cap-l11-2", {opacity: 0}, {opacity: 1, duration: 0.12, ease: "power2.out"}, 85.839);
+  tl.to("#cap-l11-2", {opacity: 0, duration: 0.1, ease: "power2.in"}, 87.531);
+  tl.fromTo("#cap-l11-3", {opacity: 0}, {opacity: 1, duration: 0.12, ease: "power2.out"}, 87.631);
+  tl.to("#cap-l11-3", {opacity: 0, duration: 0.1, ease: "power2.in"}, 88.534);
+  tl.fromTo("#cap-l11-4", {opacity: 0}, {opacity: 1, duration: 0.12, ease: "power2.out"}, 88.634);
+  tl.to("#cap-l11-4", {opacity: 0, duration: 0.1, ease: "power2.in"}, 90.110);
+  tl.fromTo("#cap-l11-5", {opacity: 0}, {opacity: 1, duration: 0.12, ease: "power2.out"}, 90.210);
+  tl.to("#cap-l11-5", {opacity: 0, duration: 0.1, ease: "power2.in"}, 91.400);
+  tl.fromTo("#cap-l12-0", {opacity: 0}, {opacity: 1, duration: 0.12, ease: "power2.out"}, 94.100);
+  tl.to("#cap-l12-0", {opacity: 0, duration: 0.1, ease: "power2.in"}, 94.430);
+  tl.fromTo("#cap-l12-1", {opacity: 0}, {opacity: 1, duration: 0.12, ease: "power2.out"}, 94.530);
+  tl.to("#cap-l12-1", {opacity: 0, duration: 0.1, ease: "power2.in"}, 95.720);
+  tl.fromTo("#cap-l12-2", {opacity: 0}, {opacity: 1, duration: 0.12, ease: "power2.out"}, 95.820);
+  tl.to("#cap-l12-2", {opacity: 0, duration: 0.1, ease: "power2.in"}, 97.010);
+  tl.fromTo("#cap-l12-3", {opacity: 0}, {opacity: 1, duration: 0.12, ease: "power2.out"}, 97.110);
+  tl.to("#cap-l12-3", {opacity: 0, duration: 0.1, ease: "power2.in"}, 99.303);
+  tl.fromTo("#cap-l12-4", {opacity: 0}, {opacity: 1, duration: 0.12, ease: "power2.out"}, 99.403);
+  tl.to("#cap-l12-4", {opacity: 0, duration: 0.1, ease: "power2.in"}, 100.450);
+  tl.fromTo("#cap-l13-0", {opacity: 0}, {opacity: 1, duration: 0.12, ease: "power2.out"}, 102.950);
+  tl.to("#cap-l13-0", {opacity: 0, duration: 0.1, ease: "power2.in"}, 103.920);
+  window.__timelines["captions"] = tl;
+  </script>
+</template>
