@@ -65,6 +65,10 @@ training**. If our model improves there too, it learned "phone audio" in general
 The middle 95% of those values is the 95% confidence interval: how much the score could move by chance.
 A **paired** bootstrap resamples the same clips for both models to check that "ours is better" isn't luck.
 
+**ROVER (system combination).** Three different models transcribe the same audio, we line their words up, and
+each word position takes the majority vote (ties keep our model's word). Models built differently (Whisper-style vs
+CTC) make *different* mistakes, so voting cancels many of them.
+
 **Baseline.** The simplest thing to compare against. Ours: the empty output (exactly 100% WER), whisper-small
 as most apps would use it, and the original BuzzASR before our training.
 
@@ -75,6 +79,8 @@ as most apps would use it, and the original BuzzASR before our training.
    audio about the same.
 4. On FLEURS every model makes more mistakes on women's voices, but with Common Voice speaker IDs the gap disappears,
    so it's probably a few individual speakers. Public data has no Armenian speakers over 59.
+5. Letting three different models vote word by word (ROVER) gave the best result: FLEURS clean 13.6% -> 11.9%,
+   phone 17.4% -> 15.1% (about 12-13% fewer errors), with no extra training.
 
 ## 4. Questions judges will probably ask
 
@@ -100,6 +106,10 @@ Armenian), people talking over each other, names and numbers (we measure these s
 **"Are the strong models' scores fair?"** MMS, Omnilingual and BuzzASR were trained partly on FLEURS's training
 split. The test sentences are different, but the recording style is familiar to them, which may flatter all three
 a little. We say so in the write-up.
+
+**"Why does voting help if every model is weaker alone?"** Because their mistakes don't overlap much: a CTC model
+(MMS/Omnilingual) spells sounds letter by letter and never loops, while our Whisper-style model knows Armenian words
+better. Where one slips, the other two usually agree on the right word. The cost is running three models.
 
 **"Why are women's voices worse?"** On FLEURS every model was worse for women, but FLEURS doesn't say how many
 different speakers there are. On Common Voice, which has speaker IDs (73 women, 49 men in our sample), women were
