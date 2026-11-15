@@ -70,7 +70,7 @@ A model trained specifically on Armenian beats general models that are bigger or
 least accuracy over the phone. Meta's Omnilingual gets the fewest *letter* errors (CER 4.2%) but more whole-word
 errors, and it is hurt more by the phone line.
 
-### 3. Who does it fail for? Every model is worse on women's voices
+### 3. Who does it fail for? On FLEURS, every model is worse on women's voices
 | Model (phone audio) | Women (593 clips) | Men (339 clips) |
 |---|---|---|
 | BuzzASR-armenian | 19.0% | 14.6% |
@@ -79,7 +79,7 @@ errors, and it is hurt more by the phone line.
 | whisper-large-v3-turbo | 61.8% | 51.1% |
 
 The gap appears on clean audio too (BuzzASR: 14.5% vs 12.0%). FLEURS doesn't say how many different speakers
-there are, so part of the gap could come from a few individual voices. We report it rather than hide it.
+there are, so part of the gap could come from a few individual voices. Section 6 tests this with Common Voice speaker IDs: the gap does not replicate.
 
 ### 4. Our phone-robust fine-tune
 LoRA on BuzzASR's audio encoder (about 1.5% of parameters, r=16) trained for 2 epochs on FLEURS Armenian training clips,
@@ -105,7 +105,27 @@ improve from 28.7% to 27.2% WER, so the gender gap narrows slightly but remains.
 ### 5. Clinic-call test (40 sentences, one synthetic voice at two speaking paces)
 {{CLINIC_RESULTS}}
 
+### 6. A second, independent test: Common Voice Armenian (1,000 test clips, volunteers on their own devices)
+| Test audio | Original BuzzASR | **Lsir (ours)** | Change in WER (95% CI) |
+|---|---|---|---|
+| Clean | 3.7% | 4.0% | +0.3 (0.0 to +0.6) |
+| Phone (fixed simulation) | 12.4% | 12.8% | +0.4 (-0.3 to +1.1) |
+| **Unseen GSM mobile codec** | 18.9% | **17.8%** | **-1.1 (-1.9 to -0.3)** |
+
+The gain on the unseen mobile codec **replicates** on a dataset from a different source (-1.1 points here, -1.0 on
+FLEURS), at a small cost on clean audio. (BuzzASR was trained on Common Voice's training split, which is why its
+clean score is so low. The test split has different speakers.)
+
+**Who is missing from the data?** The Common Voice Armenian test split has **no speakers over 59**. The oldest group
+is people in their 50s, with only a few speakers. The callers our tool is meant for are missing from public Armenian
+speech data, so we couldn't measure how well any model works for them.
+
+**Is the gender gap real?** With Common Voice's speaker IDs (73 female, 49 male speakers in our sample), women's
+speech is transcribed slightly *better* (clean 3.7% vs 4.4%). So the large gap we saw on FLEURS is more likely
+caused by a few individual FLEURS speakers than by gender itself.
+
 ### Where it fails, and why we think so
+- **Western Armenian:** Common Voice includes some Western Armenian sentences (classical spelling like «մէջ», «կը»). Our model rewrites them in Eastern spelling, which counts as errors.
 - **Unusual words and names:** "Կասաբլանկան" (Casablanca) or "Կիվու" are often misheard; the model has rarely heard them.
 - **Numbers:** FLEURS writes some numbers as digits and some as words, and models do both, so a correct number can
   still count as an error. Over the unseen mobile codec only about 72% of numbers survive with the original model.
@@ -120,7 +140,7 @@ improve from 28.7% to 27.2% WER, so the gender gap narrows slightly but remains.
    whether the simulator's ranking of models holds.
 2. **More, newer Armenian audio:** BuzzASR already learned FLEURS, so real gains need new speech (e.g. Common Voice
    Armenian or recordings of older speakers) and Western Armenian for the diaspora.
-3. **Investigate the gender gap** with a dataset that has speaker IDs, and test whether pitch-aware augmentation narrows it.
+3. **Older speakers:** public Armenian speech data has almost nobody over 60. Recording older volunteers (with permission) is the most important missing piece.
 
 ## How to run
 | Notebook | What it does | Runtime (free Kaggle T4) |
