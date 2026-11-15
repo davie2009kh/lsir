@@ -36,7 +36,7 @@ Starting point: suggested project **4.4.3 Speech recognition across accents**. W
 **Models compared.** `openai/whisper-small`, `openai/whisper-large-v3-turbo`, `facebook/mms-1b-all` (Armenian
 adapter), Meta Omnilingual ASR (`omniASR_CTC_1B_v2`) and `BuzzASR/armenian` (Whisper-large-v3 fine-tuned on Armenian).
 
-**Our fine-tune.** LoRA adapters on BuzzASR-Armenian (1.55B parameters; LoRA trains about 1.5%) on a free Kaggle T4,
+**Our fine-tune.** LoRA adapters on BuzzASR-Armenian (1.55B parameters; LoRA on the audio encoder trains about 1.5%) on a free Kaggle T4,
 with on-the-fly telephone augmentation and SpecAugment. The epoch is chosen on validation clips, and the test split
 is used once at the end.
 
@@ -82,7 +82,25 @@ The gap appears on clean audio too (BuzzASR: 14.5% vs 12.0%). FLEURS doesn't say
 there are, so part of the gap could come from a few individual voices. We report it rather than hide it.
 
 ### 4. Our phone-robust fine-tune
-{{FINETUNE_RESULTS}}
+LoRA on BuzzASR's audio encoder (about 1.5% of parameters, r=16) trained for 2 epochs on FLEURS Armenian training clips,
+half of them sent through our randomised telephone channel. Tested on all 932 test clips:
+
+| Test audio | Original BuzzASR | **Lsir (ours)** | Change in WER (95% CI) |
+|---|---|---|---|
+| Clean microphone | 13.7% | 13.8% | +0.1 (-0.2 to +0.4), no real change |
+| Phone (fixed simulation) | 17.4% | 17.2% | -0.2 (-0.6 to +0.1) |
+| **Unseen GSM mobile codec + packet loss + noise** | 24.3% | **23.3%** | **-1.0 (-1.5 to -0.5)**, better in 100% of resamples |
+
+| Numbers that survive transcription (177 clips with numbers) | Original | **Lsir** |
+|---|---|---|
+| Clean | 86.2% | **88.1%** |
+| Phone | 82.8% | **86.4%** |
+| Unseen mobile codec | 72.1% | **78.2%** |
+
+The gain is modest but statistically significant on the codec the model **never saw in training**, which suggests it
+learned "phone audio" in general rather than our simulator. Clean audio is unchanged. Numbers (times, doses, phone
+numbers), the details that matter most to a clinic, survive noticeably more often. Women's voices over the mobile codec
+improve from 28.7% to 27.2% WER, so the gender gap narrows slightly but remains.
 
 ### 5. Clinic-call test (40 sentences x 2 synthetic voices)
 {{CLINIC_RESULTS}}
