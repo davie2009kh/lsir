@@ -89,7 +89,7 @@ half of them sent through our randomised telephone channel. Tested on all 932 te
 |---|---|---|---|
 | Clean microphone | 13.7% | 13.8% | +0.1 (-0.2 to +0.4), no real change |
 | Phone (fixed simulation) | 17.4% | 17.2% | -0.2 (-0.6 to +0.1) |
-| **Unseen GSM mobile codec + packet loss + noise** | 24.3% | **23.3%** | **-1.0 (-1.5 to -0.5)**, better in 100% of resamples |
+| **Unseen GSM mobile codec** (+ packet loss + noise) | 24.3% | **23.3%** | **-1.0 (-1.5 to -0.5)**, better in 100% of resamples |
 
 | Numbers that survive transcription (177 clips with numbers) | Original | **Lsir** |
 |---|---|---|
@@ -97,7 +97,7 @@ half of them sent through our randomised telephone channel. Tested on all 932 te
 | Phone | 82.8% | **86.4%** |
 | Unseen mobile codec | 72.1% | **78.2%** |
 
-The gain is modest but statistically significant on the codec the model **never saw in training**, which suggests it
+The gain is modest but statistically significant on the GSM codec, which the model **never saw in training** (packet loss and noise were part of training; the codec was not), which suggests it
 learned "phone audio" in general rather than our simulator. Clean audio is unchanged. Numbers (times, doses, phone
 numbers), the details that matter most to a clinic, survive noticeably more often. Women's voices over the mobile codec
 improve from 28.7% to 27.2% WER, so the gender gap narrows slightly but remains.
@@ -124,6 +124,27 @@ speech data, so we couldn't measure how well any model works for them.
 speech is transcribed slightly *better* (clean 3.7% vs 4.4%). So the large gap we saw on FLEURS is more likely
 caused by a few individual FLEURS speakers than by gender itself.
 
+### 7. System combination: three different models vote word by word (ROVER)
+BuzzASR (Whisper-style), Meta Omnilingual and Meta MMS (both CTC) make *different* mistakes. We align each model's
+transcript to a pivot transcript and take a majority vote for every word (ties keep the pivot's word). The pivot
+is the best single model.
+
+| FLEURS test (932 clips) | WER | Change vs BuzzASR alone (strict 95% CI) |
+|---|---|---|
+| BuzzASR alone, clean | 13.6% | |
+| **Vote: BuzzASR + Omnilingual + MMS, clean** | **11.9%** | **-1.7 (-2.3 to -1.1)** |
+| BuzzASR alone, phone | 17.4% | |
+| Vote with BuzzASR as pivot, phone | 15.3% | -2.2 (-2.7 to -1.6) |
+| **Vote with Lsir (ours) as pivot, phone** | **15.1%** | **-2.3 (-2.9 to -1.7)** |
+
+Voting removes about 12-13% of errors, and our phone-trained model is the best pivot over the phone. Using the
+weaker Omnilingual as the pivot did *not* help (13.3%), which is why we use the best model as the pivot. The cost is
+running three models instead of one. Omnilingual and MMS were trained partly on FLEURS's training split.
+{{ROVER_GSM_CV}}
+
+*Strict confidence intervals resample whole sentences (FLEURS) or whole speakers (Common Voice) instead of single
+clips (`tools/cluster_bootstrap.py`); all conclusions above hold under them.*
+
 ### Where it fails, and why we think so
 - **Western Armenian:** Common Voice includes some Western Armenian sentences (classical spelling like «մէջ», «կը»). Our model rewrites them in Eastern spelling, which counts as errors.
 - **Unusual words and names:** "Կասաբլանկան" (Casablanca) or "Կիվու" are often misheard; the model has rarely heard them.
@@ -134,6 +155,10 @@ caused by a few individual FLEURS speakers than by gender itself.
   *worse* (clean 13.7% → 15.4%), because it learned to add punctuation and capitals instead of hearing better. Fine-tuning
   the decoder too was worse still. BuzzASR had already been trained on the same FLEURS sentences, so there was little new
   to learn from them.
+
+**A note on fairness:** our first fine-tune was changed into v2 after we looked at its test outputs. To make sure we
+didn't simply tune to the test set, we froze v2 and then tested it on a second dataset (Common Voice, section 6),
+where the same gain appeared.
 
 ## What we'd do next
 1. **Real phone calls:** record Armenian speakers (with permission) through real mobile and landline calls, and test
