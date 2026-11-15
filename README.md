@@ -2,7 +2,7 @@
 
 **Track:** Languages  
 **Team:** Alen Gevorgyan, Koryun Gaboyan, David Ghazaryan  
-**Live demo:** https://huggingface.co/spaces/davitlive5/lsir-armenian-phone-asr · **Model:** https://huggingface.co/davitlive5/lsir-buzzasr-armenian-phone-lora · **Full report:** [docs/REPORT.md](docs/REPORT.md)  
+**Live demo:** https://huggingface.co/spaces/davitlive5/lsir-armenian-phone-asr · **Model:** https://huggingface.co/davitlive5/lsir-buzzasr-armenian-phone-lora · **Demo video (1:54):** [watch](https://www.dropbox.com/scl/fi/j44x61vjt3xn3tev112p0/lsir-demo-v3.mp4?rlkey=vwe2mxmqw3clmvbwrodcf7frr&st=raftl60b&dl=0) · **Full report:** [docs/REPORT.md](docs/REPORT.md)  
 **Code:** this repository; every notebook's executed version with outputs is public on Kaggle (links in [docs/REPORT.md#how-to-run](docs/REPORT.md#how-to-run))
 
 *This project is a prototype and is not medical advice.*
