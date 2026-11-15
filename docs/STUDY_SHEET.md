@@ -65,6 +65,10 @@ training**. If our model improves there too, it learned "phone audio" in general
 The middle 95% of those values is the 95% confidence interval: how much the score could move by chance.
 A **paired** bootstrap resamples the same clips for both models to check that "ours is better" isn't luck.
 
+**Greedy vs beam search.** Greedy decoding writes the single most likely next token at every step and never looks
+back. Beam search keeps the 5 most likely partial transcripts and picks the best complete one, so one early mistake
+doesn't ruin the rest. It's more accurate but about 4x slower.
+
 **ROVER (system combination).** Three different models transcribe the same audio, we line their words up, and
 each word position takes the majority vote (ties keep our model's word). Models built differently (Whisper-style vs
 CTC) make *different* mistakes, so voting cancels many of them.
@@ -81,6 +85,9 @@ as most apps would use it, and the original BuzzASR before our training.
    so it's probably a few individual speakers. Public data has no Armenian speakers over 59.
 5. Letting three different models vote word by word (ROVER) gave the best result: FLEURS clean 13.6% -> 11.9%,
    phone 17.4% -> 15.1% (about 12-13% fewer errors), with no extra training.
+6. Beam search (5 beams) helps every model and ours the most: over the unseen codec 24.3% -> 20.8% (14% fewer errors
+   than the original as normally run), and our model is then significantly better than the original over the phone too.
+   Beam search plus voting gives the best phone result: 14.4%.
 
 ## 4. Questions judges will probably ask
 

@@ -164,6 +164,33 @@ weaker Omnilingual as the pivot did *not* help (13.3%), which is why we use the 
 running three models instead of one. Omnilingual and MMS were trained partly on FLEURS's training split.
 {{ROVER_GSM_CV}}
 
+### 8. Beam search: letting the model consider 5 candidate transcripts instead of 1
+Until now every model wrote its single most likely next token at each step ("greedy" decoding). With **beam search**
+it keeps the 5 most likely partial transcripts and picks the best complete one. We set 5 beams in advance (a common
+default) and did not tune it. FLEURS test, 932 clips:
+
+| Audio | BuzzASR greedy | BuzzASR beam 5 | Lsir greedy | **Lsir beam 5** | Lsir vs BuzzASR, both beam 5 (strict 95% CI) |
+|---|---|---|---|---|---|
+| Clean | 13.7% | 12.5% | 13.8% | **12.3%** | -0.23 (-0.52 to +0.07) |
+| Phone | 17.4% | 15.8% | 17.2% | **15.2%** | **-0.58 (-1.01 to -0.15)** |
+| Unseen GSM codec | 24.3% | 22.1% | 23.3% | **20.8%** | **-1.31 (-1.78 to -0.86)** |
+
+Beam search helps every model, and it helps ours **more** than the original (unseen codec: -2.5 vs -2.1 points),
+so with beam search our phone gain becomes significant on the simulated phone line too, and clean audio is no longer
+slightly worse. Altogether, Lsir with beam search makes **14% fewer errors** than the original model as normally run
+over the unseen codec (24.3% → 20.8%, CI of change -4.0 to -2.9). The cost is speed: on a T4, beam search took about
+4x as long (about 27 vs 7 minutes for the 932 clips, about 1.7 vs 0.45 seconds per clip).
+
+**Voting on top of beam search** (BuzzASR or Lsir with beam 5 as pivot, plus Omnilingual and MMS):
+
+| Audio | Lsir beam 5 alone | Vote, Lsir beam 5 pivot | Change (strict 95% CI) |
+|---|---|---|---|
+| Clean | 12.3% | **11.6%** | -0.66 (-1.24 to -0.07) |
+| Phone | 15.2% | **14.4%** | -0.88 (-1.41 to -0.37) |
+
+Voting still helps, but less than with greedy decoding (beam search already fixes some of the same errors). The best
+phone result, 14.4%, is about 17% fewer errors than the original BuzzASR with greedy decoding (17.4%).
+
 *Strict confidence intervals resample whole sentences (FLEURS) or whole speakers (Common Voice) instead of single
 clips (`tools/cluster_bootstrap.py`); all conclusions above hold under them.*
 

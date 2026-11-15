@@ -8,7 +8,7 @@ import re
 from collections import Counter
 
 import jiwer
-from transformers.models.whisper.english_normalizer import BasicTextNormalizer
+from textnorm import BasicTextNormalizer
 
 _norm = BasicTextNormalizer()
 

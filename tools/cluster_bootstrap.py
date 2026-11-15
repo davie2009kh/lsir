@@ -11,7 +11,7 @@ import sys
 import jiwer
 import numpy as np
 import pandas as pd
-from transformers.models.whisper.english_normalizer import BasicTextNormalizer
+from textnorm import BasicTextNormalizer
 
 _norm = BasicTextNormalizer()
 

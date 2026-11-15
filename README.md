@@ -29,19 +29,21 @@ the best, BuzzASR-Armenian (Whisper-large-v3 trained on Armenian). We added a sm
 lines. To keep ourselves honest, we test on a mobile codec (GSM) that is **never used in training**.
 
 ## Results (word error rate, lower is better)
-| Test audio (FLEURS, 932 clips) | whisper-small | BuzzASR | **Lsir (ours)** |
-|---|---|---|---|
-| Clean | 108% | 13.7% | 13.8% |
-| Phone line | 118% | 17.4% | 17.2% |
-| **Unseen mobile codec** | — | 24.3% | **23.3%** (95% CI of change -1.5 to -0.5) |
+| Test audio (FLEURS, 932 clips) | whisper-small | BuzzASR | **Lsir (ours)** | **Lsir + 3-model vote** |
+|---|---|---|---|---|
+| Clean | 108% | 12.5% | 12.3% | **11.6%** |
+| Phone line | 118% | 15.8% | **15.2%** | **14.4%** |
+| **Unseen mobile codec** | — | 22.1% | **20.8%** | {{ROVER_GSM}} |
 
-The usual baseline, whisper-small, is worse than writing nothing (100%). Our model's gain on the unseen codec is
-modest but significant, and it **replicates on Common Voice** (18.9% → 17.8%). Over that codec, numbers survive more
-often (72% → 78%), and on our clinic test more medicine names come through (33% → 42%). Letting three different models
-vote word by word cut errors by another 12-13% (phone: 17.4% → 15.1%). We chose the voting setup on the FLEURS test,
-so we treat this as exploratory.
+*BuzzASR and Lsir use beam search (5 beams); whisper-small is run as most apps run it.* The usual baseline,
+whisper-small, is worse than writing nothing (100%). Against the original BuzzASR, our model is significantly better
+over the phone (-0.6 points, 95% CI -1.0 to -0.15) and on the codec it never trained on (-1.3, CI -1.8 to -0.9;
+strict test that resamples whole sentences), and equal on clean audio. The codec gain **replicates on Common Voice**
+(18.9% → 17.8%). Over that codec, numbers survive more often (72% → 78%), and on our clinic test more medicine names
+come through (33% → 42%). Letting three different models vote word by word removes another 5-6% of errors. We chose
+the voting setup on the FLEURS test, so we treat it as exploratory until it is confirmed on Common Voice.
 
-**Where it fails:** on clean audio our model is no better (slightly worse on Common Voice: 3.7% → 4.0%). Western
+**Where it fails:** on clean audio our model is no better (slightly worse on Common Voice: 3.7% → 4.0%, greedy decoding). Western
 Armenian spelling, rare names and sounds lost on phone lines ("ս", "շ", "ց") cause most errors. Our phone audio is
 simulated and our clinic voice is synthetic. Our first fine-tune made the model worse, because it learned punctuation
 instead of sounds. The FLEURS gender gap disappeared on Common Voice, and public data has no Armenian speakers over 59.
