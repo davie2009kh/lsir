@@ -73,8 +73,8 @@ as most apps would use it, and the original BuzzASR before our training.
 2. The best free Armenian model (BuzzASR) is far better, but it still loses accuracy over a phone line.
 3. Our phone-trained LoRA reduces errors on phone audio, including a codec it never saw, while keeping clean
    audio about the same.
-4. Every model makes more mistakes on **women's** voices in FLEURS. We report it; we can't fully explain it, since
-   FLEURS doesn't say how many different speakers there are.
+4. On FLEURS every model makes more mistakes on women's voices, but with Common Voice speaker IDs the gap disappears,
+   so it's probably a few individual speakers. Public data has no Armenian speakers over 59.
 
 ## 4. Questions judges will probably ask
 
@@ -101,9 +101,13 @@ Armenian), people talking over each other, names and numbers (we measure these s
 split. The test sentences are different, but the recording style is familiar to them, which may flatter all three
 a little. We say so in the write-up.
 
-**"Why are women's voices worse?"** We don't know for sure. Possible reasons: fewer female speakers in training
-data, higher-pitched voices losing more information in an 8 kHz phone band, or a few individual speakers.
-FLEURS has no speaker IDs, so we can't separate these. We report it rather than hide it.
+**"Why are women's voices worse?"** On FLEURS every model was worse for women, but FLEURS doesn't say how many
+different speakers there are. On Common Voice, which has speaker IDs (73 women, 49 men in our sample), women were
+transcribed slightly *better*. So the FLEURS gap is most likely caused by a few individual speakers, not by gender
+itself. That's why we tested on a second dataset before drawing a conclusion.
+
+**"Does it work for older people?"** We couldn't measure it: the Common Voice Armenian test set has no speakers over
+59. That's a real gap in public data, and recording older volunteers (with permission) is our top next step.
 
 **"Who would use this?"** A clinic, pharmacy or bank voice line in Armenia, so that older Armenian-only callers can
 book appointments or ask about prescriptions without being misunderstood.
