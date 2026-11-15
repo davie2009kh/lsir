@@ -5,3 +5,4 @@ kaggle_out/
 app/lsir-whisper-small-hy/
 *.safetensors
 hf/
+private/

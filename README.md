@@ -1,7 +1,7 @@
 # Lsir (Լսիր): Armenian speech-to-text that works over the phone
 
 **Track:** Languages  
-**Team:** {{TEAM NAMES}}  
+**Team:** Alen Gevorgyan, Koryun Gaboyan, David Ghazaryan  
 **Live demo:** https://huggingface.co/spaces/davitlive5/lsir-armenian-phone-asr · **Model:** https://huggingface.co/davitlive5/lsir-buzzasr-armenian-phone-lora · **Full report:** [docs/REPORT.md](docs/REPORT.md)
 
 *This project is a prototype and is not medical advice.*
@@ -56,4 +56,4 @@ instead of sounds. The FLEURS gender gap disappeared on Common Voice, and public
 FLEURS (Google, CC-BY-4.0); Common Voice 20 Armenian (Mozilla, CC0); BuzzASR/armenian (MIT); OpenAI Whisper (MIT);
 Meta MMS and Omnilingual ASR; Piper Armenian voice (davit312/piper-TTS-Armenian) for the clinic test; PEFT/LoRA;
 ROVER (Fiscus, 1997). Full list with links: [docs/REPORT.md#sources](docs/REPORT.md#sources).
-**AI tools:** {{AI TOOLS}}
+**AI tools:** We used Claude (Anthropic) as an AI coding assistant. It wrote and debugged most of the code and drafted the documents; we chose the problem, the user and the tests, checked every result, and can explain each step.

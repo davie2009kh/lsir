@@ -132,6 +132,4 @@ book appointments or ask about prescriptions without being misunderstood.
 **"Is it a medical tool?"** No. It's a prototype and not medical advice. A real deployment would need testing with
 real callers and a human fallback for anything urgent.
 
-**"What did you use AI tools for?"** We used Claude (an AI coding assistant) to help write and debug code and to
-draft documents. We chose the problem and the tests, checked the results, and can explain every step. (Adjust this
-answer to what you actually did.)
+**"What did you use AI tools for?"** We used Claude (Anthropic) as an AI coding assistant. It wrote and debugged most of the code and drafted the documents; we chose the problem, the user and the tests, checked every result, and can explain each step. Be ready to explain any notebook cell: that's why this sheet exists.

@@ -3,7 +3,7 @@
 *The one-page summary is the [README](../README.md). This report has every table, the failure analysis and how to run the code.*
 
 **Track:** AI + Languages  
-**Team:** {{TEAM NAMES}}  
+**Team:** Alen Gevorgyan, Koryun Gaboyan, David Ghazaryan  
 **Live demo:** https://huggingface.co/spaces/davitlive5/lsir-armenian-phone-asr  
 **Model:** https://huggingface.co/davitlive5/lsir-buzzasr-armenian-phone-lora
 
@@ -246,6 +246,6 @@ with all outputs are linked below. Every dataset and model is downloaded inside 
   mix follows Dissen et al. (arXiv 2406.18928) and data-augmentation work on low-bit-rate telephony (Applied Sciences 12(3):1580, 2022).
 - **Libraries:** PyTorch, Transformers, PEFT, jiwer, SciPy, pandas, matplotlib, Gradio, ffmpeg.
 - **Compute:** free Kaggle T4 GPUs.
-- **AI tools:** {{AI TOOLS: describe how you used Claude / other assistants}}
+- **AI tools:** We used Claude (Anthropic) as an AI coding assistant. It wrote and debugged most of the code and drafted the documents; we chose the problem, the user and the tests, checked every result, and can explain each step.
 
 *This project is a prototype and is not medical advice.*
