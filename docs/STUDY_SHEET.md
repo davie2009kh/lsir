@@ -87,7 +87,7 @@ as most apps would use it, and the original BuzzASR before our training.
    phone 17.4% -> 15.1% (about 12-13% fewer errors), with no extra training.
 6. Beam search (5 beams) helps every model and ours the most: over the unseen codec 24.3% -> 20.8% (14% fewer errors
    than the original as normally run), and our model is then significantly better than the original over the phone too.
-   Beam search plus voting gives the best phone result: 14.4%.
+   Beam search plus voting gives the best results: phone 14.3%, unseen codec 19.6% (19% fewer errors than 24.3%).
 
 ## 4. Questions judges will probably ask
 

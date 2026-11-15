@@ -162,7 +162,21 @@ is the best single model.
 Voting removes about 12-13% of errors, and our phone-trained model is the best pivot over the phone. Using the
 weaker Omnilingual as the pivot did *not* help (13.3%), which is why we use the best model as the pivot. The cost is
 running three models instead of one. Omnilingual and MMS were trained partly on FLEURS's training split.
-*Voting on the unseen GSM codec and on Common Voice (to confirm the setup on data we didn't choose it on) is still running and will be added here.*
+**Voting on every condition** (MMS and Omnilingual re-run for all three conditions in notebook 8; strict 95% CI of the
+change against the pivot model alone):
+
+| FLEURS test | Pivot alone | Vote | Change |
+|---|---|---|---|
+| Unseen GSM codec, BuzzASR greedy pivot | 24.3% | 21.5% | -2.8 (-3.3 to -2.2) |
+| Unseen GSM codec, Lsir greedy pivot | 23.3% | 20.8% | -2.5 (-3.1 to -1.9) |
+| Unseen GSM codec, Lsir beam 5 pivot | 20.8% | **19.6%** | -1.2 (-1.7 to -0.7) |
+| Phone, Lsir beam 5 pivot | 15.2% | **14.3%** | -0.9 (-1.4 to -0.4) |
+| Clean, Lsir beam 5 pivot | 12.3% | **11.6%** | -0.7 (-1.2 to -0.1) |
+
+Our best system (Lsir with beam search, voting with Omnilingual and MMS) gets **19.6%** over the unseen codec, against
+24.3% for the original BuzzASR as normally run: 19% fewer errors (change -4.7, CI -5.4 to -4.0). We chose the voting
+setup on the FLEURS clean and phone conditions; the codec condition and Common Voice (still running) check it on data
+we did not choose it on.
 
 ### 8. Beam search: letting the model consider 5 candidate transcripts instead of 1
 Until now every model wrote its single most likely next token at each step ("greedy" decoding). With **beam search**
@@ -186,10 +200,11 @@ over the unseen codec (24.3% → 20.8%, CI of change -4.0 to -2.9). The cost is 
 | Audio | Lsir beam 5 alone | Vote, Lsir beam 5 pivot | Change (strict 95% CI) |
 |---|---|---|---|
 | Clean | 12.3% | **11.6%** | -0.66 (-1.24 to -0.07) |
-| Phone | 15.2% | **14.4%** | -0.88 (-1.41 to -0.37) |
+| Phone | 15.2% | **14.3%** | -0.90 (-1.42 to -0.38) |
 
 Voting still helps, but less than with greedy decoding (beam search already fixes some of the same errors). The best
-phone result, 14.4%, is about 17% fewer errors than the original BuzzASR with greedy decoding (17.4%).
+phone result, 14.3%, is about 18% fewer errors than the original BuzzASR with greedy decoding (17.4%). (These use the
+MMS and Omnilingual transcripts re-run in notebook 8.)
 
 *Strict confidence intervals resample whole sentences (FLEURS) or whole speakers (Common Voice) instead of single
 clips (`tools/cluster_bootstrap.py`); all conclusions above hold under them.*

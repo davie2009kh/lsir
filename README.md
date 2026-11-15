@@ -33,15 +33,15 @@ lines. To keep ourselves honest, we test on a mobile codec (GSM) that is **never
 | Test audio (FLEURS, 932 clips) | whisper-small | BuzzASR | **Lsir (ours)** | **Lsir + 3-model vote** |
 |---|---|---|---|---|
 | Clean | 108% | 12.5% | 12.3% | **11.6%** |
-| Phone line | 118% | 15.8% | **15.2%** | **14.4%** |
-| **Unseen mobile codec** | — | 22.1% | **20.8%** | still running |
+| Phone line | 118% | 15.8% | **15.2%** | **14.3%** |
+| **Unseen mobile codec** | — | 22.1% | **20.8%** | **19.6%** |
 
 *BuzzASR and Lsir use beam search (5 beams); whisper-small is run as most apps run it.* The usual baseline,
 whisper-small, is worse than writing nothing (100%). Against the original BuzzASR, our model is significantly better
 over the phone (-0.6 points, 95% CI -1.0 to -0.15) and on the codec it never trained on (-1.3, CI -1.8 to -0.9;
 strict test that resamples whole sentences), and equal on clean audio. The codec gain **replicates on Common Voice**
 (18.9% → 17.8%, greedy decoding). Over that codec, numbers survive more often (72% → 78%), and on our clinic test more medicine names
-come through (33% → 42%). Letting three different models vote word by word removes another 5-6% of errors. We chose
+come through (33% → 42%). Letting three different models vote word by word removes another 5-6% of errors: over the unseen codec, 24.3% for the original model as normally run becomes 19.6%. We chose
 the voting setup on the FLEURS test, so we treat it as exploratory until it is confirmed on Common Voice.
 
 **Where it fails:** on clean audio our model is no better (slightly worse on Common Voice: 3.7% → 4.0%, greedy decoding). Western
