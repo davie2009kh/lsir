@@ -45,7 +45,7 @@ HERO = """
 """
 
 ABOUT = """
-<p>We tested both models on 932 sentences from the FLEURS Armenian test set that were never used in training. Share
+<p>We tested both models on the 932 recordings (350 different sentences) of the FLEURS Armenian test set, none used in training. Share
 of words wrong (lower is better), both with beam search:</p>
 <table>
 <tr><th>Audio</th><th>BuzzASR</th><th>Lsir</th></tr>
