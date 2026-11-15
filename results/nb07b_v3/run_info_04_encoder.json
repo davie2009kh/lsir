@@ -1,0 +1,23 @@
+{
+ "lora_part": "encoder",
+ "epochs": 1,
+ "best_epoch": 0,
+ "lr": 3e-05,
+ "lora_r": 16,
+ "clean_prob": 0.5,
+ "label_col": "transcription",
+ "n_val": 300,
+ "batch": 16,
+ "train_clips": 7090,
+ "test_clips": 932,
+ "has_opus": true,
+ "unseen_codec": [
+  "libgsm",
+  "13k",
+  "GSM mobile codec"
+ ],
+ "unseen_condition": "unseen: GSM mobile codec + loss + noise",
+ "torch": "2.11.0+cu130",
+ "transformers": "5.20.2",
+ "peft": "0.21.2"
+}

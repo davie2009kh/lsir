@@ -231,6 +231,12 @@ clips (`tools/cluster_bootstrap.py`); all conclusions above hold under them.*
   *worse* (clean 13.7% → 15.4%), because it learned to add punctuation and capitals instead of hearing better. Fine-tuning
   the decoder too was worse still. BuzzASR had already been trained on the same FLEURS sentences, so there was little new
   to learn from them.
+- **More data didn't help (v3):** we continued training v2 for one more epoch on 7,090 clips (FLEURS plus Common Voice
+  Armenian training clips plus ASR-filtered synthetic Armenian speech from NB07a). On our 300-clip validation set the
+  unseen GSM codec moved only 22.7% → 22.5%, while clean got worse (13.8% → 14.3%) and phone barely moved
+  (17.0% → 17.2%). Validation therefore kept v2 (`best epoch 0`), so v3's test numbers are identical to v2's and v2
+  stays the released model. Our guess: synthetic voices and volunteer microphone recordings are too different from
+  what the encoder needs; real phone-call audio is the missing ingredient (see below). Results in `results/nb07b_v3/`.
 
 **A note on fairness:** our first fine-tune was changed into v2 after we looked at its test outputs. To make sure we
 didn't simply tune to the test set, we froze v2 and then tested it on a second dataset (Common Voice, section 6),
@@ -239,8 +245,9 @@ where the same gain appeared.
 ## What we'd do next
 1. **Real phone calls:** record Armenian speakers (with permission) through real mobile and landline calls, and test
    whether the simulator's ranking of models holds.
-2. **More, newer Armenian audio:** BuzzASR already learned FLEURS, so real gains need new speech (e.g. Common Voice
-   Armenian or recordings of older speakers) and Western Armenian for the diaspora.
+2. **More, newer Armenian audio:** BuzzASR already learned FLEURS, so real gains need new speech. Adding Common Voice
+   and synthetic speech did not help (v3, above), so the next data should be real phone-quality recordings, older
+   speakers, and Western Armenian for the diaspora.
 3. **Older speakers:** public Armenian speech data has almost nobody over 60. Recording older volunteers (with permission) is the most important missing piece.
 
 ## How to run
@@ -258,6 +265,7 @@ dataset and model is downloaded inside the notebook, and no API keys are needed.
 | `notebooks/05_clinic_calls.py` | [Kaggle](https://www.kaggle.com/code/davit2009/lsir-05-clinic-calls) | Clinic-call test with a synthetic Armenian voice (Piper) | ~40 min |
 | `notebooks/06_cv_and_beam.py` | [Common Voice](https://www.kaggle.com/code/davit2009/lsir-06-cv), [beam search](https://www.kaggle.com/code/davit2009/lsir-06-beam) | Second test set with age/gender groups; greedy vs beam search | ~1.5 h, ~3.5 h |
 | `notebooks/07a_synthetic_speech.py` | [Kaggle](https://www.kaggle.com/code/davit2009/lsir-07a-synthetic-armenian-speech) | Synthetic Armenian training speech (Anadil, MMS-TTS), filtered by ASR | ~1.5 h |
+| `notebooks/07b_retrain_more_data.py` | outputs in `results/nb07b_v3/` (notebook kept private: its adapter was trained on non-commercial synthetic speech) | v3: v2 + one epoch on FLEURS + Common Voice + synthetic speech (no gain, v2 kept) | ~2.5 h |
 | `notebooks/08_combination_inputs.py` | [FLEURS](https://www.kaggle.com/code/davit2009/lsir-08-fleurs), [Common Voice](https://www.kaggle.com/code/davit2009/lsir-08-cv) | MMS and Omnilingual transcripts on all three conditions, for the voting test | ~1.5 h each |
 | `tools/rover.py`, `tools/cluster_bootstrap.py` | run locally on the saved transcripts in `results/` | Word-level voting between models; sentence/speaker-level significance tests | seconds |
 | `app/app.py` | [Live demo](https://huggingface.co/spaces/davitlive5/lsir-armenian-phone-asr) | Gradio demo, the same code as the Hugging Face Space | |

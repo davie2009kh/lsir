@@ -89,6 +89,9 @@ as most apps would use it, and the original BuzzASR before our training.
 6. Beam search (5 beams) helps every model and ours the most: over the unseen codec 24.3% -> 20.8% (14% fewer errors
    than the original as normally run), and our model is then significantly better than the original over the phone too.
    This is our headline: same decoding for both, 22.1% -> 20.8% over the unseen codec.
+7. More training data did NOT help: one more epoch with Common Voice + synthetic Armenian speech (v3) made clean audio
+   worse (13.8% -> 14.3% on validation) for a tiny gain on the mobile codec (22.7% -> 22.5%), so we kept v2.
+   If asked "why not train on more data?": we tried; the data we could get for free isn't phone-like enough.
 
 ## 4. Questions judges will probably ask
 
