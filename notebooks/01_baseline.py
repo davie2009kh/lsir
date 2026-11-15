@@ -236,7 +236,8 @@ print(pd.DataFrame(rows).to_string(index=False))
 #   *training* split (different sentences from the test split), which may help it here.
 #
 # For Whisper we try two settings:
-# * **auto**: Whisper guesses the language itself (what happens if the developer doesn't set it);
+# * **auto**: Whisper guesses the language itself (what happens if the developer doesn't set it). It turns out to
+  recognise Armenian almost always (section 8), so the two settings give nearly the same results;
 # * **forced**: we tell Whisper the language in advance.
 
 # %%
@@ -339,8 +340,9 @@ for c in ax.containers:
 plt.tight_layout(); plt.savefig(f"{OUT}/wer_by_language.png", dpi=120); plt.show()
 
 # %% [markdown]
-# ## 8. Why does Armenian fail? (1) Whisper often doesn't recognise the language
-# When we let Whisper guess the language, which language does it think Armenian speech is?
+# ## 8. Does Whisper even recognise that it's hearing Armenian?
+# When we let Whisper guess the language, which language does it think Armenian speech is? If it recognises
+# Armenian, the problem is not language detection but *writing* Armenian correctly.
 
 # %%
 auto_hy = res[(res.lang == "hy_am") & (res.setting == "auto")]
@@ -353,7 +355,7 @@ for lang in ["ru_ru", "en_us"]:
     print(f"(for comparison) whisper-small detects {LANGS[lang][0]} correctly in {100*(g['detected']==LANGS[lang][1]).mean():.0f}% of clips")
 
 # %% [markdown]
-# ## 9. Why does Armenian fail? (2) Real examples, model output next to the correct transcript
+# ## 9. Why does Armenian fail? Real examples, model output next to the correct transcript
 
 # %%
 def show(model, setting, channel, n=4, worst=True, lang="hy_am"):
