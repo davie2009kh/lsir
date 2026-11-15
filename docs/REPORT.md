@@ -217,18 +217,22 @@ where the same gain appeared.
 3. **Older speakers:** public Armenian speech data has almost nobody over 60. Recording older volunteers (with permission) is the most important missing piece.
 
 ## How to run
-| Notebook | What it does | Runtime (free Kaggle T4) |
-|---|---|---|
-| `notebooks/01_baseline.py` | Whisper on Armenian vs Russian vs English, phone simulation | ~40 min |
-| `notebooks/02_finetune.py` | Fine-tuning whisper-small (interrupted run; partial results in `results/`) | ~2.5 h |
-| `notebooks/03_strong_models.py` | 4 models on all 932 test clips, clean and phone | ~1.5 h |
-| `notebooks/03b_omnilingual.py` | Meta Omnilingual ASR, same test | ~40 min |
-| `notebooks/04_phone_finetune.py` | Phone-robust LoRA fine-tune of BuzzASR + 3-condition test | ~3.5 h |
-| `notebooks/05_clinic_calls.py` | Clinic-call test with a synthetic Armenian voice (Piper) | ~40 min |
-| `app/app.py` | Gradio demo (works in Colab or as a Hugging Face Space) | |
+Every notebook below ran on a free Kaggle T4 GPU, and its **executed version with all outputs is public on Kaggle**.
+The source of each is in `notebooks/` as a `.py` file with `# %%` cells (converted with `tools/py2nb.py`). Every
+dataset and model is downloaded inside the notebook, and no API keys are needed.
 
-Notebooks are written as `.py` files with `# %%` cells and converted with `tools/py2nb.py`; the executed versions
-with all outputs are linked below. Every dataset and model is downloaded inside the notebooks, and no API keys are needed.
+| Notebook (source) | Executed, with outputs | What it does | Runtime |
+|---|---|---|---|
+| `notebooks/01_baseline.py` | [Kaggle](https://www.kaggle.com/code/davit2009/lsir-01-armenian-asr-baseline) | Whisper on Armenian vs Russian vs English, phone simulation | ~40 min |
+| `notebooks/02_finetune.py` | partial results in `results/` | Fine-tuning whisper-small (interrupted run) | ~2.5 h |
+| `notebooks/03_strong_models.py` | [Kaggle](https://www.kaggle.com/code/davit2009/lsir-03-armenian-asr-strong-models) | 4 models on all 932 test clips, clean and phone | ~1.5 h |
+| `notebooks/03b_omnilingual.py` | [Kaggle](https://www.kaggle.com/code/davit2009/lsir-03b-omnilingual-armenian) | Meta Omnilingual ASR, same test | ~40 min |
+| `notebooks/04_phone_finetune.py` | [Kaggle](https://www.kaggle.com/code/davit2009/lsir-04-phone-lora-encoder) | Phone-robust LoRA fine-tune of BuzzASR + 3-condition test | ~3.5 h |
+| `notebooks/05_clinic_calls.py` | [Kaggle](https://www.kaggle.com/code/davit2009/lsir-05-clinic-calls) | Clinic-call test with a synthetic Armenian voice (Piper) | ~40 min |
+| `notebooks/06_cv_and_beam.py` | [Common Voice](https://www.kaggle.com/code/davit2009/lsir-06-cv), [beam search](https://www.kaggle.com/code/davit2009/lsir-06-beam) | Second test set with age/gender groups; greedy vs beam search | ~1.5 h, ~3.5 h |
+| `notebooks/07a_synthetic_speech.py` | [Kaggle](https://www.kaggle.com/code/davit2009/lsir-07a-synthetic-armenian-speech) | Synthetic Armenian training speech (Anadil, MMS-TTS), filtered by ASR | ~1.5 h |
+| `tools/rover.py`, `tools/cluster_bootstrap.py` | run locally on the saved transcripts in `results/` | Word-level voting between models; sentence/speaker-level significance tests | seconds |
+| `app/app.py` | [Live demo](https://huggingface.co/spaces/davitlive5/lsir-armenian-phone-asr) | Gradio demo, the same code as the Hugging Face Space | |
 
 ## Sources
 - **FLEURS:** Conneau et al., 2022. https://huggingface.co/datasets/google/fleurs (CC-BY-4.0)
