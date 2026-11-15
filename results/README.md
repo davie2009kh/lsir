@@ -11,3 +11,6 @@ epoch 0 (= the unchanged original model); the run was stopped before its test ph
 two identical models. Numbers copied from the Kaggle run log (100 validation clips).
 
 `nb04_v1_encoder/`: notebook 4 v1 with `LORA_PART="encoder"`, complete outputs (test on all 932 clips).
+
+`nb04_v2_encoder/`: notebook 4 **final** version (encoder-only LoRA r=16, lr 5e-5, trained on FLEURS's
+normalised `transcription`, epoch chosen on 300 validation clips). Complete outputs, all 932 test clips.
