@@ -9,11 +9,12 @@
 # far more dangerous than getting a filler word wrong.
 #
 # So we wrote **40 short sentences that a caller to an Armenian clinic or pharmacy might say**, and had them
-# read by two free Armenian neural voices (Microsoft Edge TTS: *Anahit*, female; *Hayk*, male). We play every
+# read by a free Armenian text-to-speech voice (Piper `hy_AM-gor-medium`, Eastern Armenian, male) at a normal and
+# a slow speaking pace (slow speech is closer to many older callers). We play every
 # sentence clean, through the fixed phone simulation, and through the **unseen** mobile-codec condition from
 # notebook 4. Then we measure word errors, **how many numbers survive**, and **how many medical terms survive**.
 #
-# **Honest limitations.** These are synthetic voices, not real callers: they are clearer and more regular than
+# **Honest limitations.** This is one synthetic male voice, not real callers: it is clearer and more regular than
 # a real elderly caller, so real-world error rates would be higher. The sentences were written by our team (with
 # an AI assistant's help) and are only 40, so treat this as a sanity check of what matters to a clinic, not a benchmark.
 #
@@ -23,11 +24,11 @@
 SMOKE = False
 SEED = 42
 GEN = dict(num_beams=1, no_repeat_ngram_size=3, repetition_penalty=1.2, max_new_tokens=440)
-VOICES = {"female": "hy-AM-AnahitNeural", "male": "hy-AM-HaykNeural"}
+PACES = {"normal pace": 1.0, "slow pace": 1.35}     # Piper length_scale: above 1 = slower speech
 
 # %%
 import subprocess, sys
-subprocess.run([sys.executable, "-m", "pip", "install", "-q", "jiwer", "peft", "edge-tts"], check=True)
+subprocess.run([sys.executable, "-m", "pip", "install", "-q", "jiwer", "peft", "piper-tts"], check=True)
 subprocess.run([sys.executable, "-m", "pip", "uninstall", "-y", "-q", "torchao"], check=False)   # Kaggle's old torchao breaks peft; we don't use it
 
 import asyncio, glob, io, os, re, json, time, shutil
@@ -100,15 +101,22 @@ print(len(CLINIC), "sentences,", sum(len(t) for _, t in CLINIC), "medical terms,
       sum(len(re.findall(r"\d+", s)) for s, _ in CLINIC), "numbers")
 
 # %% [markdown]
-# ## 2. Speak them with two Armenian neural voices
+# ## 2. Speak them with an Armenian text-to-speech voice, at two speaking paces
 
 # %%
 FFMPEG = shutil.which("ffmpeg")
 os.makedirs("/tmp/tts", exist_ok=True)
 
-def speak(text, voice, path):
-    # the edge-tts command-line tool (Jupyter already runs an event loop, so we don't call asyncio here)
-    subprocess.run(["edge-tts", "--voice", voice, "--text", text, "--write-media", path], check=True, capture_output=True)
+import urllib.request
+PIPER_URL = "https://huggingface.co/davit312/piper-TTS-Armenian/resolve/main/v3/hy_AM-gor-medium.onnx"
+for ext in ["", ".json"]:
+    urllib.request.urlretrieve(PIPER_URL + ext, "/tmp/tts/voice.onnx" + ext)
+
+def speak(text, length_scale, path):
+    r = subprocess.run(["piper", "-m", "/tmp/tts/voice.onnx", "-f", path, "--length_scale", str(length_scale)],
+                       input=text, text=True, capture_output=True)
+    if r.returncode != 0:
+        raise RuntimeError(r.stderr[-500:])
 
 def mp3_to_16k(path):
     r = subprocess.run([FFMPEG, "-loglevel", "error", "-i", path, "-f", "f32le", "-ar", "16000", "-ac", "1", "pipe:1"],
@@ -117,11 +125,11 @@ def mp3_to_16k(path):
 
 rows = []
 for i, (sent, terms) in enumerate(CLINIC):
-    for g, voice in VOICES.items():
-        p = f"/tmp/tts/{i:02d}_{g}.mp3"
+    for g, scale in PACES.items():
+        p = f"/tmp/tts/{i:02d}_{g.split()[0]}.wav"
         for attempt in range(3):
             try:
-                speak(sent, voice, p); break
+                speak(sent, scale, p); break
             except Exception as e:
                 print("retry", i, g, repr(e)[:100]); time.sleep(2)
         rows.append(dict(sid=i, voice=g, text=sent, terms=terms, wav=mp3_to_16k(p)))
@@ -273,7 +281,7 @@ for (m, ch), hyps in outputs.items():
     H = [norm(h) for h in hyps]
     nk = [kept(NUM.findall(r), NUM.findall(h)) for r, h in zip(clips["text"], hyps)]
     tk = [kept([norm(t) for t in terms], [w for w in h.split()]) for terms, h in zip(clips["terms"], H)]
-    for g in ["female", "male", "all"]:
+    for g in list(PACES) + ["all"]:
         k = (clips["voice"] == g).values if g != "all" else np.ones(len(clips), bool)
         res.append({"model": m, "audio": ch, "voice": g,
                     "WER %": 100 * jiwer.wer([r for r, kk in zip(R, k) if kk], [h for h, kk in zip(H, k) if kk]),
@@ -301,9 +309,9 @@ plt.tight_layout(); plt.savefig(f"{OUT}/clinic_results.png", dpi=130); plt.show(
 # %%
 show = [m for m in dict.fromkeys(k[0] for k in outputs)]
 for i in [1, 4, 22, 23, 37] if not SMOKE else [0, 1]:
-    for g in ["female"]:
+    for g in ["slow pace"]:
         j = clips.index[(clips.sid == i) & (clips.voice == g)][0]
-        print(f"--- sentence {i} ({g} voice) ---")
+        print(f"--- sentence {i} ({g}) ---")
         print(f"  {'correct':38s}: {clips.text[j]}")
         for m in show:
             print(f"  {m[:38]:38s}: {outputs[(m, 'unseen mobile codec')][j][:200]}")
