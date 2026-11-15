@@ -77,7 +77,9 @@ probe = ["/tmp/omni/bin/python", "-c", "import torch; print(torch.__version__.sp
 tv = subprocess.run(probe, capture_output=True, text=True).stdout.strip()
 print("torch inside the Omnilingual environment:", tv)
 # torchaudio must be built for exactly this torch version (that mismatch was the failure in notebook 3)
-sh("uv", "pip", "install", "-q", "--python", "/tmp/omni/bin/python", f"torchaudio=={tv}")
+# fairseq2 pins NumPy 1.26, and the newest pyarrow needs NumPy 2, so pin a pyarrow that still supports NumPy 1.x
+sh("uv", "pip", "install", "-q", "--python", "/tmp/omni/bin/python", f"torchaudio=={tv}", "pyarrow>=20,<22")
+sh("/tmp/omni/bin/python", "-c", "import numpy, pyarrow, torchaudio; print(numpy.__version__, pyarrow.__version__, torchaudio.__version__)")
 
 # %% [markdown]
 # ## 3. Transcribe both versions of every clip
