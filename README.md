@@ -17,7 +17,7 @@ phone line**, the callers who most need help are the ones who get misunderstood.
 2. **A phone-robust fine-tune of the best model** (BuzzASR-Armenian + LoRA, trained with telephone augmentation),
    tested on a mobile codec it never saw in training.
 3. **A clinic-call test**: 40 sentences a caller to an Armenian clinic might say (appointments, phone numbers,
-   doses, medicine names), spoken by two Armenian neural voices, scored on whether **numbers and medical terms** survive.
+   doses, medicine names), spoken by an Armenian text-to-speech voice at two speaking paces, scored on whether **numbers and medical terms** survive.
 4. **A demo app**: speak or upload Armenian, optionally send it through a phone line, and compare models side by side.
 
 ## What we added
@@ -102,7 +102,7 @@ learned "phone audio" in general rather than our simulator. Clean audio is uncha
 numbers), the details that matter most to a clinic, survive noticeably more often. Women's voices over the mobile codec
 improve from 28.7% to 27.2% WER, so the gender gap narrows slightly but remains.
 
-### 5. Clinic-call test (40 sentences x 2 synthetic voices)
+### 5. Clinic-call test (40 sentences, one synthetic voice at two speaking paces)
 {{CLINIC_RESULTS}}
 
 ### Where it fails, and why we think so
@@ -130,7 +130,7 @@ improve from 28.7% to 27.2% WER, so the gender gap narrows slightly but remains.
 | `notebooks/03_strong_models.py` | 4 models on all 932 test clips, clean and phone | ~1.5 h |
 | `notebooks/03b_omnilingual.py` | Meta Omnilingual ASR, same test | ~40 min |
 | `notebooks/04_phone_finetune.py` | Phone-robust LoRA fine-tune of BuzzASR + 3-condition test | ~3.5 h |
-| `notebooks/05_clinic_calls.py` | Clinic-call test with two Armenian neural voices | ~40 min |
+| `notebooks/05_clinic_calls.py` | Clinic-call test with a synthetic Armenian voice (Piper) | ~40 min |
 | `app/app.py` | Gradio demo (works in Colab or as a Hugging Face Space) | |
 
 Notebooks are written as `.py` files with `# %%` cells and converted with `tools/py2nb.py`; the executed versions
@@ -142,7 +142,7 @@ with all outputs are linked below. Every dataset and model is downloaded inside 
 - **BuzzASR-Armenian:** Singh et al., 2026, *BuzzASR: A Swarm of 100+ Monolingual Speech Recognition Models*. https://huggingface.co/BuzzASR/armenian (MIT)
 - **MMS:** Pratap et al., 2023. https://huggingface.co/facebook/mms-1b-all (CC-BY-NC-4.0)
 - **Omnilingual ASR:** Meta AI, 2025. https://github.com/facebookresearch/omnilingual-asr (Apache-2.0)
-- **Edge TTS voices** (hy-AM-AnahitNeural, hy-AM-HaykNeural) via the `edge-tts` package, used only to synthesise the clinic-call test.
+- **Piper Armenian voice** `hy_AM-gor-medium` (davit312/piper-TTS-Armenian, GPL-2.0), used only to synthesise the clinic-call test. https://huggingface.co/davit312/piper-TTS-Armenian
 - **Methods:** LoRA (Hu et al., 2021) via Hugging Face PEFT; SpecAugment (Park et al., 2019); the telephone-augmentation
   mix follows Dissen et al. (arXiv 2406.18928) and data-augmentation work on low-bit-rate telephony (Applied Sciences 12(3):1580, 2022).
 - **Libraries:** PyTorch, Transformers, PEFT, jiwer, SciPy, pandas, matplotlib, Gradio, ffmpeg.
