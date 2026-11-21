@@ -16,6 +16,7 @@ except ImportError:
     def gpu(f):
         return f
 
+import slides
 from lsir_core import HAS_GSM, landline, marked, mobile, to_16k_mono, transcribe_both
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -41,6 +42,20 @@ HERO = """
       <text x="0" y="50">0 Hz</text><text x="124" y="50">3,400</text><text x="286" y="50">8,000</text>
     </svg>
   </div>
+</div>
+"""
+
+PROOF = """
+<div id="lsir-proof">
+  <div class="pf"><p class="v"><s>22.1%</s> 20.8%</p><p class="k">words wrong over a mobile codec Lsir never heard in training</p></div>
+  <div class="pf"><p class="v"><s>72%</s> 78%</p><p class="k">of numbers (doses, times, phone numbers) survive the call</p></div>
+  <div class="pf"><p class="v">2 datasets</p><p class="k">the gain repeats on Common Voice, data we never tuned on</p></div>
+  <nav class="links" aria-label="Project links">
+    <a href="https://github.com/davie2009kh/lsir">Code and notebooks</a>
+    <a href="https://github.com/davie2009kh/lsir/blob/main/docs/REPORT.md">Full report</a>
+    <a href="https://huggingface.co/davitlive5/lsir-buzzasr-armenian-phone-lora">Model</a>
+    <a href="https://www.dropbox.com/scl/fi/j44x61vjt3xn3tev112p0/lsir-demo-v3.mp4?rlkey=vwe2mxmqw3clmvbwrodcf7frr&st=raftl60b&dl=0">Demo video</a>
+  </nav>
 </div>
 """
 
@@ -116,7 +131,7 @@ theme = gr.themes.Base(
     button_primary_background_fill="#8c1d3a", button_primary_background_fill_dark="#e8708c",
     block_radius="12px", block_shadow="none",
 )
-CSS = open(os.path.join(HERE, "style.css")).read()
+CSS = open(os.path.join(HERE, "style.css")).read() + slides.CSS
 STYLE = dict(theme=theme, css=CSS)
 BLOCKS_STYLE = STYLE if "css" in inspect.signature(gr.Blocks.__init__).parameters else {}   # Gradio 6 moved these
 LAUNCH_STYLE = {} if BLOCKS_STYLE else STYLE
@@ -124,7 +139,10 @@ LAUNCH_STYLE = {} if BLOCKS_STYLE else STYLE
 with gr.Blocks(title="Lsir: Armenian speech-to-text over the phone", **BLOCKS_STYLE) as demo:
     ref = gr.Textbox("", visible=False)          # correct transcript of the chosen example ("" for your own audio)
     row = gr.Number(-1, visible=False, precision=0)   # example row in the FLEURS test set (sets the line-noise seed)
+    with gr.Accordion("Presentation slides", open=False, elem_id="lsir-slides"):
+        gr.HTML(slides.FONT_LINK + slides.SLIDES)
     gr.HTML(HERO)
+    gr.HTML(PROOF)
 
     gr.HTML('<div class="lsir-step-title"><span class="n">1</span><h2>Choose some Armenian speech</h2>'
             '<p>an example sentence, or your own voice (up to 30 seconds)</p></div>')
@@ -140,6 +158,8 @@ with gr.Blocks(title="Lsir: Armenian speech-to-text over the phone", **BLOCKS_ST
         channel = gr.Radio(CHANNELS, value=CHANNELS[0], show_label=False, elem_id="lsir-channel", scale=1)
         go = gr.Button("Transcribe", elem_id="lsir-go", scale=0, min_width=200)
 
+    gr.HTML('<div class="lsir-step-title"><span class="n">3</span><h2>Compare</h2>'
+            '<p>the same audio, the original model and ours</p></div>')
     with gr.Row(equal_height=True):
         out_orig = gr.HTML(empty_cards()[0])
         out_lsir = gr.HTML(empty_cards()[1])

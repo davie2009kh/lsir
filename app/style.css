@@ -33,8 +33,7 @@ body, gradio-app, .gradio-container { background: var(--tuff) !important; }
 footer { display: none !important; }
 
 /* ---------- hero: one bold element, the word itself ---------- */
-#lsir-hero { display: grid; grid-template-columns: auto 1fr; gap: 8px 40px; align-items: end; padding: 40px 0 28px;
-  border-bottom: 1px solid var(--line); margin-bottom: 8px; }
+#lsir-hero { display: grid; grid-template-columns: auto 1fr; gap: 8px 40px; align-items: end; padding: 40px 0 28px; }
 #lsir-hero .word { font-family: "Noto Serif Armenian", serif; font-weight: 900; color: var(--pom);
   font-size: clamp(5.5rem, 16vw, 11rem); line-height: .82; letter-spacing: -.02em; margin: 0; }
 #lsir-hero .gloss { grid-column: 1; align-self: start; font-size: .95rem; color: var(--muted); margin: 6px 0 0 6px; }
@@ -51,6 +50,23 @@ footer { display: none !important; }
 @media (max-width: 760px) {
   #lsir-hero { grid-template-columns: 1fr; padding-top: 24px; }
   #lsir-hero .pitch { grid-column: 1; grid-row: auto; }
+}
+
+/* ---------- proof: three before/after facts and the links ---------- */
+#lsir-proof { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line); margin-bottom: 12px; }
+#lsir-proof .pf { padding: 18px 20px 16px 0; }
+#lsir-proof .pf + .pf { padding-left: 20px; border-left: 1px solid var(--line); }
+#lsir-proof .v { margin: 0; font-size: 1.7rem; font-weight: 700; color: var(--pom); line-height: 1.15; font-variant-numeric: tabular-nums; }
+#lsir-proof .v s { color: var(--muted); font-weight: 600; font-size: 1.15rem; text-decoration-thickness: 2px; margin-right: 6px; }
+#lsir-proof .k { margin: 6px 0 0; color: var(--muted); font-size: .95rem; line-height: 1.4; }
+#lsir-proof .links { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 8px; padding: 0 0 16px; }
+#lsir-proof .links a { color: var(--ink); text-decoration: none; font-weight: 600; font-size: .92rem; padding: 6px 14px;
+  border: 1px solid var(--line); border-radius: 999px; background: var(--surface); }
+#lsir-proof .links a:hover { border-color: var(--pom); color: var(--pom); }
+@media (max-width: 760px) {
+  #lsir-proof { grid-template-columns: 1fr; }
+  #lsir-proof .pf + .pf { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); }
 }
 
 /* ---------- steps (a real sequence, so they are numbered) ---------- */
